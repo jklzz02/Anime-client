@@ -3,16 +3,23 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AnimeComponent } from './anime/anime.component';
+import { provideHttpClient } from '@angular/common/http';
+import { AnimeDetailComponent } from './anime-detail/anime-detail.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { VideoEmbedComponent } from './video-embed/video-embed.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AnimeComponent,
+    AnimeDetailComponent,
+    NotFoundComponent,
+    VideoEmbedComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+  imports: [BrowserModule, AppRoutingModule, FormsModule],
+  providers: [provideHttpClient()],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
