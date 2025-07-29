@@ -11,6 +11,7 @@ import { VideoEmbedComponent } from './video-embed/video-embed.component';
 import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
+import { AnimeSearchComponent } from './anime-search/anime-search.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { HeaderComponent } from './header/header.component';
     VideoEmbedComponent,
     HomeComponent,
     HeaderComponent,
+    AnimeSearchComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [provideHttpClient()],

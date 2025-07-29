@@ -1,11 +1,14 @@
-<header class="bg-base-light text-text-light dark:bg-base dark:text-text mb-3">
-  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-    <div class="flex items-center justify-between">
+<header
+  class="bg-base-light text-text-light dark:bg-base dark:text-text mb-3 shadow-sm sticky top-0 z-50"
+>
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+    <div class="flex flex-wrap items-center justify-between gap-3">
       <a
         routerLink="/"
         class="text-xl font-bold text-lavender-light dark:text-lavender hover:opacity-85"
-        >AnimeHub</a
       >
+        AnimeHub
+      </a>
 
       <button
         (click)="isMenuOpen = !isMenuOpen"
@@ -36,67 +39,81 @@
         </svg>
       </button>
 
-      <div class="hidden md:flex space-x-6 items-center">
+      <div class="hidden md:flex space-x-4 items-center">
         <a
           routerLink="home"
-          routerLinkActive="text-white bg-blue-light dark:bg-blue transition"
+          routerLinkActive="bg-blue-light text-white dark:bg-blue dark:text-white"
           [routerLinkActiveOptions]="{ exact: true }"
-          class="py-1 px-3 rounded hover:text-white hover:bg-blue-light dark:hover:bg-blue transition"
-          >Home</a
+          class="py-1.5 px-3 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
         >
+          Home
+        </a>
         <a
           routerLink="explore"
-          routerLinkActive="text-white bg-blue-light dark:bg-blue transition"
-          class="py-1 px-3 rounded hover:text-white hover:bg-blue-light dark:hover:bg-blue transition"
-          >Explore</a
+          routerLinkActive="bg-blue-light text-white dark:bg-blue dark:text-white"
+          class="py-1.5 px-3 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
         >
+          Explore
+        </a>
         <a
           routerLink="review"
-          routerLinkActive="text-white bg-blue-light dark:bg-blue transition"
+          routerLinkActive="bg-blue-light text-white dark:bg-blue dark:text-white"
           [routerLinkActiveOptions]="{ exact: true }"
-          class="py-1 px-3 rounded hover:text-white hover:bg-blue-light dark:hover:bg-blue transition"
-          >Reviews</a
+          class="py-1.5 px-3 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
         >
+          Reviews
+        </a>
         <a
           routerLink="about"
-          routerLinkActive="text-white bg-blue-light dark:bg-blue transition"
+          routerLinkActive="bg-blue-light text-white dark:bg-blue dark:text-white"
           [routerLinkActiveOptions]="{ exact: true }"
-          class="py-1 px-3 rounded hover:text-white hover:bg-blue-light dark:hover:bg-blue transition"
-          >About</a
+          class="py-1.5 px-3 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
         >
+          About
+        </a>
+      </div>
+
+      <div class="hidden md:block flex-1 max-w-lg">
+        <app-anime-search></app-anime-search>
       </div>
     </div>
 
     <div *ngIf="isMenuOpen" class="mt-4 flex flex-col space-y-2 md:hidden">
+      <app-anime-search class="w-full mb-2"></app-anime-search>
       <a
         routerLink="home"
-        routerLinkActive="text-white bg-blue-light dark:bg-blue transition"
+        routerLinkActive="bg-blue-light text-white dark:bg-blue dark:text-white"
         [routerLinkActiveOptions]="{ exact: true }"
-        class="block px-2 py-1 rounded hover:text-white hover:bg-blue-light dark:hover:bg-blue transition"
-        >Home</a
+        class="block px-2 py-1 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
       >
+        Home
+      </a>
       <a
         routerLink="explore"
-        routerLinkActive="text-white bg-blue-light dark:bg-blue transition"
-        class="block px-2 py-1 rounded hover:text-white hover:bg-blue-light dark:hover:bg-blue transition"
-        >Explore</a
+        routerLinkActive="bg-blue-light text-white dark:bg-blue dark:text-white"
+        class="block px-2 py-1 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
       >
+        Explore
+      </a>
       <a
         routerLink="review"
-        routerLinkActive="text-white bg-blue-light dark:bg-blue transition"
+        routerLinkActive="bg-blue-light text-white dark:bg-blue dark:text-white"
         [routerLinkActiveOptions]="{ exact: true }"
-        class="block px-2 py-1 rounded hover:text-white hover:bg-blue-light dark:hover:bg-blue transition"
-        >Reviews</a
+        class="block px-2 py-1 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
       >
+        Reviews
+      </a>
       <a
         routerLink="about"
-        routerLinkActive="text-white bg-blue-light dark:bg-blue transition"
+        routerLinkActive="bg-blue-light text-white dark:bg-blue dark:text-white"
         [routerLinkActiveOptions]="{ exact: true }"
-        class="block px-2 py-1 rounded hover:text-white hover:bg-blue-light dark:hover:bg-blue transition"
-        >About</a
+        class="block px-2 py-1 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
       >
+        About
+      </a>
     </div>
   </nav>
+
   <div
     class="mx-auto rounded w-full py-0.5 bg-lavender-light dark:bg-lavender"
   ></div>

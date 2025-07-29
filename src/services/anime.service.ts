@@ -37,6 +37,6 @@ export class AnimeService {
   }
 
   getSummaries(count: number): Observable<AnimeSummary[]> {
-    return this.http.get<AnimeSummary[]>(`${this.BASE}?count=${count}`);
+    return this.http.get<AnimeSummary[]>(`${this.BASE}/summary?count=${count}`);
   }
 }
