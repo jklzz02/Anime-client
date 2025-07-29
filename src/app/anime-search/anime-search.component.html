@@ -2,13 +2,6 @@
   <label for="anime-search" class="sr-only">Search Anime</label>
 
   <div class="relative">
-    <!-- Search Icon -->
-    <div
-      class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
-    >
-      <i class="bi bi-search w-4 h-6 text-surface2 dark:text-surface2-dark"></i>
-    </div>
-
     <input
       (input)="onSearch()"
       [(ngModel)]="query"
@@ -17,13 +10,13 @@
       id="anime-search"
       name="anime-search"
       placeholder="Anime title.."
-      class="block w-full p-4 ps-10 text-sm rounded-lg bg-surface0 text-text border border-surface1 placeholder-surface2 focus:outline-none focus:ring-2 focus:ring-blue focus:border-blue dark:bg-surface1 dark:text-text dark:border-surface2 dark:placeholder-surface2"
+      class="block w-full p-4 ps-10 text-sm rounded-lg bg-base-light text-text-light shadow-sm placeholder-surface2-light focus:outline-none focus:ring-2 focus:ring-lavender-light focus:border-lavender-light dark:bg-surface1 dark:text-text dark:border-surface2 dark:placeholder-surface2"
     />
 
     <button
       [disabled]="!query"
       type="submit"
-      class="absolute end-2.5 bottom-2.5 px-4 py-2 text-sm font-medium rounded-lg text-white bg-blue hover:bg-blue/90 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-blue dark:bg-blue-dark dark:hover:bg-blue-dark/80"
+      class="absolute end-2.5 bottom-2.5 px-4 py-2 text-sm font-medium rounded-lg text-white bg-blue-light hover:bg-blue/90 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-blue dark:bg-blue dark:hover:bg-blue/80"
     >
       Search
     </button>
@@ -31,11 +24,11 @@
 
   <ul
     *ngIf="suggestions.length && isVisible"
-    class="absolute mt-2 w-full max-h-72 overflow-auto rounded-lg border shadow-lg bg-base border-surface1 text-text dark:bg-base-dark dark:border-surface1-dark dark:text-text-dark z-50"
+    class="absolute mt-2 w-full max-h-72 overflow-auto rounded-lg border shadow-lg bg-base-light border-surface1-light text-text dark:bg-base dark:border-surface1 dark:text-text z-50"
   >
     <li
       *ngFor="let suggestion of suggestions"
-      class="flex items-center gap-2 px-3 py-2 hover:bg-surface0 dark:hover:bg-surface2 transition-colors"
+      class="flex items-center gap-2 px-3 py-2 hover:bg-surface0-light dark:hover:bg-surface2 transition-colors"
     >
       <a
         class="flex items-center gap-2 w-full"
@@ -56,7 +49,7 @@
             (error)="suggestion.imageUrl = 'assets/placeholder.png'"
           />
         </div>
-        <span class="text-peach dark:text-peach-dark text-sm truncate">
+        <span class="text-peach-light dark:text-peach text-sm truncate">
           {{ suggestion.title }}
         </span>
       </a>
