@@ -1,95 +1,97 @@
 <div *ngIf="anime">
-  <div
-    class="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-  >
+  <div class="w-full max-w-screen-xl mx-auto">
     <div
-      class="anime-box rounded-xl p-4 shadow hover:shadow-lg transition-shadow bg-mantle-light dark:bg-surface0"
-      *ngFor="let item of anime.data"
+      class="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3"
     >
-      <a [routerLink]="'/anime/detail/' + item.id">
-        <div class="relative w-full rounded-lg overflow-hidden">
-          <img
-            class="w-full h-auto object-contain"
-            [src]="item.image_url"
-            [alt]="item.title"
-            [title]="item.title"
-            (error)="item.image_url = 'assets/placeholder.png'"
-          />
-          <div
-            class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 text-white"
-          >
-            <h2 class="text-xl font-semibold drop-shadow-lg">
-              {{ item.title }}
-            </h2>
-            <p class="text-sm">
-              <span *ngIf="item.score > 0" class="text-green font-bold">
-                Score: {{ item.score }}
-              </span>
-              <span *ngIf="item.score == 0" class="text-peach">
-                Not scored yet
-              </span>
-            </p>
+      <div
+        class="rounded-xl p-4 shadow hover:shadow-lg transition-shadow bg-mantle-light dark:bg-surface0"
+        *ngFor="let item of anime.data"
+      >
+        <a [routerLink]="'/detail/' + item.id">
+          <div class="relative w-full rounded-lg overflow-hidden">
+            <img
+              class="w-full h-auto object-contain"
+              [src]="item.image_url"
+              [alt]="item.title"
+              [title]="item.title"
+              (error)="item.image_url = 'assets/placeholder.png'"
+            />
+            <div
+              class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 text-white"
+            >
+              <h2 class="text-xl font-semibold drop-shadow-lg">
+                {{ item.title }}
+              </h2>
+              <p class="text-sm">
+                <span *ngIf="item.score > 0" class="text-green font-bold">
+                  Score: {{ item.score }}
+                </span>
+                <span *ngIf="item.score == 0" class="text-peach">
+                  Not scored yet
+                </span>
+              </p>
+            </div>
           </div>
+
+          <figcaption class="text-xs text-lavender px-4 py-2">
+            {{ item.other_title }}
+          </figcaption>
+        </a>
+
+        <div
+          *ngIf="item.type?.name?.toLowerCase() !== 'unknown'"
+          class="mt-1 text-xs text-subtext1"
+        >
+          {{ item.type.name }}
         </div>
 
-        <figcaption class="text-xs text-lavender px-4 py-2">
-          {{ item.other_title }}
-        </figcaption>
-      </a>
+        <div *ngIf="item.genres" class="my-1">
+          <span
+            *ngFor="let genre of item.genres"
+            class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-blue dark:text-crust"
+          >
+            {{ genre.name }}
+          </span>
+        </div>
 
-      <div
-        *ngIf="item.type?.name?.toLowerCase() !== 'unknown'"
-        class="mt-1 text-xs text-subtext1"
-      >
-        {{ item.type.name }}
-      </div>
+        <div *ngIf="item.producers" class="my-1">
+          <span
+            *ngFor="let producer of item.producers"
+            class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-lavender dark:text-crust"
+          >
+            {{ producer.name }}
+          </span>
+        </div>
 
-      <div *ngIf="item.genres" class="my-1">
-        <span
-          *ngFor="let genre of item.genres"
-          class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-blue dark:text-crust"
-        >
-          {{ genre.name }}
-        </span>
-      </div>
-
-      <div *ngIf="item.producers" class="my-1">
-        <span
-          *ngFor="let producer of item.producers"
-          class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-lavender dark:text-crust"
-        >
-          {{ producer.name }}
-        </span>
-      </div>
-
-      <div *ngIf="item.licensors" class="my-1">
-        <span
-          *ngFor="let licensor of item.licensors"
-          class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-peach dark:text-crust"
-        >
-          {{ licensor.name }}
-        </span>
+        <div *ngIf="item.licensors" class="my-1">
+          <span
+            *ngFor="let licensor of item.licensors"
+            class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-peach dark:text-crust"
+          >
+            {{ licensor.name }}
+          </span>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="flex justify-center items-center mt-8 flex-col gap-2">
-    <div class="inline-flex rounded-md shadow-sm" role="group">
-      <button
-        (click)="previousPage()"
-        class="font-semibold py-2 px-4 rounded-l bg-surface0-light dark:bg-surface0 hover:bg-surface0 hover:text-base-light dark:hover:bg-surface1 dark:text-text"
-      >
-        Prev
-      </button>
-      <button
-        (click)="nextPage()"
-        class="font-semibold py-2 px-4 rounded-r bg-surface0-light dark:bg-surface0 hover:bg-surface0 hover:text-base-light dark:hover:bg-surface1 dark:text-text"
-      >
-        Next
-      </button>
+    <div class="flex justify-center items-center mt-8 flex-col gap-2">
+      <div class="inline-flex rounded-md shadow-sm" role="group">
+        <button
+          (click)="previousPage()"
+          class="font-semibold py-2 px-4 rounded-l bg-surface0-light dark:bg-surface0 hover:bg-surface0 hover:text-base-light dark:hover:bg-surface1 dark:text-text"
+        >
+          Prev
+        </button>
+        <button
+          (click)="nextPage()"
+          class="font-semibold py-2 px-4 rounded-r bg-surface0-light dark:bg-surface0 hover:bg-surface0 hover:text-base-light dark:hover:bg-surface1 dark:text-text"
+        >
+          Next
+        </button>
+      </div>
+      <p class="text-sm text-subtext0">
+        Page {{ page }} of {{ anime.total_pages }}
+      </p>
     </div>
-    <p class="text-sm text-subtext0">
-      Page {{ page }} of {{ anime.total_pages }}
-    </p>
   </div>
 </div>

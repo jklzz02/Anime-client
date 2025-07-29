@@ -12,8 +12,8 @@ export interface Anime {
   duration: string;
   source: Source;
   release_year: number;
-  started_airing: string;
-  finished_airing: string;
+  started_airing: Date;
+  finished_airing: Date;
   rating: string;
   studio: string;
   score: number;

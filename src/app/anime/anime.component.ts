@@ -32,7 +32,7 @@ export class AnimeComponent implements OnInit {
 
   loadAnime() {
     this.animeService
-      .getPaginatedAnime(this.page, 32)
+      .getPaginatedAnime(this.page, 33)
       .subscribe((data) => (this.anime = data));
   }
 
@@ -43,7 +43,7 @@ export class AnimeComponent implements OnInit {
       this.page++;
     }
 
-    this.router.navigateByUrl(`anime/${this.page}`);
+    this.router.navigateByUrl(`explore/${this.page}`);
   }
 
   previousPage() {
@@ -53,6 +53,6 @@ export class AnimeComponent implements OnInit {
       this.page--;
     }
 
-    this.router.navigateByUrl(`anime/${this.page}`);
+    this.router.navigateByUrl(`explore/${this.page}`);
   }
 }

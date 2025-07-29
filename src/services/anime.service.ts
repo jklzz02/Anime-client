@@ -32,6 +32,10 @@ export class AnimeService {
     );
   }
 
+  getRecent(count: number): Observable<Anime[]> {
+    return this.http.get<Anime[]>(`${this.BASE}/recent?count=${count}`);
+  }
+
   getSummaries(count: number): Observable<AnimeSummary[]> {
     return this.http.get<AnimeSummary[]>(`${this.BASE}?count=${count}`);
   }

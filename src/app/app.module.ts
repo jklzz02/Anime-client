@@ -9,6 +9,8 @@ import { AnimeDetailComponent } from './anime-detail/anime-detail.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { VideoEmbedComponent } from './video-embed/video-embed.component';
 import { FormsModule } from '@angular/forms';
+import { HomeComponent } from './home/home.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { FormsModule } from '@angular/forms';
     AnimeDetailComponent,
     NotFoundComponent,
     VideoEmbedComponent,
+    HomeComponent,
+    HeaderComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [provideHttpClient()],

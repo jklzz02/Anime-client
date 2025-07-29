@@ -54,7 +54,7 @@
           </div>
           <div>
             <span class="text-surface2">Started airing:</span>
-            {{ anime.started_airing }}
+            {{ anime.started_airing | date : "longDate" }}
           </div>
         </div>
       </section>
