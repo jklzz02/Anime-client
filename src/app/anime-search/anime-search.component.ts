@@ -66,4 +66,14 @@ export class AnimeSearchComponent implements OnInit {
     this.query = '';
     this.isVisible = false;
   }
+
+  searchSubmit(): void {
+    if (!this.query.trim().length) {
+      return;
+    }
+
+    this.animeService
+      .getAnimeByTitle(this.query, 1, 33)
+      .subscribe((data) => console.log(data));
+  }
 }

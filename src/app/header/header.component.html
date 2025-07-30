@@ -1,5 +1,5 @@
 <header
-  class="bg-base-light text-text-light dark:bg-base dark:text-text mb-3 shadow-sm sticky top-0 z-50"
+  class="bg-mantle-light text-text-light dark:bg-mantle dark:text-text shadow-sm sticky top-0 z-50 rounded-md w-full"
 >
   <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
     <div class="flex flex-wrap items-center justify-between gap-3">
@@ -15,28 +15,8 @@
         class="md:hidden inline-flex items-center justify-center p-2 rounded hover:bg-surface1-light dark:hover:bg-surface1 focus:outline-none"
         aria-label="Toggle menu"
       >
-        <svg
-          class="h-6 w-6"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            *ngIf="!isMenuOpen"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M4 6h16M4 12h16M4 18h16"
-          />
-          <path
-            *ngIf="isMenuOpen"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
+        <i *ngIf="!isMenuOpen" class="bi bi-list text-2xl"></i>
+        <i *ngIf="isMenuOpen" class="bi bi-x text-2xl"></i>
       </button>
 
       <div class="hidden md:flex space-x-4 items-center">
@@ -46,7 +26,7 @@
           [routerLinkActiveOptions]="{ exact: true }"
           class="py-1.5 px-3 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
         >
-          Home
+          <i class="bi bi-house-door-fill"></i> Home
         </a>
         <a
           routerLink="explore"
@@ -86,7 +66,7 @@
         [routerLinkActiveOptions]="{ exact: true }"
         class="block px-2 py-1 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
       >
-        Home
+        <i class="bi bi-house-door-fill"></i> Home
       </a>
       <a
         routerLink="explore"
@@ -113,8 +93,4 @@
       </a>
     </div>
   </nav>
-
-  <div
-    class="mx-auto rounded w-full py-0.5 bg-lavender-light dark:bg-lavender"
-  ></div>
 </header>

@@ -25,7 +25,7 @@ export class AnimeDetailComponent implements OnInit {
       this.animeService.getAnimeById(id).subscribe(
         (data) => {
           this.anime = data;
-          this.title.setTitle(this.anime.title);
+          this.title.setTitle('AnimeHub | ' + this.anime.title);
         },
         (error) => {
           console.log(error);

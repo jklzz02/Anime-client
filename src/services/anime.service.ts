@@ -22,8 +22,14 @@ export class AnimeService {
     return this.http.get<Anime>(`${this.BASE}/${input}`);
   }
 
-  getAnimeByTitle(title: string): Observable<Anime[]> {
-    return this.http.get<Anime[]>(`${this.BASE}/title/${title}`);
+  getAnimeByTitle(
+    title: string,
+    page: number,
+    count: number
+  ): Observable<Anime[]> {
+    return this.http.get<Anime[]>(
+      `${this.BASE}/title/${title}?page=${page}&size=${count}`
+    );
   }
 
   getPaginatedAnime(page: number, count: number): Observable<PaginatedAnime> {

@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { AnimeSearchComponent } from './anime-search/anime-search.component';
+import { AboutComponent } from './about/about.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { AnimeSearchComponent } from './anime-search/anime-search.component';
     HomeComponent,
     HeaderComponent,
     AnimeSearchComponent,
+    AboutComponent,
+    FooterComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [provideHttpClient()],
