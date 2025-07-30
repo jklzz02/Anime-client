@@ -1,0 +1,89 @@
+<div
+  class="rounded-xl p-4 shadow hover:shadow-lg transition-shadow bg-mantle-light dark:bg-surface0"
+>
+  <a [routerLink]="'/detail/' + anime.id">
+    <div class="relative w-full rounded-lg overflow-hidden">
+      <img
+        class="w-full h-auto object-contain"
+        [src]="anime.image_url"
+        [alt]="anime.title"
+        [title]="anime.title"
+        (error)="anime.image_url = 'assets/placeholder.png'"
+      />
+      <div
+        class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 text-white"
+      >
+        <h2 class="text-xl font-semibold drop-shadow-lg">
+          {{ anime.title }}
+        </h2>
+        <p class="text-sm">
+          <span *ngIf="anime.score > 0" class="text-green font-bold">
+            Score: {{ anime.score }}
+          </span>
+          <span *ngIf="anime.score == 0" class="text-peach">
+            Not scored yet
+          </span>
+        </p>
+      </div>
+    </div>
+
+    <figcaption class="text-xs text-lavender px-4 py-2">
+      {{ anime.other_title }}
+    </figcaption>
+  </a>
+
+  <div
+    *ngIf="anime.type?.name?.toLowerCase() !== 'unknown'"
+    class="mt-1 text-xs text-subtext1"
+  >
+    {{ anime.type.name }}
+  </div>
+
+  <div *ngIf="fanFavourite || isNew || short">
+    <span
+      *ngIf="isNew"
+      class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-green-light dark:bg-green dark:text-crust"
+    >
+      new
+    </span>
+    <span
+      *ngIf="fanFavourite"
+      class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-green-light dark:bg-green dark:text-crust"
+    >
+      fan favourite
+    </span>
+    <span
+      *ngIf="short"
+      class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-green-light dark:bg-green dark:text-crust"
+    >
+      short
+    </span>
+  </div>
+
+  <div *ngIf="anime.genres" class="my-1">
+    <span
+      *ngFor="let genre of anime.genres"
+      class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-blue-light dark:bg-blue dark:text-crust"
+    >
+      {{ genre.name }}
+    </span>
+  </div>
+
+  <div *ngIf="anime.producers" class="my-1">
+    <span
+      *ngFor="let producer of anime.producers"
+      class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-lavender-light dark:bg-lavender dark:text-crust"
+    >
+      {{ producer.name }}
+    </span>
+  </div>
+
+  <div *ngIf="anime.licensors" class="my-1">
+    <span
+      *ngFor="let licensor of anime.licensors"
+      class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-peach-light dark:bg-peach dark:text-crust"
+    >
+      {{ licensor.name }}
+    </span>
+  </div>
+</div>

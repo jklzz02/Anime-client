@@ -1,0 +1,25 @@
+<div class="flex justify-center items-center mt-8 flex-col gap-2">
+  <div class="inline-flex rounded-md shadow-sm" role="group">
+    <button
+      (click)="previous.emit()"
+      class="font-semibold py-2 px-4 rounded-l bg-surface0-light dark:bg-surface0 hover:bg-surface0 hover:text-base-light dark:hover:bg-surface1 dark:text-text"
+    >
+      Prev
+    </button>
+    <button
+      (click)="next.emit()"
+      class="font-semibold py-2 px-4 rounded-r bg-surface0-light dark:bg-surface0 hover:bg-surface0 hover:text-base-light dark:hover:bg-surface1 dark:text-text"
+    >
+      Next
+    </button>
+  </div>
+  <p class="text-sm text-subtext0">
+    Page {{ currentPage }} of
+    <a
+      class="text-peach-light dark:text-peach hover:opacity-85"
+      routerLink="/{{ path }}/{{ totalPages }}"
+    >
+      {{ totalPages }}
+    </a>
+  </p>
+</div>
