@@ -2,53 +2,86 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PaginatedAnime } from '../../interfaces/paginated-anime';
 import { AnimeService } from '../../services/anime.service';
+import { AnimeSummary } from '../../interfaces/anime-summary';
+import levenshtein from 'js-levenshtein';
 
 @Component({
   selector: 'app-anime-search-results',
   standalone: false,
   templateUrl: './anime-search-results.component.html',
-  styleUrl: './anime-search-results.component.css',
+  styleUrls: ['./anime-search-results.component.css'],
 })
 export class AnimeSearchResultsComponent implements OnInit {
+  page: number = 1;
+  lastPage: number = 1;
+  query: string = '';
+  anime!: PaginatedAnime;
+  suggestions: AnimeSummary[] = [];
+
   constructor(
     private route: ActivatedRoute,
     private animeService: AnimeService
   ) {}
 
-  page: number = 1;
-  lastPage: number = 1;
-  query: string = '';
-  anime!: PaginatedAnime;
-
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((params) => {
-      this.query = params.get('title') ?? '';
+      const newQuery = params.get('title') ?? '';
+      if (this.query !== newQuery) {
+        this.page = 1;
+      }
+      this.query = newQuery;
       this.loadAnime(this.query, this.page);
     });
   }
 
-  loadAnime(query: string, page: number) {
-    this.animeService.getAnimeByTitle(query, page, 33).subscribe((data) => {
-      this.anime = data;
-      this.page = this.anime.page;
-      this.lastPage = data.total_pages;
+  loadAnime(query: string, page: number): void {
+    this.animeService.getAnimeByTitle(query, page, 33).subscribe({
+      next: (data) => {
+        this.anime = data;
+        this.page = data.page;
+        this.lastPage = data.total_pages;
+      },
+      error: (err) => {
+        if (err.status == 404) {
+          this.filterSuggestions(query);
+        }
+      },
+    });
+  }
+
+  private filterSuggestions(query: string): void {
+    this.animeService.getSummaries(2000).subscribe({
+      next: (data) => {
+        const filtered = data
+          .map((a) => ({
+            suggestion: a,
+            distance: levenshtein(a.title.toLowerCase(), query.toLowerCase()),
+          }))
+          .filter((r) => r.distance <= 3)
+          .sort((a, b) => a.distance - b.distance)
+          .slice(0, 5);
+
+        console.log(filtered, data);
+        this.suggestions = filtered.map((entry) => entry.suggestion);
+      },
+
+      error: (err) => console.log(err),
     });
   }
 
   nextPage(): void {
     this.page++;
-    if (this.page >= this.lastPage) {
+    if (this.page > this.lastPage) {
       this.page = 1;
     }
-
     this.loadAnime(this.query, this.page);
   }
+
   previousPage(): void {
     this.page--;
-    if (this.page <= 1) {
-      this.loadAnime(this.query, this.lastPage);
+    if (this.page < 1) {
+      this.page = this.lastPage;
     }
-
     this.loadAnime(this.query, this.page);
   }
 }
