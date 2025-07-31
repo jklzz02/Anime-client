@@ -1,7 +1,10 @@
 <div
   class="rounded-xl p-4 shadow hover:shadow-lg transition-shadow bg-mantle-light dark:bg-surface0"
 >
-  <a [routerLink]="'/detail/' + anime.id">
+  <a
+    [routerLink]="'/detail/' + anime.id"
+    class="hover:opacity-75 transition-opacity"
+  >
     <div class="relative w-full rounded-lg overflow-hidden">
       <img
         class="w-full h-auto object-contain"

@@ -16,6 +16,8 @@ import { AboutComponent } from './about/about.component';
 import { FooterComponent } from './footer/footer.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { AnimeCardComponent } from './anime-card/anime-card.component';
+import { AnimeSearchResultsComponent } from './anime-search-results/anime-search-results.component';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { AnimeCardComponent } from './anime-card/anime-card.component';
     FooterComponent,
     PaginationComponent,
     AnimeCardComponent,
+    AnimeSearchResultsComponent,
+    ErrorComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [provideHttpClient()],

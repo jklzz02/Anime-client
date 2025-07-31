@@ -31,9 +31,16 @@ export class AnimeComponent implements OnInit {
   }
 
   loadAnime() {
-    this.animeService
-      .getPaginatedAnime(this.page, 33)
-      .subscribe((data) => (this.anime = data));
+    this.animeService.getPaginatedAnime(this.page, 33).subscribe({
+      next: (data) => (this.anime = data),
+      error: (err) => {
+        if (err.status >= 500 || err.status == 0) {
+          this.router.navigate(['/error'], {
+            queryParams: { status: err.status },
+          });
+        }
+      },
+    });
   }
 
   nextPage() {

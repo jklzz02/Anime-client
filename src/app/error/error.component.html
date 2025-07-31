@@ -1,0 +1,29 @@
+<div
+  class="min-h-screen flex flex-col justify-center items-center text-center px-6 bg-base-light text-text-light dark:bg-base dark:text-text"
+>
+  <i
+    class="bi bi-database-fill-x text-9xl font-extrabold mb-6 select-none text-peach-light dark:text-peach"
+  >
+  </i>
+
+  <p class="text-2xl font-semibold mb-4 text-lavender-light dark:text-lavender">
+    Oops! Something Went Wrong.
+  </p>
+
+  <p class="max-w-lg mb-8 text-surface1-light dark:text-text">
+    It looks like we're running into some issues.
+    <ng-container *ngIf="statusCode != 0">
+      status code:
+      <strong class="text-lavender-light inline dark:text-lavender">
+        {{ statusCode }}
+      </strong>
+    </ng-container>
+  </p>
+
+  <a
+    routerLink="/home"
+    class="inline-block px-6 py-3 rounded-lg font-medium transition-colors duration-300 bg-blue-light hover:bg-lavender-light dark:bg-blue dark:hover:bg-lavender text-white"
+  >
+    Go Home
+  </a>
+</div>

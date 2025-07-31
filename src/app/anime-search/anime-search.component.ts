@@ -72,8 +72,6 @@ export class AnimeSearchComponent implements OnInit {
       return;
     }
 
-    this.animeService
-      .getAnimeByTitle(this.query, 1, 33)
-      .subscribe((data) => console.log(data));
+    this.router.navigate(['/search'], { queryParams: { title: this.query } });
   }
 }

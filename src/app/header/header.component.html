@@ -26,7 +26,7 @@
           [routerLinkActiveOptions]="{ exact: true }"
           class="py-1.5 px-3 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
         >
-          <i class="bi bi-house-door-fill"></i> Home
+          Home
         </a>
         <a
           routerLink="explore"
@@ -51,10 +51,19 @@
         >
           About
         </a>
-      </div>
 
-      <div class="hidden md:block flex-1 max-w-lg">
-        <app-anime-search></app-anime-search>
+        <div class="min-w-lg">
+          <app-anime-search></app-anime-search>
+        </div>
+
+        <select
+          class="hover:cursor-pointer px-4 py-2 shadow-sm rounded-md dark:bg-lavender/20"
+          [value]="currentTheme"
+          (change)="onThemeChange($event)"
+        >
+          <option class="dark:bg-lavender/20" value="light">Light mode</option>
+          <option value="dark">Dark mode</option>
+        </select>
       </div>
     </div>
 
@@ -66,7 +75,7 @@
         [routerLinkActiveOptions]="{ exact: true }"
         class="block px-2 py-1 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
       >
-        <i class="bi bi-house-door-fill"></i> Home
+        Home
       </a>
       <a
         routerLink="explore"

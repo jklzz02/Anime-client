@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AnimeService } from '../../services/anime.service';
 import { Anime } from '../../interfaces/anime';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +11,11 @@ import { Title } from '@angular/platform-browser';
   styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
-  constructor(private animeService: AnimeService, private title: Title) {}
+  constructor(
+    private animeService: AnimeService,
+    private title: Title,
+    private router: Router
+  ) {}
 
   recentAnime: Anime[] = [];
   loadCount: number = 33;
@@ -26,8 +31,15 @@ export class HomeComponent implements OnInit {
   }
 
   private loadRecentAnime(count: number) {
-    this.animeService
-      .getRecent(count)
-      .subscribe((data) => (this.recentAnime = data));
+    this.animeService.getRecent(count).subscribe({
+      next: (data) => (this.recentAnime = data),
+      error: (err) => {
+        if (err.status >= 500 || err.status == 0) {
+          this.router.navigate(['/error'], {
+            queryParams: { status: err.status },
+          });
+        }
+      },
+    });
   }
 }

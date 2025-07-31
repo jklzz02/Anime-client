@@ -1,0 +1,20 @@
+<div *ngIf="anime" class="w-full max-w-screen-xl mx-auto my-8">
+  <div
+    class="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 my-4"
+  >
+    <ng-container *ngFor="let item of anime.data">
+      <app-anime-card [anime]="item"></app-anime-card>
+    </ng-container>
+  </div>
+
+  <ng-container *ngIf="anime.total_pages > 1">
+    <app-pagination
+      [currentPage]="page"
+      [totalPages]="anime.total_pages"
+      [path]="'explore'"
+      (next)="nextPage()"
+      (previous)="previousPage()"
+    >
+    </app-pagination>
+  </ng-container>
+</div>
