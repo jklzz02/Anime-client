@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(private themeService: ThemeService) {}
 
   ngOnInit(): void {
+    this.currentTheme = this.themeService.currentTheme;
     this.themeSub = this.themeService.theme$.subscribe((theme) => {
       this.currentTheme = theme;
       document.documentElement.setAttribute('data-theme', theme);
@@ -23,10 +24,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   isMenuOpen: boolean = false;
 
-  public onThemeChange(event: Event): void {
-    console.log('called');
-    const selectedTheme = (event.target as HTMLSelectElement).value as Theme;
-    this.themeService.setTheme(selectedTheme);
+  public onThemeToggle(): void {
+    const theme: Theme = this.currentTheme == 'light' ? 'dark' : 'light';
+    this.themeService.setTheme(theme);
   }
 
   ngOnDestroy(): void {

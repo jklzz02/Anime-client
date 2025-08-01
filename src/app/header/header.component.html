@@ -1,8 +1,8 @@
 <header
   class="bg-mantle-light text-text-light dark:bg-mantle dark:text-text shadow-sm sticky top-0 z-50 rounded-md w-full"
 >
-  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-    <div class="flex flex-wrap items-center justify-between gap-3">
+  <nav class="px-4 sm:px-6 lg:px-8 py-3">
+    <div class="flex items-center justify-start gap-3 relative">
       <a
         routerLink="/"
         class="text-xl font-bold text-lavender-light dark:text-lavender hover:opacity-85"
@@ -15,8 +15,8 @@
         class="md:hidden inline-flex items-center justify-center p-2 rounded hover:bg-surface1-light dark:hover:bg-surface1 focus:outline-none"
         aria-label="Toggle menu"
       >
-        <i *ngIf="!isMenuOpen" class="bi bi-list text-2xl"></i>
-        <i *ngIf="isMenuOpen" class="bi bi-x text-2xl"></i>
+        <i *ngIf="!isMenuOpen" class="absolute bi bi-list text-2xl end-2"></i>
+        <i *ngIf="isMenuOpen" class="absolute bi bi-x text-2xl end-2"></i>
       </button>
 
       <div class="hidden md:flex space-x-4 items-center">
@@ -51,19 +51,16 @@
         >
           About
         </a>
-
-        <div class="min-w-lg">
-          <app-anime-search></app-anime-search>
-        </div>
-
-        <select
-          class="hover:cursor-pointer px-4 py-2 shadow-sm rounded-md dark:bg-lavender/20"
-          [value]="currentTheme"
-          (change)="onThemeChange($event)"
+      </div>
+      <div class="hidden md:flex items-center justify-end w-full">
+        <button
+          class="flex items-center justify-center px-3 py-2 rounded shadow-md aspect-square transition bg-lavender-light/20 dark:bg-lavender/20 hover:opacity-75 hover:cursor-pointer"
+          (click)="onThemeToggle()"
         >
-          <option class="dark:bg-lavender/20" value="light">Light mode</option>
-          <option value="dark">Dark mode</option>
-        </select>
+          <i *ngIf="currentTheme == 'dark'" class="bi bi-sun text-2xl"></i>
+          <i *ngIf="currentTheme == 'light'" class="bi bi-moon text-2xl"></i>
+        </button>
+        <app-anime-search class="lg:min-w-lg"></app-anime-search>
       </div>
     </div>
 
