@@ -11,15 +11,23 @@
       </a>
 
       <button
+        class="absolute end-10 px-2 py-1 rounded-full shadow-md transition bg-lavender-light/20 dark:bg-lavender/20 hover:opacity-75 hover:cursor-pointer"
+        (click)="onThemeToggle()"
+      >
+        <i *ngIf="currentTheme == 'dark'" class="bi bi-sun"></i>
+        <i *ngIf="currentTheme == 'light'" class="bi bi-moon"></i>
+      </button>
+
+      <button
         (click)="isMenuOpen = !isMenuOpen"
-        class="md:hidden inline-flex items-center justify-center p-2 rounded hover:bg-surface1-light dark:hover:bg-surface1 focus:outline-none"
+        class="lg:hidden inline-flex items-center justify-center p-2 rounded hover:bg-surface1-light dark:hover:bg-surface1"
         aria-label="Toggle menu"
       >
         <i *ngIf="!isMenuOpen" class="absolute bi bi-list text-2xl end-2"></i>
         <i *ngIf="isMenuOpen" class="absolute bi bi-x text-2xl end-2"></i>
       </button>
 
-      <div class="hidden md:flex space-x-4 items-center">
+      <div class="hidden lg:flex space-x-4 items-center">
         <a
           routerLink="home"
           routerLinkActive="bg-blue-light text-white dark:bg-blue dark:text-white"
@@ -52,9 +60,9 @@
           About
         </a>
       </div>
-      <div class="hidden md:flex items-center justify-end w-full">
+      <div class="hidden lg:flex items-center justify-end w-full">
         <button
-          class="flex items-center justify-center px-3 py-2 rounded shadow-md aspect-square transition bg-lavender-light/20 dark:bg-lavender/20 hover:opacity-75 hover:cursor-pointer"
+          class="flex items-center justify-center px-3 py-2 rounded-full shadow-md aspect-square transition bg-lavender-light/20 dark:bg-lavender/20 hover:opacity-75 hover:cursor-pointer"
           (click)="onThemeToggle()"
         >
           <i *ngIf="currentTheme == 'dark'" class="bi bi-sun text-2xl"></i>
@@ -64,7 +72,7 @@
       </div>
     </div>
 
-    <div *ngIf="isMenuOpen" class="mt-4 flex flex-col space-y-2 md:hidden">
+    <div *ngIf="isMenuOpen" class="mt-4 flex flex-col space-y-2 lg:hidden">
       <app-anime-search class="w-full mb-2"></app-anime-search>
       <a
         routerLink="home"
