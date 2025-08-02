@@ -1,14 +1,16 @@
 <a
-  class="flex flex-col items-center bg-mantle-light dark:bg-lavender/10 rounded-xl shadow-md hover:scale-105 hover:shadow-lg transition p-4 text-center"
+  class="flex flex-col h-75 items-center rounded-xl bg-mantle-light dark:bg-mantle shadow-md hover:scale-105 hover:shadow-lg transition p-4 text-center"
   [routerLink]="['/detail', summary.id]"
 >
   <img
     [src]="summary.image_url"
     [alt]="summary.title"
     (error)="summary.image_url = 'assets/placeholder.png'"
-    class="w-34 h-48 object-cover rounded-md mb-3"
+    class="w-34 max-h-1/2 object-cover rounded-md mb-3"
   />
-  <span class="text-lg text-text-light dark:text-text">
+  <span
+    class="text-md max-w-4/5 max-h-1/5 text-text-light dark:text-text overflow-hidden whitespace-nowrap text-ellipsis"
+  >
     {{ summary.title }}
   </span>
   <span
@@ -30,5 +32,5 @@
     {{ summary.score }}
   </span>
   <p>{{ summary.release_year }}</p>
-  <p>{{ summary.rating }}</p>
+  <p class="text-sm">{{ summary.rating }}</p>
 </a>

@@ -143,20 +143,15 @@
   </div>
 </div>
 
-<div *ngIf="relatedSummaries.length" class="block md:hidden space-y-4">
-  <app-anime-summary-card
-    *ngFor="let summary of relatedSummaries"
-    [summary]="summary"
-  ></app-anime-summary-card>
-</div>
-
 <div
   *ngIf="relatedSummaries.length"
-  class="hidden md:block relative max-w-6xl mx-auto px-9 my-12"
+  class="relative max-w-6xl mx-auto px-9 my-6"
 >
+  <h3 class="px-3 text-lg text-text-light dark:text-text">You may also like</h3>
+
   <div
     #carousel
-    class="flex space-x-4 overflow-x-auto overflow-y-visible scroll-smooth snap-x snap-mandatory min-h-100 items-center"
+    class="flex space-x-4 overflow-x-auto overflow-y-visible scroll-smooth snap-x snap-mandatory min-h-90 items-center"
   >
     <app-anime-summary-card
       *ngFor="let summary of relatedSummaries"
