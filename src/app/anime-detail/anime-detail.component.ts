@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AnimeService } from '../../services/anime.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Anime } from '../../interfaces/anime';
+import { AnimeSummary } from '../../interfaces/anime-summary';
 
 @Component({
   selector: 'app-anime-detail',
@@ -12,6 +13,7 @@ import { Anime } from '../../interfaces/anime';
 })
 export class AnimeDetailComponent implements OnInit {
   anime: Anime | any;
+  relatedSummaries: AnimeSummary[] = [];
 
   constructor(
     private title: Title,
@@ -32,6 +34,22 @@ export class AnimeDetailComponent implements OnInit {
           this.router.navigateByUrl('not-found');
         }
       );
+
+      this.animeService
+        .getRelatedSummaries(id, 10)
+        .subscribe((data) => (this.relatedSummaries = data));
+    });
+  }
+
+  @ViewChild('carousel') carousel!: ElementRef<HTMLDivElement>;
+
+  scrollCarousel(direction: number) {
+    const container = this.carousel.nativeElement;
+    const scrollAmount = container.offsetWidth / 2;
+
+    container.scrollBy({
+      left: direction * scrollAmount,
+      behavior: 'smooth',
     });
   }
 }

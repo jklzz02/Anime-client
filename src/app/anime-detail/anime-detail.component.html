@@ -142,3 +142,42 @@
     </aside>
   </div>
 </div>
+
+<div *ngIf="relatedSummaries.length" class="block md:hidden space-y-4">
+  <app-anime-summary-card
+    *ngFor="let summary of relatedSummaries"
+    [summary]="summary"
+  ></app-anime-summary-card>
+</div>
+
+<div
+  *ngIf="relatedSummaries.length"
+  class="hidden md:block relative max-w-6xl mx-auto px-9 my-12"
+>
+  <div
+    #carousel
+    class="flex space-x-4 overflow-x-auto overflow-y-visible scroll-smooth snap-x snap-mandatory min-h-100 items-center"
+  >
+    <app-anime-summary-card
+      *ngFor="let summary of relatedSummaries"
+      [summary]="summary"
+      class="flex-shrink-0 w-72 snap-center relative transition-transform duration-300 hover:scale-105 hover:z-10"
+      style="transform-origin: center bottom"
+    ></app-anime-summary-card>
+  </div>
+
+  <button
+    (click)="scrollCarousel(-1)"
+    class="absolute left-0 top-1/2 -translate-y-1/2 bg-mantle-light dark:bg-mantle hover:opacity-70 rounded-full py-2 px-3 shadow"
+    aria-label="Scroll left"
+  >
+    <i class="text-text-light dark:text-text bi bi-arrow-left"></i>
+  </button>
+  <button
+    (click)="scrollCarousel(1)"
+    class="absolute right-0 top-1/2 -translate-y-1/2 bg-mantle-light dark:bg-mantle hover:opacity-70 rounded-full py-2 px-3 shadow"
+    aria-label="Scroll right"
+  >
+    <i class="text-text-light dark:text-text bi bi-arrow-right"></i>
+  </button>
+</div>
