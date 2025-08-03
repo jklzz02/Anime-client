@@ -13,6 +13,8 @@ import { Title } from '@angular/platform-browser';
 export class AnimeComponent implements OnInit {
   anime: PaginatedAnime | any;
   page: number = 1;
+  count: number = 33;
+  counter: number[] = Array(33);
 
   constructor(
     private title: Title,
@@ -31,7 +33,7 @@ export class AnimeComponent implements OnInit {
   }
 
   loadAnime() {
-    this.animeService.getPaginatedAnime(this.page, 33).subscribe({
+    this.animeService.getPaginatedAnime(this.page, this.count).subscribe({
       next: (data) => (this.anime = data),
       error: (err) => {
         if (err.status >= 500 || err.status == 0) {

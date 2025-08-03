@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
 
   recentAnime: Anime[] = [];
   loadCount: number = 33;
+  counter: number[] = Array(this.loadCount);
 
   ngOnInit(): void {
     this.loadRecentAnime(this.loadCount);

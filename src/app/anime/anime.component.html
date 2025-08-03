@@ -16,3 +16,22 @@
   >
   </app-pagination>
 </div>
+
+<div *ngIf="!anime" class="w-full max-w-screen-xl mx-auto my-8">
+  <div
+    class="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 my-8 min-h-full"
+  >
+    <div
+      *ngFor="let i of counter"
+      class="bg-mantle-light dark:bg-surface0 p-4 min-h-100 lg:h-210 rounded-xl shadow"
+    >
+      <div
+        class="bg-surface1-light dark:bg-surface1 h-3/5 flex justify-center items-center"
+      >
+        <i
+          class="bi bi-file-earmark-image text-3xl text-text-light dark:text-text"
+        ></i>
+      </div>
+    </div>
+  </div>
+</div>

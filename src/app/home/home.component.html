@@ -22,7 +22,10 @@
   class="w-full py-16 px-6 bg-mantle-light text-text-light dark:bg-mantle dark:text-text"
 >
   <div class="max-w-7xl mx-auto">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+    <div
+      *ngIf="recentAnime"
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"
+    >
       <ng-container *ngFor="let anime of recentAnime">
         <div
           class="bg-mantle-light dark:bg-surface0 hover:scale-105 transition-transform rounded-lg overflow-hidden shadow-sm hover:shadow-md duration-300"
@@ -48,6 +51,19 @@
           </div>
         </div>
       </ng-container>
+    </div>
+    <div
+      *ngIf="!recentAnime.length"
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"
+    >
+      <div
+        *ngFor="let i of counter"
+        class="animate-pulse bg-surface0-light dark:bg-surface0 rounded-lg overflow-hidden shadow-sm p-4"
+      >
+        <div class="bg-overlay h-48 w-full mb-4 rounded"></div>
+        <div class="h-4 bg-overlay mb-2 rounded w-3/4"></div>
+        <div class="h-3 bg-overlay rounded w-full"></div>
+      </div>
     </div>
   </div>
   <div class="text-center mx-auto">
