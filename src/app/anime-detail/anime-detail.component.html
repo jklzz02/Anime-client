@@ -1,4 +1,4 @@
-<div class="max-w-4xl mx-auto px-4 py-8">
+<div *ngIf="anime" class="max-w-4xl mx-auto px-4 py-8">
   <div class="relative rounded-xl overflow-hidden mb-8">
     <img
       *ngIf="anime.trailer_image_url"
@@ -58,7 +58,6 @@
           </div>
         </div>
       </section>
-
       <section
         *ngIf="anime.trailer_embed_url"
         class="rounded-lg bg-white dark:bg-crust p-6 shadow-sm"
