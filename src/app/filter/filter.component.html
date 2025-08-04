@@ -1,0 +1,91 @@
+<!-- Backdrop -->
+<div
+  *ngIf="isOpen"
+  class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm flex items-center justify-center"
+>
+  <div
+    class="w-full max-w-md mx-auto bg-mantle-light dark:bg-mantle rounded-xl shadow-2xl p-6 z-50 relative"
+  >
+    <button
+      (click)="isOpen = false"
+      class="absolute top-3 right-3 text-text-light dark:text-text hover:text-peach-light dark:hover:text-peach"
+      aria-label="Close"
+    >
+      <i class="text-2xl bi bi-x"></i>
+    </button>
+
+    <h2 class="text-xl font-bold text-text-light dark:text-text mb-4">
+      Filter Anime
+    </h2>
+
+    <div class="space-y-4 grid grid-cols-2 gap-2">
+      <select
+        name="genre"
+        id="genre"
+        class="w-full rounded-md bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-3 py-2"
+      >
+        <option *ngFor="let genre of genres" [value]="genre.id">
+          {{ genre.name }}
+        </option>
+      </select>
+
+      <select
+        name="licensor"
+        id="licensor"
+        class="w-full rounded-md bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-3 py-2"
+      >
+        <option *ngFor="let licensor of licensors" [value]="licensor.id">
+          {{ licensor.name }}
+        </option>
+      </select>
+
+      <select
+        name="producer"
+        id="producer"
+        class="w-full rounded-md bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-3 py-2"
+      >
+        <option *ngFor="let producer of producers" [value]="producer.id">
+          {{ producer.name }}
+        </option>
+      </select>
+
+      <select
+        name="type"
+        id="type"
+        class="w-full rounded-md bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-3 py-2"
+      >
+        <option *ngFor="let type of types" [value]="type.id">
+          {{ type.name }}
+        </option>
+      </select>
+
+      <select
+        name="source"
+        id="source"
+        class="w-full rounded-md bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-3 py-2"
+      >
+        <option *ngFor="let source of sources" [value]="source.id">
+          {{ source.name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="mt-6 text-center">
+      <button
+        (click)="applyFilters()"
+        class="bg-blue-light dark:bg-blue text-white font-semibold px-4 py-2 rounded-md hover:bg-blue dark:hover:bg-blue/90 transition"
+      >
+        Apply Filters
+      </button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!isOpen" class="mx-auto text-center">
+  <button
+    class="px-3 py-2 shadow rounded-full bg-surface0-light dark:bg-lavender text-text-light dark:text-text hover:opacity-75"
+    (click)="toggleMenu()"
+  >
+    <i class="text-2xl bi bi-filter"></i>
+  </button>
+</div>

@@ -19,6 +19,7 @@ import { AnimeCardComponent } from './anime-card/anime-card.component';
 import { AnimeSearchResultsComponent } from './anime-search-results/anime-search-results.component';
 import { ErrorComponent } from './error/error.component';
 import { AnimeSummaryCardComponent } from './anime-summary-card/anime-summary-card.component';
+import { FilterComponent } from './filter/filter.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { AnimeSummaryCardComponent } from './anime-summary-card/anime-summary-ca
     AnimeSearchResultsComponent,
     ErrorComponent,
     AnimeSummaryCardComponent,
+    FilterComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [provideHttpClient()],

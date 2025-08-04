@@ -1,4 +1,4 @@
-<div *ngIf="anime" class="w-full max-w-screen-xl mx-auto my-8">
+<div *ngIf="anime" class="w-full max-w-screen-xl mx-auto my-8 relative">
   <div
     class="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3"
   >
@@ -8,6 +8,7 @@
   </div>
 
   <app-pagination
+    class="mb-3"
     [currentPage]="page"
     [totalPages]="anime.total_pages"
     [path]="'explore'"
@@ -15,6 +16,8 @@
     (previous)="previousPage()"
   >
   </app-pagination>
+
+  <app-filter class="sticky bottom-1 z-30"></app-filter>
 </div>
 
 <div *ngIf="!anime" class="w-full max-w-screen-xl mx-auto my-8">
