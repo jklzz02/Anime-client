@@ -17,6 +17,7 @@ export class AnimeSearchResultsComponent implements OnInit {
   query: string = '';
   anime!: PaginatedAnime;
   suggestions: AnimeSummary[] = [];
+  notFound: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -27,6 +28,7 @@ export class AnimeSearchResultsComponent implements OnInit {
     this.route.queryParamMap.subscribe((params) => {
       const newQuery = params.get('title') ?? '';
       if (this.query !== newQuery) {
+        this.query = newQuery;
         this.page = 1;
       }
       this.query = newQuery;
@@ -35,6 +37,8 @@ export class AnimeSearchResultsComponent implements OnInit {
   }
 
   loadAnime(query: string, page: number): void {
+    this.notFound = false;
+
     this.animeService.getAnimeByTitle(query, page, 33).subscribe({
       next: (data) => {
         this.anime = data;
@@ -44,6 +48,7 @@ export class AnimeSearchResultsComponent implements OnInit {
       error: (err) => {
         if (err.status == 404) {
           this.filterSuggestions(query);
+          this.notFound = true;
         }
       },
     });
