@@ -27,7 +27,7 @@ export class AnimeComponent implements OnInit {
     this.route.paramMap.subscribe((param) => {
       const paramPage = Number(param.get('page'));
       this.page = !Number.isNaN(paramPage) && paramPage > 0 ? paramPage : 1;
-      this.title.setTitle('AnimeHub | Explore ' + this.page);
+      this.title.setTitle('AnimeHub | Explore');
       this.loadAnime();
     });
   }

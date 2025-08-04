@@ -39,3 +39,14 @@
     </div>
   </ng-container>
 </div>
+
+<div *ngIf="!notFound && !anime" class="w-full max-w-screen-xl mx-auto my-8">
+  <div
+    class="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 my-8 min-h-full"
+  >
+    <div
+      *ngFor="let i of counter"
+      class="animate-pulse bg-mantle-light dark:bg-surface0 p-4 min-h-100 lg:h-210 rounded-xl shadow"
+    ></div>
+  </div>
+</div>

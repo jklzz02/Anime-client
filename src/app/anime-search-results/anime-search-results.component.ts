@@ -14,8 +14,10 @@ import levenshtein from 'js-levenshtein';
 export class AnimeSearchResultsComponent implements OnInit {
   page: number = 1;
   lastPage: number = 1;
+  count: number = 33;
+  counter: number[] = Array(this.count);
   query: string = '';
-  anime!: PaginatedAnime;
+  anime!: PaginatedAnime | null;
   suggestions: AnimeSummary[] = [];
   notFound: boolean = false;
 
@@ -30,16 +32,17 @@ export class AnimeSearchResultsComponent implements OnInit {
       if (this.query !== newQuery) {
         this.query = newQuery;
         this.page = 1;
+        this.anime = null;
       }
       this.query = newQuery;
-      this.loadAnime(this.query, this.page);
+      this.loadAnime(this.query, this.page, this.count);
     });
   }
 
-  loadAnime(query: string, page: number): void {
+  loadAnime(query: string, page: number, count: number): void {
     this.notFound = false;
 
-    this.animeService.getAnimeByTitle(query, page, 33).subscribe({
+    this.animeService.getAnimeByTitle(query, page, count).subscribe({
       next: (data) => {
         this.anime = data;
         this.page = data.page;
@@ -79,7 +82,7 @@ export class AnimeSearchResultsComponent implements OnInit {
     if (this.page > this.lastPage) {
       this.page = 1;
     }
-    this.loadAnime(this.query, this.page);
+    this.loadAnime(this.query, this.page, this.count);
   }
 
   previousPage(): void {
@@ -87,6 +90,6 @@ export class AnimeSearchResultsComponent implements OnInit {
     if (this.page < 1) {
       this.page = this.lastPage;
     }
-    this.loadAnime(this.query, this.page);
+    this.loadAnime(this.query, this.page, this.count);
   }
 }
