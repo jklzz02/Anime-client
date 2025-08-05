@@ -19,7 +19,10 @@ export class HomeComponent implements OnInit {
 
   recentAnime: Anime[] = [];
   loadCount: number = 33;
+  stepCount: number = 6;
   counter: number[] = Array(this.loadCount);
+  stepCounter: number[] = Array(this.stepCount);
+  loading: boolean = false;
 
   ngOnInit(): void {
     this.loadRecentAnime(this.loadCount);
@@ -27,11 +30,13 @@ export class HomeComponent implements OnInit {
   }
 
   public loadMore() {
-    this.loadCount += 6;
+    this.loadCount += this.stepCount;
     this.loadRecentAnime(this.loadCount);
   }
 
   private loadRecentAnime(count: number) {
+    this.loading = true;
+
     this.animeService.getRecent(count).subscribe({
       next: (data) => (this.recentAnime = data),
       error: (err) => {
@@ -41,6 +46,7 @@ export class HomeComponent implements OnInit {
           });
         }
       },
+      complete: () => (this.loading = false),
     });
   }
 }

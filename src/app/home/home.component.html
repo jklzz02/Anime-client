@@ -51,6 +51,16 @@
           </div>
         </div>
       </ng-container>
+      <ng-container *ngIf="loading">
+        <div
+          *ngFor="let i of stepCounter"
+          class="animate-pulse bg-surface0-light dark:bg-surface0 rounded-lg overflow-hidden shadow-sm p-4"
+        >
+          <div class="bg-overlay h-48 w-full mb-4 rounded"></div>
+          <div class="h-4 bg-overlay mb-2 rounded w-3/4"></div>
+          <div class="h-3 bg-overlay rounded w-full"></div>
+        </div>
+      </ng-container>
     </div>
     <div
       *ngIf="!recentAnime.length"
