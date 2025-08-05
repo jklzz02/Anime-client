@@ -24,16 +24,16 @@ export class AnimeDetailComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe((param) => {
       const id: number = Number(param.get('id'));
-      this.animeService.getAnimeById(id).subscribe(
-        (data) => {
+      this.animeService.getAnimeById(id).subscribe({
+        next: (data) => {
           this.anime = data;
           this.title.setTitle('AnimeHub | ' + this.anime.title);
         },
-        (error) => {
+        error: (error) => {
           console.log(error);
           this.router.navigateByUrl('not-found');
-        }
-      );
+        },
+      });
 
       this.animeService
         .getRelatedSummaries(id, 10)
