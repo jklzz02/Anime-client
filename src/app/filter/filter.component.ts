@@ -11,6 +11,9 @@ import {
   Type,
 } from '../../interfaces/anime';
 import { LicensorService } from '../../services/licensor.service';
+import { AnimeSearchParameters } from '../../interfaces/anime-search-parameters';
+import { AnimeService } from '../../services/anime.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-filter',
@@ -26,12 +29,26 @@ export class FilterComponent implements OnInit {
   sources: Source[] = [];
   isOpen: boolean = false;
 
+  filter: AnimeSearchParameters = {
+    producer_id: null,
+    licensor_id: null,
+    genreId: null,
+    type: null,
+    source: null,
+    min_score: null,
+    min_release_year: null,
+    episodes: null,
+    include_adult_content: false,
+  };
+
   constructor(
+    private animeService: AnimeService,
     private genreService: GenreService,
     private producerService: ProducerService,
     private licensorService: LicensorService,
     private typeService: TypeService,
-    private sourceService: SourceService
+    private sourceService: SourceService,
+    private router: Router
   ) {}
   ngOnInit(): void {
     this.genreService.getGenres().subscribe((data) => (this.genres = data));
@@ -51,7 +68,19 @@ export class FilterComponent implements OnInit {
 
   toggleMenu(): void {
     this.isOpen = !this.isOpen;
+    const header = document.querySelector('header');
+
+    if (header?.classList.contains('hidden')) {
+      header.classList.remove('hidden');
+    } else {
+      header?.classList.add('hidden');
+    }
   }
 
-  applyFilters(): void {}
+  applyFilters(): void {
+    this.toggleMenu();
+    this.router.navigateByUrl(
+      '/search' + this.animeService.buildQuery(this.filter)
+    );
+  }
 }

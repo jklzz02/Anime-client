@@ -1,12 +1,15 @@
 <div
   *ngIf="isOpen"
-  class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm flex items-center justify-center"
+  class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center"
 >
-  <div
+  <form
+    (ngSubmit)="applyFilters()"
+    #filterForm="ngForm"
     class="w-full max-w-md mx-auto bg-mantle-light dark:bg-mantle rounded-xl shadow-2xl p-6 z-50 relative"
   >
     <button
-      (click)="isOpen = false"
+      type="button"
+      (click)="toggleMenu()"
       class="absolute top-3 right-3 text-text-light dark:text-text hover:text-peach-light dark:hover:text-peach"
       aria-label="Close"
     >
@@ -17,10 +20,10 @@
       Filter Anime
     </h2>
 
-    <div class="space-y-4 grid grid-cols-2 gap-2">
+    <div class="space-y-4 grid grid-cols-1 gap-2">
       <select
-        name="genre"
-        id="genre"
+        name="genreId"
+        [(ngModel)]="filter.genreId"
         class="w-full rounded-md bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-3 py-2"
       >
         <option *ngFor="let genre of genres" [value]="genre.id">
@@ -29,8 +32,8 @@
       </select>
 
       <select
-        name="licensor"
-        id="licensor"
+        name="licensor_id"
+        [(ngModel)]="filter.licensor_id"
         class="w-full rounded-md bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-3 py-2"
       >
         <option *ngFor="let licensor of licensors" [value]="licensor.id">
@@ -39,8 +42,8 @@
       </select>
 
       <select
-        name="producer"
-        id="producer"
+        name="producer_id"
+        [(ngModel)]="filter.producer_id"
         class="w-full rounded-md bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-3 py-2"
       >
         <option *ngFor="let producer of producers" [value]="producer.id">
@@ -50,34 +53,80 @@
 
       <select
         name="type"
-        id="type"
+        [(ngModel)]="filter.type"
         class="w-full rounded-md bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-3 py-2"
       >
-        <option *ngFor="let type of types" [value]="type.id">
+        <option *ngFor="let type of types" [value]="type.name">
           {{ type.name }}
         </option>
       </select>
 
       <select
         name="source"
-        id="source"
+        [(ngModel)]="filter.source"
         class="w-full rounded-md bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-3 py-2"
       >
-        <option *ngFor="let source of sources" [value]="source.id">
+        <option *ngFor="let source of sources" [value]="source.name">
           {{ source.name }}
         </option>
       </select>
+
+      <input
+        type="number"
+        name="min_score"
+        [(ngModel)]="filter.min_score"
+        placeholder="minimum score..."
+        class="w-full rounded-md bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-3 py-2"
+      />
+
+      <input
+        type="number"
+        name="min_release_year"
+        [(ngModel)]="filter.min_release_year"
+        placeholder="minimum release year..."
+        class="w-full rounded-md bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-3 py-2"
+      />
+
+      <input
+        type="number"
+        name="episodes"
+        [(ngModel)]="filter.episodes"
+        placeholder="episodes count..."
+        class="w-full rounded-md bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-3 py-2"
+      />
+
+      <div class="flex items-center gap-4">
+        <label class="flex items-center gap-2">
+          <input
+            type="radio"
+            name="include_adult_content"
+            [value]="true"
+            [(ngModel)]="filter.include_adult_content"
+          />
+          <span class="text-text-light dark:text-text">Adult</span>
+        </label>
+
+        <label class="flex items-center gap-2">
+          <input
+            type="radio"
+            name="include_adult_content"
+            [value]="false"
+            [(ngModel)]="filter.include_adult_content"
+          />
+          <span class="text-text-light dark:text-text">Non-Adult</span>
+        </label>
+      </div>
     </div>
 
     <div class="mt-6 text-center">
       <button
-        (click)="applyFilters()"
+        type="submit"
         class="bg-blue-light dark:bg-blue text-white font-semibold px-4 py-2 rounded-md hover:bg-blue dark:hover:bg-blue/90 transition"
       >
         Apply Filters
       </button>
     </div>
-  </div>
+  </form>
 </div>
 
 <div *ngIf="!isOpen" class="mx-auto text-center">

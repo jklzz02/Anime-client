@@ -19,6 +19,4 @@ export interface AnimeSearchParameters {
   min_release_year?: number | null;
   max_release_year?: number | null;
   include_adult_content?: boolean;
-  page?: number | null;
-  size?: number | null;
 }

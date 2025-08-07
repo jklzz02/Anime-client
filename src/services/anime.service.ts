@@ -58,6 +58,19 @@ export class AnimeService {
     page: number,
     count: number
   ): Observable<PaginatedAnime> {
+    const request =
+      this.BASE +
+      '/search' +
+      this.buildQuery(parameters) +
+      '&page=' +
+      page +
+      '&size=' +
+      count;
+
+    return this.http.get<PaginatedAnime>(request);
+  }
+
+  buildQuery(parameters: AnimeSearchParameters): string {
     const params: string[] = [];
 
     Object.entries(parameters).forEach(([key, value]) => {
@@ -66,11 +79,6 @@ export class AnimeService {
       }
     });
 
-    const query: string = params.length ? '?' + params.join('&') : '';
-
-    const request =
-      this.BASE + '/search' + query + '&page=' + page + '&size=' + count;
-
-    return this.http.get<PaginatedAnime>(request);
+    return params.length ? '?' + params.join('&') : '';
   }
 }
