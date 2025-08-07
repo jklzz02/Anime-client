@@ -113,13 +113,20 @@
       </div>
     </div>
 
-    <div class="mt-6 text-center">
+    <div class="flex gap-2 mt-6 items-center justify-center">
       <button
         type="submit"
-        class="bg-blue-light dark:bg-blue text-white font-semibold px-4 py-2 rounded-md hover:bg-blue dark:hover:bg-blue/90 transition"
+        class="bg-blue-light dark:bg-blue text-white font-semibold px-4 py-2 rounded-md hover:cursor-pointer hover:bg-blue dark:hover:bg-blue/90 transition"
       >
         Apply Filters
       </button>
+
+      <span
+        (click)="clearFilters()"
+        class="bg-blue-light dark:bg-blue text-white font-semibold px-4 py-2 rounded-md hover:cursor-pointer hover:bg-blue dark:hover:bg-blue/90 transition"
+      >
+        Reset Filters
+      </span>
     </div>
   </form>
 </div>

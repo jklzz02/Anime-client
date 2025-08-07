@@ -12,7 +12,8 @@ import {
 } from '../../interfaces/anime';
 import { LicensorService } from '../../services/licensor.service';
 import { AnimeSearchParameters } from '../../interfaces/anime-search-parameters';
-import { Params, Router } from '@angular/router';
+import { NavigationEnd, Params, Router } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-filter',
@@ -49,6 +50,17 @@ export class FilterComponent implements OnInit {
     private router: Router
   ) {}
   ngOnInit(): void {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.isOpen = false;
+        const header = document.querySelector('header');
+
+        if (header?.classList.contains('hidden')) {
+          header.classList.remove('hidden');
+        }
+      });
+
     this.genreService.getGenres().subscribe((data) => (this.genres = data));
 
     this.producerService
@@ -76,7 +88,13 @@ export class FilterComponent implements OnInit {
   }
 
   applyFilters(): void {
-    this.toggleMenu();
+    this.router.navigate(['/search'], {
+      queryParams: { ...this.filter } as Params,
+    });
+  }
+
+  clearFilters(): void {
+    this.filter = { title: this.filter.title };
     this.router.navigate(['/search'], {
       queryParams: { ...this.filter } as Params,
     });
