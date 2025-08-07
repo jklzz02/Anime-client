@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpUrlEncodingCodec } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 import { Anime } from '../interfaces/anime';
 import { PaginatedAnime } from '../interfaces/paginated-anime';
 import { AnimeSummary } from '../interfaces/anime-summary';
+import { AnimeSearchParameters } from '../interfaces/anime-search-parameters';
 
 @Injectable({
   providedIn: 'root',
@@ -50,5 +51,26 @@ export class AnimeService {
     return this.http.get<AnimeSummary[]>(
       `${this.BASE}/related?id=${id}&count=${count}`
     );
+  }
+
+  searchAnime(
+    parameters: AnimeSearchParameters,
+    page: number,
+    count: number
+  ): Observable<PaginatedAnime> {
+    const params: string[] = [];
+
+    Object.entries(parameters).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        params.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+      }
+    });
+
+    const query: string = params.length ? '?' + params.join('&') : '';
+
+    const request =
+      this.BASE + '/search' + query + '&page=' + page + '&size=' + count;
+
+    return this.http.get<PaginatedAnime>(request);
   }
 }

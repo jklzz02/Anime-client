@@ -33,7 +33,6 @@
           <a routerLink="/detail/{{ anime.id }}">
             <img
               [src]="anime.image_url"
-              [alt]="anime.title"
               [title]="anime.title"
               (error)="anime.image_url = 'assets/placeholder.png'"
               class="w-full h-48 object-cover"

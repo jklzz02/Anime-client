@@ -1,0 +1,24 @@
+export interface AnimeSearchParameters {
+  title?: string | null;
+  producer_id?: number | null;
+  producer?: string | null;
+  licensorNames?: string[] | null;
+  licensor_id?: number | null;
+  licensor?: string | null;
+  licensors?: string[] | null;
+  genreId?: number | null;
+  genre?: string | null;
+  genres?: string[] | null;
+  status?: string | null;
+  episodes?: number | null;
+  source?: string | null;
+  type?: string | null;
+  english_title?: string | null;
+  min_score?: number | null;
+  max_score?: number | null;
+  min_release_year?: number | null;
+  max_release_year?: number | null;
+  include_adult_content?: boolean;
+  page?: number | null;
+  size?: number | null;
+}

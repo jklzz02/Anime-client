@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PaginatedAnime } from '../../interfaces/paginated-anime';
 import { AnimeService } from '../../services/anime.service';
 import { AnimeSummary } from '../../interfaces/anime-summary';
 import levenshtein from 'js-levenshtein';
+import { AnimeSearchParameters } from '../../interfaces/anime-search-parameters';
 
 @Component({
   selector: 'app-anime-search-results',
@@ -16,42 +17,50 @@ export class AnimeSearchResultsComponent implements OnInit {
   lastPage: number = 1;
   count: number = 33;
   counter: number[] = Array(this.count);
-  query: string = '';
   anime!: PaginatedAnime | null;
   suggestions: AnimeSummary[] = [];
   notFound: boolean = false;
+  params: AnimeSearchParameters = {};
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private animeService: AnimeService
   ) {}
 
   ngOnInit(): void {
-    this.route.queryParamMap.subscribe((params) => {
-      const newQuery = params.get('title') ?? '';
-      if (this.query !== newQuery) {
-        this.query = newQuery;
-        this.page = 1;
-        this.anime = null;
-      }
-      this.query = newQuery;
-      this.loadAnime(this.query, this.page, this.count);
+    this.route.queryParams.subscribe((params) => {
+      const newParams = { ...params } as AnimeSearchParameters;
+
+      this.params = newParams;
+      this.anime = null;
+      this.page = 1;
+
+      this.loadAnime(this.params, this.page, this.count);
     });
   }
 
-  loadAnime(query: string, page: number, count: number): void {
+  loadAnime(
+    parameters: AnimeSearchParameters,
+    page: number,
+    count: number
+  ): void {
     this.notFound = false;
 
-    this.animeService.getAnimeByTitle(query, page, count).subscribe({
+    this.animeService.searchAnime(parameters, page, count).subscribe({
       next: (data) => {
         this.anime = data;
         this.page = data.page;
         this.lastPage = data.total_pages;
       },
       error: (err) => {
-        if (err.status == 404) {
-          this.filterSuggestions(query);
+        if (err.status == 404 && parameters.title?.length) {
+          this.filterSuggestions(parameters.title);
           this.notFound = true;
+        } else {
+          this.router.navigate(['error'], {
+            queryParams: { status: err.status },
+          });
         }
       },
     });
@@ -69,7 +78,6 @@ export class AnimeSearchResultsComponent implements OnInit {
           .sort((a, b) => a.distance - b.distance)
           .slice(0, 5);
 
-        console.log(filtered, data);
         this.suggestions = filtered.map((entry) => entry.suggestion);
       },
 
@@ -82,7 +90,7 @@ export class AnimeSearchResultsComponent implements OnInit {
     if (this.page > this.lastPage) {
       this.page = 1;
     }
-    this.loadAnime(this.query, this.page, this.count);
+    this.loadAnime(this.params, this.page, this.count);
   }
 
   previousPage(): void {
@@ -90,6 +98,6 @@ export class AnimeSearchResultsComponent implements OnInit {
     if (this.page < 1) {
       this.page = this.lastPage;
     }
-    this.loadAnime(this.query, this.page, this.count);
+    this.loadAnime(this.params, this.page, this.count);
   }
 }
