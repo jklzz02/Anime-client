@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { GenreService } from '../../services/genre.service';
 import { ProducerService } from '../../services/producer.service';
 import { TypeService } from '../../services/type.service';
@@ -13,7 +13,7 @@ import {
 import { LicensorService } from '../../services/licensor.service';
 import { AnimeSearchParameters } from '../../interfaces/anime-search-parameters';
 import { AnimeService } from '../../services/anime.service';
-import { Router } from '@angular/router';
+import { Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-filter',
@@ -29,7 +29,7 @@ export class FilterComponent implements OnInit {
   sources: Source[] = [];
   isOpen: boolean = false;
 
-  filter: AnimeSearchParameters = {
+  @Input() filter: AnimeSearchParameters = {
     producer_id: null,
     licensor_id: null,
     genreId: null,
@@ -79,8 +79,8 @@ export class FilterComponent implements OnInit {
 
   applyFilters(): void {
     this.toggleMenu();
-    this.router.navigateByUrl(
-      '/search' + this.animeService.buildQuery(this.filter)
-    );
+    this.router.navigate(['/search'], {
+      queryParams: { ...this.filter } as Params,
+    });
   }
 }

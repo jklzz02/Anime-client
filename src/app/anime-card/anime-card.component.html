@@ -61,29 +61,35 @@
   </div>
 
   <div *ngIf="anime.genres" class="my-1">
-    <span
+    <a
+      [routerLink]="['/search']"
+      [queryParams]="{ genreId: genre.id }"
       *ngFor="let genre of anime.genres"
-      class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-blue-light dark:bg-blue dark:text-crust"
+      class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-blue-light dark:bg-blue dark:text-crust hover:opacity-90"
     >
       {{ genre.name }}
-    </span>
+    </a>
   </div>
 
   <div *ngIf="anime.producers" class="my-1">
-    <span
+    <a
+      [routerLink]="['/search']"
+      [queryParams]="{ producer_id: producer.id }"
       *ngFor="let producer of anime.producers"
-      class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-lavender-light dark:bg-lavender dark:text-crust"
+      class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-lavender-light dark:bg-lavender dark:text-crust hover:opacity-90"
     >
       {{ producer.name }}
-    </span>
+    </a>
   </div>
 
   <div *ngIf="anime.licensors" class="my-1">
-    <span
+    <a
+      [routerLink]="['/search']"
+      [queryParams]="{ licensor_id: licensor.id }"
       *ngFor="let licensor of anime.licensors"
-      class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-peach-light dark:bg-peach dark:text-crust"
+      class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-peach-light dark:bg-peach dark:text-crust hover:opacity-90"
     >
       {{ licensor.name }}
-    </span>
+    </a>
   </div>
 </div>

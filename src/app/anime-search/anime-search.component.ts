@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AnimeService } from '../../services/anime.service';
 import { AnimeSummary } from '../../interfaces/anime-summary';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { filter } from 'rxjs';
+import { AnimeSearchParameters } from '../../interfaces/anime-search-parameters';
 
 @Component({
   selector: 'app-anime-search',
@@ -11,37 +12,47 @@ import { filter } from 'rxjs';
   styleUrl: './anime-search.component.css',
 })
 export class AnimeSearchComponent implements OnInit {
-  constructor(private animeService: AnimeService, private router: Router) {}
+  constructor(
+    private animeService: AnimeService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   animeSummary: AnimeSummary[] = [];
   suggestions: AnimeSummary[] | any = [];
   isVisible: boolean = false;
-  query: string = '';
+  query: AnimeSearchParameters = {};
 
   ngOnInit(): void {
     this.animeService
       .getSummaries(1000)
       .subscribe((data) => (this.animeSummary = data));
 
+    this.route.queryParams.subscribe((params) => {
+      this.query = { ...params };
+    });
+
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         this.isVisible = false;
-        this.query = '';
+        this.query.title = '';
       });
   }
 
   onSearch(): void {
     this.isVisible = true;
 
-    if (!this.animeSummary.length) {
+    if (!this.animeSummary.length || !this.query.title?.trim()) {
       this.suggestions = [];
       return;
     }
 
     const filtered = this.animeSummary
       .filter((a) =>
-        a.title.toLowerCase().includes(this.query.toLowerCase().trim())
+        a.title
+          .toLowerCase()
+          .includes(this.query.title?.toLowerCase().trim() ?? '')
       )
       .slice(0, 100);
 
@@ -63,15 +74,17 @@ export class AnimeSearchComponent implements OnInit {
       return;
     }
 
-    this.query = '';
+    this.query.title = '';
     this.isVisible = false;
   }
 
   searchSubmit(): void {
-    if (!this.query.trim().length) {
+    if (!this.query.title?.trim()) {
       return;
     }
 
-    this.router.navigate(['/search'], { queryParams: { title: this.query } });
+    this.router.navigate(['/search'], {
+      queryParams: { ...this.query } as Params,
+    });
   }
 }
