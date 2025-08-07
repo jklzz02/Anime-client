@@ -12,7 +12,6 @@ import {
 } from '../../interfaces/anime';
 import { LicensorService } from '../../services/licensor.service';
 import { AnimeSearchParameters } from '../../interfaces/anime-search-parameters';
-import { AnimeService } from '../../services/anime.service';
 import { Params, Router } from '@angular/router';
 
 @Component({
@@ -38,11 +37,10 @@ export class FilterComponent implements OnInit {
     min_score: null,
     min_release_year: null,
     episodes: null,
-    include_adult_content: false,
+    include_adult_content: null,
   };
 
   constructor(
-    private animeService: AnimeService,
     private genreService: GenreService,
     private producerService: ProducerService,
     private licensorService: LicensorService,

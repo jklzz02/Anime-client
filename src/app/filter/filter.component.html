@@ -94,27 +94,22 @@
         placeholder="episodes count..."
         class="w-full rounded-md bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-3 py-2"
       />
-
-      <div class="flex items-center gap-4">
-        <label class="flex items-center gap-2">
+      <div class="flex items-center gap-2">
+        <div class="relative inline-block w-11 h-5">
           <input
-            type="radio"
-            name="include_adult_content"
-            [value]="true"
             [(ngModel)]="filter.include_adult_content"
-          />
-          <span class="text-text-light dark:text-text">Adult</span>
-        </label>
-
-        <label class="flex items-center gap-2">
-          <input
-            type="radio"
+            id="include_adult_content"
             name="include_adult_content"
-            [value]="false"
-            [(ngModel)]="filter.include_adult_content"
+            type="checkbox"
+            class="peer appearance-none w-11 h-5 bg-surf-100 rounded-full bg-surface2-light dark:bg-surface2 checked:bg-peach-light dark:checked:bg-peach cursor-pointer transition-colors duration-300"
           />
-          <span class="text-text-light dark:text-text">Non-Adult</span>
-        </label>
+          <label
+            for="include_adult_content"
+            class="absolute top-0 left-0 w-5 h-5 bg-white rounded-full border shadow-sm transition-transform duration-300 peer-checked:translate-x-6 cursor-pointer"
+          >
+          </label>
+        </div>
+        <span>Include adult content</span>
       </div>
     </div>
 
