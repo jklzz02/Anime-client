@@ -95,8 +95,6 @@ export class FilterComponent implements OnInit {
 
   clearFilters(): void {
     this.filter = { title: this.filter.title };
-    this.router.navigate(['/search'], {
-      queryParams: { ...this.filter } as Params,
-    });
+    this.router.navigate(['/explore']);
   }
 }

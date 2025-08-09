@@ -5,8 +5,9 @@
     <div class="flex items-center justify-start gap-3 relative">
       <a
         routerLink="/"
-        class="text-xl font-bold text-lavender-light dark:text-lavender hover:opacity-85"
+        class="text-xl flex items-center font-bold text-lavender-light dark:text-lavender hover:opacity-85"
       >
+        <img src="assets/logo.png" alt="logo" title="logo" class="max-w-10" />
         AnimeHub
       </a>
 
@@ -20,7 +21,7 @@
 
       <button
         (click)="isMenuOpen = !isMenuOpen"
-        class="lg:hidden inline-flex items-center justify-center p-2 rounded hover:bg-surface1-light dark:hover:bg-surface1"
+        class="lg:hidden inline-flex items-center justify-center p-2 rounded"
         aria-label="Toggle menu"
       >
         <i *ngIf="!isMenuOpen" class="absolute bi bi-list text-2xl end-2"></i>
