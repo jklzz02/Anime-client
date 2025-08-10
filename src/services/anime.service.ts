@@ -5,13 +5,14 @@ import { Anime } from '../interfaces/anime';
 import { PaginatedAnime } from '../interfaces/paginated-anime';
 import { AnimeSummary } from '../interfaces/anime-summary';
 import { AnimeSearchParameters } from '../interfaces/anime-search-parameters';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AnimeService {
   constructor(private http: HttpClient) {}
-  private BASE: string = 'https://localhost:7145/api/Anime';
+  private BASE: string = environment.anime_api_domain + '/api/Anime';
 
   getAnimeById(animeId: number): Observable<Anime>;
   getAnimeById(animeIds: number[]): Observable<Anime[]>;
