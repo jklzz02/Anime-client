@@ -46,12 +46,14 @@
     >
       new
     </span>
-    <span
+    <a
+      [routerLink]="['/search']"
+      [queryParams]="{ min_score: 8 }"
       *ngIf="fanFavourite"
-      class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-green-light dark:bg-green dark:text-crust"
+      class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-green-light dark:bg-green dark:text-crust hover:opacity-85"
     >
       fan favourite
-    </span>
+    </a>
     <span
       *ngIf="short"
       class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-green-light dark:bg-green dark:text-crust"
@@ -65,7 +67,7 @@
       [routerLink]="['/search']"
       [queryParams]="{ genreId: genre.id }"
       *ngFor="let genre of anime.genres"
-      class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-blue-light dark:bg-blue dark:text-crust hover:opacity-90"
+      class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-blue-light dark:bg-blue dark:text-crust hover:opacity-85"
     >
       {{ genre.name }}
     </a>
@@ -76,7 +78,7 @@
       [routerLink]="['/search']"
       [queryParams]="{ producer_id: producer.id }"
       *ngFor="let producer of anime.producers"
-      class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-lavender-light dark:bg-lavender dark:text-crust hover:opacity-90"
+      class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-lavender-light dark:bg-lavender dark:text-crust hover:opacity-85"
     >
       {{ producer.name }}
     </a>
@@ -87,7 +89,7 @@
       [routerLink]="['/search']"
       [queryParams]="{ licensor_id: licensor.id }"
       *ngFor="let licensor of anime.licensors"
-      class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-peach-light dark:bg-peach dark:text-crust hover:opacity-90"
+      class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-peach-light dark:bg-peach dark:text-crust hover:opacity-85"
     >
       {{ licensor.name }}
     </a>

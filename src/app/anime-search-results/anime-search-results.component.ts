@@ -46,6 +46,7 @@ export class AnimeSearchResultsComponent implements OnInit {
     count: number
   ): void {
     this.notFound = false;
+    window.scrollTo(0, 0);
 
     this.animeService.searchAnime(parameters, page, count).subscribe({
       next: (data) => {
