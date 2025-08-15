@@ -1,19 +1,19 @@
 <div
-  class="rounded-xl p-4 shadow hover:shadow-lg transition bg-mantle-light dark:bg-surface0 lg:h-210 hover:scale-105"
+  class="rounded-xl shadow hover:shadow-lg bg-mantle-light dark:bg-surface0 lg:h-210 overflow-hidden"
 >
   <a [routerLink]="'/detail/' + anime.id">
-    <div class="relative w-full rounded-lg overflow-hidden">
+    <div class="relative w-full rounded-t-lg overflow-hidden">
       <img
-        class="w-full h-auto object-contain"
+        class="w-full h-48 sm:h-auto object-cover transition hover:scale-105"
         [src]="anime.image_url"
         [alt]="anime.title"
         [title]="anime.title"
         (error)="anime.image_url = 'assets/placeholder.png'"
       />
       <div
-        class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 text-white"
+        class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3 sm:p-4 text-white"
       >
-        <h2 class="text-xl font-semibold drop-shadow-lg">
+        <h2 class="text-lg sm:text-xl font-semibold drop-shadow-lg">
           {{ anime.title }}
         </h2>
         <p class="text-sm">
@@ -26,72 +26,89 @@
         </p>
       </div>
     </div>
-
-    <figcaption class="text-xs text-lavender px-4 py-2">
-      {{ anime.other_title }}
-    </figcaption>
   </a>
 
-  <div
-    *ngIf="anime.type?.name?.toLowerCase() !== 'unknown'"
-    class="mt-1 text-xs text-subtext1"
-  >
-    {{ anime.type.name }}
-  </div>
+  <div class="p-3 sm:p-4">
+    <figcaption class="text-xs text-lavender mb-2">
+      {{ anime.other_title }}
+    </figcaption>
 
-  <div *ngIf="fanFavourite || isNew || short">
-    <span
-      *ngIf="isNew"
-      class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-green-light dark:bg-green dark:text-crust"
+    <div
+      *ngIf="anime.type?.name?.toLowerCase() !== 'unknown'"
+      class="mb-2 text-xs text-subtext1"
     >
-      new
-    </span>
-    <a
-      [routerLink]="['/search']"
-      [queryParams]="{ min_score: 8 }"
-      *ngIf="fanFavourite"
-      class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-green-light dark:bg-green dark:text-crust hover:opacity-85"
-    >
-      fan favourite
-    </a>
-    <span
-      *ngIf="short"
-      class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-green-light dark:bg-green dark:text-crust"
-    >
-      short
-    </span>
-  </div>
+      {{ anime.type.name }}
+    </div>
 
-  <div *ngIf="anime.genres" class="my-1">
-    <a
-      [routerLink]="['/search']"
-      [queryParams]="{ genreId: genre.id }"
-      *ngFor="let genre of anime.genres"
-      class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-blue-light dark:bg-blue dark:text-crust hover:opacity-85"
-    >
-      {{ genre.name }}
-    </a>
-  </div>
+    <div *ngIf="fanFavourite || isNew || short" class="mb-2">
+      <span
+        *ngIf="isNew"
+        class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-green-light dark:bg-green dark:text-crust"
+      >
+        new
+      </span>
+      <a
+        [routerLink]="['/search']"
+        [queryParams]="{ min_score: 8 }"
+        *ngIf="fanFavourite"
+        class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-green-light dark:bg-green dark:text-crust hover:opacity-85"
+      >
+        fan favourite
+      </a>
+      <span
+        *ngIf="short"
+        class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-green-light dark:bg-green dark:text-crust"
+      >
+        short
+      </span>
+    </div>
 
-  <div *ngIf="anime.producers" class="my-1">
-    <a
-      [routerLink]="['/search']"
-      [queryParams]="{ producer_id: producer.id }"
-      *ngFor="let producer of anime.producers"
-      class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-lavender-light dark:bg-lavender dark:text-crust hover:opacity-85"
-    >
-      {{ producer.name }}
-    </a>
-  </div>
+    <div *ngIf="anime.genres" class="mb-2">
+      <a
+        [routerLink]="['/search']"
+        [queryParams]="{ genreId: genre.id }"
+        *ngFor="let genre of anime.genres | slice : 0 : 3"
+        class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-blue-light dark:bg-blue dark:text-crust hover:opacity-85"
+      >
+        {{ genre.name }}
+      </a>
+      <span *ngIf="anime.genres.length > 3" class="text-xs text-subtext1 px-1">
+        +{{ anime.genres.length - 3 }}
+      </span>
+    </div>
 
-  <div *ngIf="anime.licensors" class="my-1">
-    <a
-      [routerLink]="['/search']"
-      [queryParams]="{ licensor_id: licensor.id }"
-      *ngFor="let licensor of anime.licensors"
-      class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-peach-light dark:bg-peach dark:text-crust hover:opacity-85"
-    >
-      {{ licensor.name }}
-    </a>
+    <div *ngIf="anime.producers" class="mb-2">
+      <a
+        [routerLink]="['/search']"
+        [queryParams]="{ producer_id: producer.id }"
+        *ngFor="let producer of anime.producers | slice : 0 : 3"
+        class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-lavender-light dark:bg-lavender dark:text-crust hover:opacity-85"
+      >
+        {{ producer.name }}
+      </a>
+      <span
+        *ngIf="anime.producers.length > 3"
+        class="text-xs text-subtext1 px-1"
+      >
+        +{{ anime.producers.length - 3 }}
+      </span>
+    </div>
+
+    <div *ngIf="anime.licensors" class="mb-1">
+      <a
+        [routerLink]="['/search']"
+        [queryParams]="{ licensor_id: licensor.id }"
+        *ngFor="let licensor of anime.licensors | slice : 0 : 3"
+        class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-peach-light dark:bg-peach dark:text-crust hover:opacity-85"
+      >
+        {{ licensor.name }}
+      </a>
+      <span
+        *ngIf="anime.licensors.length > 3"
+        class="text-xs text-subtext1 px-1"
+      >
+        +{{ anime.licensors.length - 3 }}
+      </span>
+    </div>
   </div>
 </div>

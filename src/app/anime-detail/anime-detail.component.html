@@ -1,146 +1,163 @@
-<div *ngIf="anime" class="max-w-4xl mx-auto px-4 py-8">
-  <div class="relative rounded-xl overflow-hidden mb-8">
-    <img
-      *ngIf="anime.trailer_image_url"
-      [src]="anime.trailer_image_url"
-      [alt]="anime.title"
-      [title]="anime.title"
-      (error)="anime.image_url = 'assets/placeholder.png'"
-      class="w-full h-100 object-cover transition-all duration-300 group-hover:scale-105"
-    />
+<div *ngIf="anime" class="max-w-6xl mx-auto px-4 py-8">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+    <div class="lg:col-span-1 order-1 lg:order-1">
+      <div class="lg:sticky lg:top-8">
+        <div
+          class="relative rounded-xl overflow-hidden mb-4 lg:mb-6 max-w-sm mx-auto lg:max-w-none"
+        >
+          <img
+            [src]="anime.image_url"
+            [alt]="anime.title"
+            [title]="anime.title"
+            (error)="anime.image_url = 'assets/placeholder.png'"
+            class="w-full h-auto object-cover duration-300"
+          />
+        </div>
 
-    <img
-      *ngIf="!anime.trailer_image_url"
-      [src]="anime.image_url"
-      [alt]="anime.title"
-      [title]="anime.title"
-      (error)="anime.image_url = 'assets/placeholder.png'"
-      class="w-full h-100 object-cover transition-all duration-300 group-hover:scale-105"
-    />
+        <section
+          class="rounded-lg bg-white dark:bg-crust p-4 lg:p-6 shadow-sm text-center mb-4 lg:mb-6"
+        >
+          <div [ngSwitch]="true">
+            <div
+              *ngSwitchCase="anime.score >= 7.5"
+              class="text-3xl lg:text-4xl font-bold mb-2 text-green"
+            >
+              {{ anime.score }}/10
+            </div>
 
-    <div
-      class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6"
-    >
-      <h1 class="text-4xl font-bold text-white mb-2">{{ anime.title }}</h1>
-      <p class="text-xl text-gray-300">
-        {{ anime.english_title || anime.other_title }}
-      </p>
+            <div
+              *ngSwitchCase="anime.score >= 6 && anime.score < 7.5"
+              class="text-3xl lg:text-4xl font-bold mb-2 text-peach"
+            >
+              {{ anime.score }}/10
+            </div>
+
+            <div
+              *ngSwitchDefault
+              class="text-3xl lg:text-4xl font-bold mb-2 text-red-400"
+            >
+              {{ anime.score }}/10
+            </div>
+          </div>
+          <div class="text-color-surface2 text-sm">User Rating</div>
+        </section>
+
+        <section
+          class="rounded-lg bg-white dark:bg-crust p-4 lg:p-6 shadow-sm mb-4 lg:mb-6"
+        >
+          <h3 class="font-semibold mb-3 lg:mb-4 text-sm">Genres</h3>
+          <div class="flex flex-wrap gap-2">
+            <span
+              *ngFor="let genre of anime.genres"
+              class="px-2 lg:px-3 py-1 text-white bg-blue dark:text-crust text-xs lg:text-sm rounded-full"
+            >
+              {{ genre.name }}
+            </span>
+          </div>
+        </section>
+
+        <section
+          class="rounded-lg bg-white dark:bg-crust p-4 lg:p-6 shadow-sm space-y-3 lg:space-y-4"
+        >
+          <div *ngIf="anime.studio">
+            <h3 class="font-semibold mb-2 text-sm">Studio</h3>
+            <span
+              class="px-2 lg:px-3 py-1 text-white bg-lavender-light dark:text-crust dark:bg-green text-xs lg:text-sm rounded-full"
+            >
+              {{ anime.studio }}
+            </span>
+          </div>
+
+          <div *ngIf="anime.producers">
+            <h3 class="font-semibold mb-2 text-sm">Producers</h3>
+            <div class="flex flex-wrap gap-2">
+              <span
+                *ngFor="let producer of anime.producers"
+                class="px-2 lg:px-3 py-1 text-white bg-lavender dark:text-crust text-xs lg:text-sm rounded-full"
+              >
+                {{ producer.name }}
+              </span>
+            </div>
+          </div>
+
+          <div *ngIf="anime.licensors">
+            <h3 class="font-semibold mb-2 text-sm">Licensors</h3>
+            <div class="flex flex-wrap gap-2">
+              <span
+                *ngFor="let licensor of anime.licensors"
+                class="px-2 lg:px-3 py-1 text-white bg-peach dark:text-crust text-xs lg:text-sm rounded-full"
+              >
+                {{ licensor.name }}
+              </span>
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
-  </div>
 
-  <div class="grid md:grid-cols-3 gap-8">
-    <div class="md:col-span-2 space-y-8">
-      <section class="rounded-lg bg-white dark:bg-crust p-6 shadow-sm">
-        <h2 class="text-2xl font-semibold border-b pb-2 mb-4">Synopsis</h2>
-        <p class="leading-relaxed">{{ anime.synopsis }}</p>
-        <div class="mt-6 grid grid-cols-2 gap-4">
+    <div class="lg:col-span-2 space-y-6 lg:space-y-8 order-2 lg:order-2">
+      <div class="mb-6 lg:mb-8">
+        <h1
+          class="text-2xl sm:text-3xl lg:text-4xl font-bold text-text-light dark:text-text mb-2"
+        >
+          {{ anime.title }}
+        </h1>
+        <p class="text-lg sm:text-xl text-surface2">
+          {{ anime.english_title || anime.other_title }}
+        </p>
+      </div>
+
+      <section class="rounded-lg bg-white dark:bg-crust p-4 lg:p-6 shadow-sm">
+        <h2 class="text-xl lg:text-2xl font-semibold border-b pb-2 mb-4">
+          Synopsis
+        </h2>
+        <p class="leading-relaxed mb-4 lg:mb-6 text-sm">
+          {{ anime.synopsis }}
+        </p>
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4 text-sm"
+        >
           <div>
-            <span class="text-surface2">Episodes:</span>
-            {{ anime.episodes }}
+            <span class="text-surface2 font-medium">Episodes:</span>
+            <span class="block sm:inline sm:ml-2">{{ anime.episodes }}</span>
           </div>
           <div>
-            <span class="text-surface2">Duration:</span>
-            {{ anime.duration }}
+            <span class="text-surface2 font-medium">Duration:</span>
+            <span class="block sm:inline sm:ml-2">{{ anime.duration }}</span>
           </div>
           <div>
-            <span class="text-surface2">Status:</span> {{ anime.status }}
+            <span class="text-surface2 font-medium">Status:</span>
+            <span class="block sm:inline sm:ml-2">{{ anime.status }}</span>
           </div>
           <div>
-            <span class="text-surface2">Rating:</span> {{ anime.rating }}
+            <span class="text-surface2 font-medium">Rating:</span>
+            <span class="block sm:inline sm:ml-2">{{ anime.rating }}</span>
           </div>
           <div>
-            <span class="text-surface2">Release year:</span>
-            {{ anime.release_year }}
+            <span class="text-surface2 font-medium">Release year:</span>
+            <span class="block sm:inline sm:ml-2">{{
+              anime.release_year
+            }}</span>
           </div>
           <div>
-            <span class="text-surface2">Started airing:</span>
-            {{ anime.started_airing | date : "longDate" }}
+            <span class="text-surface2 font-medium">Started airing:</span>
+            <span class="block sm:inline sm:ml-2">{{
+              anime.started_airing | date : "longDate"
+            }}</span>
           </div>
         </div>
       </section>
+
       <section
         *ngIf="anime.trailer_embed_url"
-        class="rounded-lg bg-white dark:bg-crust p-6 shadow-sm"
+        class="rounded-lg bg-white dark:bg-crust p-4 lg:p-6 shadow-sm"
       >
+        <h2 class="text-xl lg:text-2xl font-semibold border-b pb-2 mb-4">
+          Trailer
+        </h2>
         <app-video-embed [url]="anime.trailer_embed_url"></app-video-embed>
       </section>
     </div>
-
-    <aside class="space-y-6">
-      <section class="rounded-lg bg-white dark:bg-crust p-6 shadow-sm">
-        <h3 class="font-semibold mb-4">Genres</h3>
-        <div class="flex flex-wrap gap-2">
-          <span
-            *ngFor="let genre of anime.genres"
-            class="px-3 py-1 text-white bg-blue dark:text-crust text-sm rounded-full"
-          >
-            {{ genre.name }}
-          </span>
-        </div>
-      </section>
-      <section
-        class="rounded-lg bg-white dark:bg-crust p-6 shadow-sm space-y-4"
-      >
-        <div *ngIf="anime.studio">
-          <h3 class="font-semibold mb-2">Studio</h3>
-          <span
-            class="px-3 py-1 text-white bg-lavender-light dark:text-crust dark:bg-green rounded-full"
-          >
-            {{ anime.studio }}
-          </span>
-        </div>
-
-        <div *ngIf="anime.producers">
-          <h3 class="font-semibold mb-2">Producers</h3>
-          <div class="flex flex-wrap gap-2">
-            <span
-              *ngFor="let producer of anime.producers"
-              class="px-3 py-1 text-white bg-lavender dark:text-crust text-sm rounded-full"
-            >
-              {{ producer.name }}
-            </span>
-          </div>
-        </div>
-
-        <div *ngIf="anime.licensors">
-          <h3 class="font-semibold mb-2">Licensors</h3>
-          <div class="flex flex-wrap gap-2">
-            <span
-              *ngFor="let licensor of anime.licensors"
-              class="px-3 py-1 text-white bg-peach dark:text-crust text-sm rounded-full"
-            >
-              {{ licensor.name }}
-            </span>
-          </div>
-        </div>
-      </section>
-
-      <section
-        class="rounded-lg bg-white dark:bg-crust p-6 shadow-sm text-center"
-      >
-        <div [ngSwitch]="true">
-          <div
-            *ngSwitchCase="anime.score >= 7.5"
-            class="text-4xl font-bold mb-2 text-green"
-          >
-            {{ anime.score }}/10
-          </div>
-
-          <div
-            *ngSwitchCase="anime.score >= 6 && anime.score < 7.5"
-            class="text-4xl font-bold mb-2 text-peach"
-          >
-            {{ anime.score }}/10
-          </div>
-
-          <div *ngSwitchDefault class="text-4xl font-bold mb-2 text-red-400">
-            {{ anime.score }}/10
-          </div>
-        </div>
-
-        <div class="text-color-surface2">User Rating</div>
-      </section>
-    </aside>
   </div>
 </div>
 
@@ -148,53 +165,57 @@
   *ngIf="relatedSummaries.length"
   class="relative max-w-6xl mx-auto px-9 my-6"
 >
-  <h3 class="px-3 text-lg text-text-light dark:text-text">You may also like</h3>
+  <h3 class="px-3 sm:text-lg text-text-light dark:text-text mb-4">
+    You may also like
+  </h3>
 
   <div
     #carousel
-    class="flex space-x-4 overflow-x-auto scroll-smooth snap-x snap-mandatory min-h-90 items-center"
+    class="flex space-x-3 sm:space-x-4 overflow-x-auto scroll-smooth snap-x snap-mandatory min-h-80 sm:min-h-90 items-center pb-2"
   >
     <app-anime-summary-card
       *ngFor="let summary of relatedSummaries"
       [summary]="summary"
-      class="flex-shrink-0 w-72 snap-center relative transition-transform duration-300 hover:scale-105 hover:z-10"
+      class="flex-shrink-0 w-60 sm:w-72 snap-center relative transition-transform duration-300 hover:scale-105 hover:z-10"
       style="transform-origin: center bottom"
     ></app-anime-summary-card>
   </div>
 
   <button
     (click)="scrollCarousel(-1)"
-    class="absolute left-0 top-1/2 -translate-y-1/2 bg-mantle-light dark:bg-mantle hover:opacity-70 rounded-full py-2 px-3 shadow"
+    class="absolute left-2 sm:left-4 lg:left-0 top-1/2 -translate-y-1/2 bg-mantle-light dark:bg-mantle hover:opacity-70 rounded-full p-2 lg:py-2 lg:px-3 shadow"
     aria-label="Scroll left"
   >
-    <i class="text-text-light dark:text-text bi bi-arrow-left"></i>
+    <i class="text-text-light dark:text-text bi bi-arrow-left text-sm"></i>
   </button>
   <button
     (click)="scrollCarousel(1)"
-    class="absolute right-0 top-1/2 -translate-y-1/2 bg-mantle-light dark:bg-mantle hover:opacity-70 rounded-full py-2 px-3 shadow"
+    class="absolute right-2 sm:right-4 lg:right-0 top-1/2 -translate-y-1/2 bg-mantle-light dark:bg-mantle hover:opacity-70 rounded-full p-2 lg:py-2 lg:px-3 shadow"
     aria-label="Scroll right"
   >
-    <i class="text-text-light dark:text-text bi bi-arrow-right"></i>
+    <i class="text-text-light dark:text-text bi bi-arrow-right text-sm"></i>
   </button>
 </div>
 
-<div *ngIf="!anime" class="max-w-4xl mx-auto px-4 py-8">
-  <div
-    class="h-100 w-full bg-surface0-light dark:bg-surface0 animate-pulse rounded-xl mb-8"
-  ></div>
-  <div class="grid md:grid-cols-3 gap-8">
-    <div
-      class="md:col-span-2 h-75 space-y-8 bg-surface0-light dark:bg-surface0 animate-pulse rounded-xl"
-    ></div>
-    <div class="space-y-6 rounded-xl">
+<div *ngIf="!anime" class="max-w-6xl mx-auto px-4 py-8">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+    <div class="lg:col-span-1">
       <div
-        class="rounded-lg h-30 bg-surface0-light dark:bg-surface0 p-6 shadow-sm animate-pulse"
+        class="h-80 sm:h-96 lg:h-96 w-full max-w-sm mx-auto lg:max-w-none bg-surface0-light dark:bg-surface0 animate-pulse rounded-xl mb-4 lg:mb-6"
       ></div>
       <div
-        class="rounded-lg h-30 bg-surface0-light dark:bg-surface0 p-6 shadow-sm animate-pulse"
+        class="rounded-lg h-20 lg:h-30 bg-surface0-light dark:bg-surface0 p-4 lg:p-6 shadow-sm animate-pulse mb-4 lg:mb-6"
       ></div>
       <div
-        class="rounded-lg h-30 bg-surface0-light dark:bg-surface0 p-6 shadow-sm animate-pulse"
+        class="rounded-lg h-20 lg:h-30 bg-surface0-light dark:bg-surface0 p-4 lg:p-6 shadow-sm animate-pulse"
+      ></div>
+    </div>
+    <div class="lg:col-span-2 space-y-6 lg:space-y-8">
+      <div
+        class="h-16 lg:h-20 w-full bg-surface0-light dark:bg-surface0 animate-pulse rounded-xl"
+      ></div>
+      <div
+        class="h-60 lg:h-75 bg-surface0-light dark:bg-surface0 animate-pulse rounded-xl"
       ></div>
     </div>
   </div>
