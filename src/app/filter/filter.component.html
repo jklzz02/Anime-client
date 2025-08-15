@@ -1,21 +1,15 @@
 <div
   *ngIf="isOpen"
-  class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center"
+  class="fixed inset-0 z-50 bg-black/50 flex items-center justify-center"
+  (click)="toggleMenu()"
 >
   <form
     (ngSubmit)="applyFilters()"
+    (blur)="toggleMenu()"
+    (click)="$event.stopPropagation()"
     #filterForm="ngForm"
     class="w-full max-w-md mx-auto bg-mantle-light dark:bg-mantle rounded-xl shadow-2xl p-6 z-50 relative"
   >
-    <button
-      type="button"
-      (click)="toggleMenu()"
-      class="absolute top-3 right-3 text-text-light dark:text-text hover:text-peach-light dark:hover:text-peach"
-      aria-label="Close"
-    >
-      <i class="text-2xl bi bi-x"></i>
-    </button>
-
     <h2 class="text-xl font-bold text-text-light dark:text-text mb-4">
       Filter Anime
     </h2>
@@ -118,14 +112,14 @@
         type="submit"
         class="bg-blue-light dark:bg-blue text-white font-semibold px-4 py-2 rounded-md hover:cursor-pointer hover:bg-blue dark:hover:bg-blue/90 transition"
       >
-        Apply Filters
+        Apply
       </button>
 
       <span
         (click)="clearFilters()"
         class="bg-blue-light dark:bg-blue text-white font-semibold px-4 py-2 rounded-md hover:cursor-pointer hover:bg-blue dark:hover:bg-blue/90 transition"
       >
-        Reset Filters
+        Reset
       </span>
     </div>
   </form>
@@ -133,7 +127,7 @@
 
 <div *ngIf="!isOpen" class="mx-auto text-center">
   <button
-    class="px-3 py-2 shadow rounded-full bg-surface0-light dark:bg-lavender text-text-light dark:text-text hover:opacity-75"
+    class="px-3 py-2 shadow rounded-full bg-surface0-light dark:bg-surface1 text-text-light dark:text-text hover:opacity-75"
     (click)="toggleMenu()"
   >
     <i class="text-2xl bi bi-filter"></i>

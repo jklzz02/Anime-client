@@ -13,7 +13,7 @@
       </a>
 
       <button
-        class="absolute end-10 px-2 py-1 rounded-full shadow-md transition bg-lavender-light/20 dark:bg-lavender/20 hover:opacity-75 hover:cursor-pointer"
+        class="absolute end-10 px-2 py-1 rounded transition-colors hover:bg-lavender-light/20 hover:dark:bg-lavender/20"
         (click)="onThemeToggle()"
       >
         <i *ngIf="currentTheme == 'dark'" class="bi bi-sun"></i>
@@ -56,11 +56,11 @@
       </div>
       <div class="hidden lg:flex items-center justify-end w-full">
         <button
-          class="flex items-center justify-center px-3 py-2 rounded-full shadow-md aspect-square transition bg-lavender-light/20 dark:bg-lavender/20 hover:opacity-75 hover:cursor-pointer"
+          class="flex items-center justify-center px-2 py-1 rounded transition-colors hover:bg-lavender-light/20 hover:dark:bg-lavender/20"
           (click)="onThemeToggle()"
         >
-          <i *ngIf="currentTheme == 'dark'" class="bi bi-sun text-2xl"></i>
-          <i *ngIf="currentTheme == 'light'" class="bi bi-moon text-2xl"></i>
+          <i *ngIf="currentTheme == 'dark'" class="bi bi-sun text-lg"></i>
+          <i *ngIf="currentTheme == 'light'" class="bi bi-moon text-lg"></i>
         </button>
         <app-anime-search class="lg:min-w-lg"></app-anime-search>
       </div>

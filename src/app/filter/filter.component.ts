@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { GenreService } from '../../services/genre.service';
 import { ProducerService } from '../../services/producer.service';
 import { TypeService } from '../../services/type.service';
@@ -21,13 +21,15 @@ import { filter } from 'rxjs';
   templateUrl: './filter.component.html',
   styleUrl: './filter.component.css',
 })
-export class FilterComponent implements OnInit {
+export class FilterComponent implements OnInit, OnDestroy {
   genres: Genre[] = [];
   producers: Producer[] = [];
   licensors: Licensor[] = [];
   types: Type[] = [];
   sources: Source[] = [];
   isOpen: boolean = false;
+  private header = document.querySelector('header');
+  private body = document.querySelector('body');
 
   @Input() filter: AnimeSearchParameters = {
     producer_id: null,
@@ -49,6 +51,7 @@ export class FilterComponent implements OnInit {
     private sourceService: SourceService,
     private router: Router
   ) {}
+
   ngOnInit(): void {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
@@ -78,12 +81,17 @@ export class FilterComponent implements OnInit {
 
   toggleMenu(): void {
     this.isOpen = !this.isOpen;
-    const header = document.querySelector('header');
 
-    if (header?.classList.contains('hidden')) {
-      header.classList.remove('hidden');
+    if (this.body?.classList.contains('overflow-y-clip')) {
+      this.body.classList.remove('overflow-y-clip');
     } else {
-      header?.classList.add('hidden');
+      this.body?.classList.add('overflow-y-clip');
+    }
+
+    if (this.header?.classList.contains('z-40')) {
+      this.header.classList.remove('z-40');
+    } else {
+      this.header?.classList.add('z-40');
     }
   }
 
@@ -96,5 +104,11 @@ export class FilterComponent implements OnInit {
   clearFilters(): void {
     this.filter = { title: this.filter.title };
     this.router.navigate(['/explore']);
+  }
+
+  ngOnDestroy(): void {
+    this.isOpen = false;
+    this.body?.classList.remove('overflow-y-clip');
+    this.header?.classList.add('z-40');
   }
 }
