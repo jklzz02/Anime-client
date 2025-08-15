@@ -103,6 +103,7 @@ export class FilterComponent implements OnInit, OnDestroy {
 
   clearFilters(): void {
     this.filter = { title: this.filter.title };
+    this.toggleMenu();
     this.router.navigate(['/explore']);
   }
 

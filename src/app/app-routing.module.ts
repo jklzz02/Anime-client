@@ -12,10 +12,18 @@ const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'about', component: AboutComponent },
   { path: 'explore', redirectTo: 'explore/1', pathMatch: 'full' },
-  { path: 'explore/:page', component: AnimeComponent },
+  {
+    path: 'explore/:page',
+    component: AnimeComponent,
+    title: 'AnimeHub | Explore',
+  },
   { path: 'detail/:id', component: AnimeDetailComponent },
-  { path: 'search', component: AnimeSearchResultsComponent },
-  { path: 'home', component: HomeComponent },
+  {
+    path: 'search',
+    component: AnimeSearchResultsComponent,
+    title: 'AnimeHub | Explore',
+  },
+  { path: 'home', component: HomeComponent, title: 'AnimeHub' },
   { path: 'error', component: ErrorComponent },
   { path: '**', component: NotFoundComponent },
 ];

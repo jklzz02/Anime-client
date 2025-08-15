@@ -13,7 +13,7 @@
       </a>
 
       <button
-        class="absolute end-10 px-2 py-1 rounded transition-colors hover:bg-lavender-light/20 hover:dark:bg-lavender/20"
+        class="absolute lg:hidden end-10 px-2 py-1 rounded transition-colors hover:bg-lavender-light/20 hover:dark:bg-lavender/20"
         (click)="onThemeToggle()"
       >
         <i *ngIf="currentTheme == 'dark'" class="bi bi-sun"></i>
@@ -29,7 +29,7 @@
         <i *ngIf="isMenuOpen" class="absolute bi bi-x text-2xl end-2"></i>
       </button>
 
-      <div class="hidden lg:flex space-x-4 items-center">
+      <div class="hidden lg:flex gap-1.5 items-center">
         <a
           routerLink="home"
           routerLinkActive="bg-blue-light text-white dark:bg-blue dark:text-white"
@@ -62,7 +62,7 @@
           <i *ngIf="currentTheme == 'dark'" class="bi bi-sun text-lg"></i>
           <i *ngIf="currentTheme == 'light'" class="bi bi-moon text-lg"></i>
         </button>
-        <app-anime-search class="lg:min-w-lg"></app-anime-search>
+        <app-anime-search class="lg:min-w-sm"></app-anime-search>
       </div>
     </div>
 

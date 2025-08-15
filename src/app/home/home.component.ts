@@ -11,11 +11,7 @@ import { Router } from '@angular/router';
   styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
-  constructor(
-    private animeService: AnimeService,
-    private title: Title,
-    private router: Router
-  ) {}
+  constructor(private animeService: AnimeService, private router: Router) {}
 
   recentAnime: Anime[] = [];
   loadCount: number = 33;
@@ -26,7 +22,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadRecentAnime(this.loadCount);
-    this.title.setTitle('AnimeHub');
   }
 
   public loadMore() {

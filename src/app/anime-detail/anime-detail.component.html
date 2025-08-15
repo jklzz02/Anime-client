@@ -118,24 +118,26 @@
       <section
         class="rounded-lg bg-white dark:bg-crust p-6 shadow-sm text-center"
       >
-        <div
-          *ngIf="anime.score >= 7.5"
-          class="text-4xl font-bold mb-2 text-green"
-        >
-          {{ anime.score }}/10
+        <div [ngSwitch]="true">
+          <div
+            *ngSwitchCase="anime.score >= 7.5"
+            class="text-4xl font-bold mb-2 text-green"
+          >
+            {{ anime.score }}/10
+          </div>
+
+          <div
+            *ngSwitchCase="anime.score >= 6 && anime.score < 7.5"
+            class="text-4xl font-bold mb-2 text-peach"
+          >
+            {{ anime.score }}/10
+          </div>
+
+          <div *ngSwitchDefault class="text-4xl font-bold mb-2 text-red-400">
+            {{ anime.score }}/10
+          </div>
         </div>
-        <div
-          *ngIf="anime.score <= 7.5 && anime.score >= 6"
-          class="text-4xl font-bold mb-2 text-peach"
-        >
-          {{ anime.score }}/10
-        </div>
-        <div
-          *ngIf="anime.score < 6"
-          class="text-4xl font-bold mb-2 text-red-400"
-        >
-          {{ anime.score }}/10
-        </div>
+
         <div class="text-color-surface2">User Rating</div>
       </section>
     </aside>
