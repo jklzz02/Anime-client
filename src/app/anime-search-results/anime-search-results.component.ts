@@ -55,8 +55,8 @@ export class AnimeSearchResultsComponent implements OnInit {
         this.lastPage = data.total_pages;
       },
       error: (err) => {
-        if (err.status == 404 && parameters.title?.length) {
-          this.filterSuggestions(parameters.title);
+        if (err.status == 404 && parameters.query?.length) {
+          this.filterSuggestions(parameters.query);
           this.notFound = true;
         } else {
           this.router.navigate(['error'], {

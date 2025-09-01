@@ -21,7 +21,7 @@ export class AnimeSearchComponent implements OnInit {
   animeSummary: AnimeSummary[] = [];
   suggestions: AnimeSummary[] | any = [];
   isVisible: boolean = false;
-  query: AnimeSearchParameters = {};
+  params: AnimeSearchParameters = {};
 
   ngOnInit(): void {
     this.animeService
@@ -29,21 +29,21 @@ export class AnimeSearchComponent implements OnInit {
       .subscribe((data) => (this.animeSummary = data));
 
     this.route.queryParams.subscribe((params) => {
-      this.query = { ...params };
+      this.params = { ...params };
     });
 
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         this.isVisible = false;
-        this.query.title = '';
+        this.params.query = '';
       });
   }
 
   onSearch(): void {
     this.isVisible = true;
 
-    if (!this.animeSummary.length || !this.query.title?.trim()) {
+    if (!this.animeSummary.length || !this.params.query?.trim()) {
       this.suggestions = [];
       return;
     }
@@ -52,7 +52,7 @@ export class AnimeSearchComponent implements OnInit {
       .filter((a) =>
         a.title
           .toLowerCase()
-          .includes(this.query.title?.toLowerCase().trim() ?? '')
+          .includes(this.params.query?.toLowerCase().trim() ?? '')
       )
       .slice(0, 100);
 
@@ -74,17 +74,17 @@ export class AnimeSearchComponent implements OnInit {
       return;
     }
 
-    this.query.title = '';
+    this.params.query = '';
     this.isVisible = false;
   }
 
   searchSubmit(): void {
-    if (!this.query.title?.trim()) {
+    if (!this.params.query?.trim()) {
       return;
     }
 
     this.router.navigate(['/search'], {
-      queryParams: { ...this.query } as Params,
+      queryParams: { ...this.params } as Params,
     });
   }
 }
