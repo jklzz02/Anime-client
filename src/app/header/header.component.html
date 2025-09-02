@@ -11,7 +11,6 @@
         <img src="assets/logo.png" alt="logo" title="logo" class="max-w-10" />
         AnimeHub
       </a>
-
       <button
         class="absolute lg:hidden end-10 px-2 py-1 rounded transition-colors hover:bg-lavender-light/20 hover:dark:bg-lavender/20"
         (click)="onThemeToggle()"
@@ -19,7 +18,6 @@
         <i *ngIf="currentTheme == 'dark'" class="bi bi-sun"></i>
         <i *ngIf="currentTheme == 'light'" class="bi bi-moon"></i>
       </button>
-
       <button
         (click)="isMenuOpen = !isMenuOpen"
         class="lg:hidden inline-flex items-center justify-center p-2 rounded"
@@ -28,7 +26,6 @@
         <i *ngIf="!isMenuOpen" class="absolute bi bi-list text-2xl end-2"></i>
         <i *ngIf="isMenuOpen" class="absolute bi bi-x text-2xl end-2"></i>
       </button>
-
       <div class="hidden lg:flex gap-1.5 items-center">
         <a
           routerLink="home"
@@ -54,7 +51,7 @@
           About
         </a>
       </div>
-      <div class="hidden lg:flex items-center justify-end w-full">
+      <div class="hidden lg:flex items-center justify-end w-full gap-3">
         <button
           class="flex items-center justify-center px-2 py-1 rounded transition-colors hover:bg-lavender-light/20 hover:dark:bg-lavender/20"
           (click)="onThemeToggle()"
@@ -63,16 +60,75 @@
           <i *ngIf="currentTheme == 'light'" class="bi bi-moon text-lg"></i>
         </button>
         <app-anime-search class="lg:min-w-sm"></app-anime-search>
+
+        <div *ngIf="!isLoggedIn" class="flex gap-2">
+          <a
+            routerLink="signin"
+            class="px-3 py-1.5 text-sm rounded border border-blue-light dark:border-blue hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
+          >
+            Sign In
+          </a>
+        </div>
+
+        <div *ngIf="isLoggedIn" class="relative">
+          <button
+            (click)="isUserMenuOpen = !isUserMenuOpen"
+            class="flex items-center gap-2 p-1 rounded hover:bg-lavender-light/20 hover:dark:bg-lavender/20"
+          >
+            <img
+              [src]="user.avatar"
+              [alt]="user.name"
+              class="w-8 h-8 rounded-full"
+            />
+            <span class="text-sm">{{ user.name }}</span>
+            <i
+              class="bi bi-chevron-down text-xs"
+              [class.rotate-180]="isUserMenuOpen"
+            ></i>
+          </button>
+
+          <div
+            *ngIf="isUserMenuOpen"
+            class="absolute overflow-clip right-0 mt-2 w-48 bg-mantle-light dark:bg-mantle border border-lavender-light/20 dark:border-lavender/20 rounded-md shadow-lg z-50"
+          >
+            <a
+              routerLink="profile"
+              class="block px-4 py-2 hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
+            >
+              Profile
+            </a>
+            <a
+              routerLink="watchlist"
+              class="block px-4 py-2 hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
+            >
+              My Watchlist
+            </a>
+            <a
+              routerLink="settings"
+              class="block px-4 py-2 hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
+            >
+              Settings
+            </a>
+            <button
+              (click)="signOut()"
+              class="block w-full text-left px-4 py-2 hover:bg-red-500 hover:text-white transition"
+            >
+              Sign Out
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
     <div *ngIf="isMenuOpen" class="mt-4 flex flex-col space-y-2 lg:hidden">
       <app-anime-search class="w-full mb-2"></app-anime-search>
+
       <a
         routerLink="home"
         routerLinkActive="bg-blue-light text-white dark:bg-blue dark:text-white"
         [routerLinkActiveOptions]="{ exact: true }"
         class="block px-2 py-1 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
+        (click)="isMenuOpen = false"
       >
         Home
       </a>
@@ -80,6 +136,7 @@
         routerLink="explore"
         routerLinkActive="bg-blue-light text-white dark:bg-blue dark:text-white"
         class="block px-2 py-1 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
+        (click)="isMenuOpen = false"
       >
         Explore
       </a>
@@ -88,9 +145,53 @@
         routerLinkActive="bg-blue-light text-white dark:bg-blue dark:text-white"
         [routerLinkActiveOptions]="{ exact: true }"
         class="block px-2 py-1 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
+        (click)="isMenuOpen = false"
       >
         About
       </a>
+
+      <div class="pt-2">
+        <div *ngIf="!isLoggedIn" class="space-y-1">
+          <a
+            routerLink="signin"
+            class="block px-2 py-1 rounded bg-blue-light dark:bg-blue text-white text-center"
+            (click)="isMenuOpen = false"
+          >
+            Sign in
+          </a>
+        </div>
+
+        <div *ngIf="isLoggedIn" class="space-y-1">
+          <div class="flex items-center gap-2 px-2 py-1">
+            <img
+              [src]="user.avatar"
+              [alt]="user.name"
+              class="w-6 h-6 rounded-full"
+            />
+            <span class="text-sm">{{ user.name }}</span>
+          </div>
+          <a
+            routerLink="profile"
+            class="block px-2 py-1 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
+            (click)="isMenuOpen = false"
+          >
+            Profile
+          </a>
+          <a
+            routerLink="watchlist"
+            class="block px-2 py-1 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
+            (click)="isMenuOpen = false"
+          >
+            Watchlist
+          </a>
+          <button
+            (click)="signOut(); isMenuOpen = false"
+            class="block w-full text-left px-2 py-1 rounded hover:bg-red-500 hover:text-white transition"
+          >
+            Sign Out
+          </button>
+        </div>
+      </div>
     </div>
   </nav>
 </header>

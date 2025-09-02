@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ThemeService, Theme } from '../../services/theme.service';
 import { debounceTime, fromEvent, Subscription } from 'rxjs';
 
@@ -10,7 +10,14 @@ import { debounceTime, fromEvent, Subscription } from 'rxjs';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   isHeaderHidden: boolean = false;
+  isLoggedIn: boolean = false;
+  isUserMenuOpen = false;
   currentTheme: Theme = 'light';
+
+  user = {
+    name: '',
+    avatar: '',
+  };
 
   private lastScrollTop = 0;
   private scrollSub?: Subscription;
@@ -52,6 +59,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
 
     this.lastScrollTop = scrollTop;
+  }
+
+  signOut() {
+    this.isLoggedIn = false;
+    this.isUserMenuOpen = false;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.relative')) {
+      this.isUserMenuOpen = false;
+    }
   }
 
   ngOnDestroy(): void {
