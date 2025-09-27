@@ -86,7 +86,7 @@
                   [(ngModel)]="filter.genreId"
                   class="w-full rounded-lg bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-4 py-2 border border-surface1-light dark:border-surface1 focus:border-blue-light dark:focus:border-blue cursor-pointer"
                 >
-                  <option value="">All Genres</option>
+                  <option [value]="null">All Genres</option>
                   <option *ngFor="let genre of genres" [value]="genre.id">
                     {{ genre.name }}
                   </option>
@@ -289,7 +289,7 @@
               Apply Filters
             </button>
             <a
-              routerLink="/explore"
+              (click)="clearFilters()"
               class="flex-1 bg-peach-light dark:bg-peach text-center text-white font-semibold rounded-full py-3.5 hover:opacity-90 transition cursor-pointer"
             >
               Reset
