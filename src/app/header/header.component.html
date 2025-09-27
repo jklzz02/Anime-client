@@ -64,7 +64,7 @@
         <div *ngIf="!isLoggedIn" class="flex gap-2">
           <a
             routerLink="signin"
-            class="px-3 py-1.5 text-sm rounded border border-blue-light dark:border-blue hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
+            class="px-3 py-1 rounded bg-blue text-white hover:bg-blue-dark transition"
           >
             Sign In
           </a>
@@ -154,10 +154,9 @@
         <div *ngIf="!isLoggedIn" class="space-y-1">
           <a
             routerLink="signin"
-            class="block px-2 py-1 rounded bg-blue-light dark:bg-blue text-white text-center"
-            (click)="isMenuOpen = false"
+            class="block w-full text-center px-2 py-1 rounded bg-blue text-white hover:bg-blue-dark transition"
           >
-            Sign in
+            Sign In
           </a>
         </div>
 

@@ -11,7 +11,11 @@ export interface AnimeSearchParameters {
   genre?: string | null;
   genres?: string[] | null;
   status?: string | null;
+  studio?: string | null;
+  rating?: string | null;
   episodes?: number | null;
+  min_episodes?: number | null;
+  max_episodes?: number | null;
   source?: string | null;
   type?: string | null;
   english_title?: string | null;
@@ -20,4 +24,8 @@ export interface AnimeSearchParameters {
   min_release_year?: number | null;
   max_release_year?: number | null;
   include_adult_content?: boolean | null;
+  start_date_from?: string | null;
+  start_date_to?: string | null;
+  end_date_from?: string | null;
+  end_date_to?: string | null;
 }

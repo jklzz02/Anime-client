@@ -1,133 +1,309 @@
 <div
   *ngIf="isOpen"
-  class="fixed inset-0 z-50 bg-black/70 flex items-center justify-center"
+  class="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4"
   (click)="toggleMenu()"
 >
   <form
     (ngSubmit)="applyFilters()"
-    (blur)="toggleMenu()"
     (click)="$event.stopPropagation()"
     #filterForm="ngForm"
-    class="w-full max-w-md mx-auto bg-mantle-light dark:bg-mantle rounded-xl shadow-2xl p-6 z-50 relative"
+    class="w-full max-w-5xl bg-mantle-light dark:bg-mantle rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
   >
-    <h2 class="text-xl font-bold text-text-light dark:text-text mb-4">
-      Filter Anime
-    </h2>
-
-    <div class="space-y-4 grid grid-cols-1 gap-2">
-      <select
-        name="genreId"
-        [(ngModel)]="filter.genreId"
-        class="w-full rounded-md bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-3 py-2"
+    <div
+      class="bg-surface0-light dark:bg-surface0 px-6 py-4 border-b border-surface1-light dark:border-surface1 flex items-center justify-between"
+    >
+      <h2
+        class="text-xl font-bold text-text-light dark:text-text flex items-center gap-2"
       >
-        <option *ngFor="let genre of genres" [value]="genre.id">
-          {{ genre.name }}
-        </option>
-      </select>
-
-      <select
-        name="licensor_id"
-        [(ngModel)]="filter.licensor_id"
-        class="w-full rounded-md bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-3 py-2"
+        <i class="bi bi-filter-square"></i>
+        Filter Anime
+      </h2>
+      <button
+        type="button"
+        (click)="toggleMenu()"
+        class="text-subtext0-light dark:text-subtext0 hover:text-text-light dark:hover:text-text transition-colors cursor-pointer"
       >
-        <option *ngFor="let licensor of licensors" [value]="licensor.id">
-          {{ licensor.name }}
-        </option>
-      </select>
-
-      <select
-        name="producer_id"
-        [(ngModel)]="filter.producer_id"
-        class="w-full rounded-md bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-3 py-2"
-      >
-        <option *ngFor="let producer of producers" [value]="producer.id">
-          {{ producer.name }}
-        </option>
-      </select>
-
-      <select
-        name="type"
-        [(ngModel)]="filter.type"
-        class="w-full rounded-md bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-3 py-2"
-      >
-        <option *ngFor="let type of types" [value]="type.name">
-          {{ type.name }}
-        </option>
-      </select>
-
-      <select
-        name="source"
-        [(ngModel)]="filter.source"
-        class="w-full rounded-md bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-3 py-2"
-      >
-        <option *ngFor="let source of sources" [value]="source.name">
-          {{ source.name }}
-        </option>
-      </select>
-
-      <input
-        type="number"
-        name="min_score"
-        [(ngModel)]="filter.min_score"
-        placeholder="minimum score..."
-        class="w-full rounded-md bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-3 py-2"
-      />
-
-      <input
-        type="number"
-        name="min_release_year"
-        [(ngModel)]="filter.min_release_year"
-        placeholder="minimum release year..."
-        class="w-full rounded-md bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-3 py-2"
-      />
-
-      <input
-        type="number"
-        name="episodes"
-        [(ngModel)]="filter.episodes"
-        placeholder="episodes count..."
-        class="w-full rounded-md bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-3 py-2"
-      />
-      <div class="flex items-center gap-2">
-        <div class="relative inline-block w-11 h-5">
-          <input
-            [(ngModel)]="filter.include_adult_content"
-            id="include_adult_content"
-            name="include_adult_content"
-            type="checkbox"
-            class="peer appearance-none w-11 h-5 bg-surf-100 rounded-full bg-surface2-light dark:bg-surface2 checked:bg-peach-light dark:checked:bg-peach cursor-pointer transition-colors duration-300"
-          />
-          <label
-            for="include_adult_content"
-            class="absolute top-0 left-0 w-5 h-5 bg-white rounded-full border shadow-sm transition-transform duration-300 peer-checked:translate-x-6 cursor-pointer"
-          >
-          </label>
-        </div>
-        <span>Include adult content</span>
-      </div>
+        <i class="bi bi-x-lg text-xl"></i>
+      </button>
     </div>
 
-    <div class="flex gap-2 mt-6 items-center justify-center">
-      <button
-        type="submit"
-        class="bg-blue-light dark:bg-blue text-white font-semibold px-4 py-2 rounded-md hover:cursor-pointer hover:bg-blue dark:hover:bg-blue/90 transition"
-      >
-        Apply
-      </button>
+    <div
+      class="flex-1 overflow-y-auto px-6 py-6 bg-surface0-light dark:bg-surface0"
+    >
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="space-y-4">
+          <h3
+            class="text-lg font-semibold text-text-light dark:text-text border-b border-surface1-light dark:border-surface1 pb-2 flex items-center gap-2"
+          >
+            <i class="bi bi-tags"></i> Content
+          </h3>
 
-      <span
-        (click)="clearFilters()"
-        class="bg-blue-light dark:bg-blue text-white font-semibold px-4 py-2 rounded-md hover:cursor-pointer hover:bg-blue dark:hover:bg-blue/90 transition"
+          <div class="space-y-3">
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label
+                  class="block text-sm font-medium text-subtext1-light dark:text-subtext1 mb-1"
+                >
+                  Type
+                </label>
+                <select
+                  name="type"
+                  [(ngModel)]="filter.type"
+                  class="w-full rounded-lg bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-4 py-2 border border-surface1-light dark:border-surface1 focus:border-blue-light dark:focus:border-blue cursor-pointer"
+                >
+                  <option value="">All Types</option>
+                  <option *ngFor="let type of types" [value]="type.name">
+                    {{ type.name }}
+                  </option>
+                </select>
+              </div>
+
+              <div>
+                <label
+                  class="block text-sm font-medium text-subtext1-light dark:text-subtext1 mb-1"
+                >
+                  Status
+                </label>
+                <select
+                  name="status"
+                  [(ngModel)]="filter.status"
+                  class="w-full rounded-lg bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-4 py-2 border border-surface1-light dark:border-surface1 focus:border-blue-light dark:focus:border-blue cursor-pointer"
+                >
+                  <option value="">All Statuses</option>
+                  <option value="Finished Airing">Finished Airing</option>
+                  <option value="Currently Airing">Currently Airing</option>
+                  <option value="Not yet aired">Not Yet Aired</option>
+                </select>
+              </div>
+              <div>
+                <label
+                  class="block text-sm font-medium text-subtext1-light dark:text-subtext1 mb-1"
+                >
+                  Genre
+                </label>
+                <select
+                  name="genreId"
+                  [(ngModel)]="filter.genreId"
+                  class="w-full rounded-lg bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-4 py-2 border border-surface1-light dark:border-surface1 focus:border-blue-light dark:focus:border-blue cursor-pointer"
+                >
+                  <option value="">All Genres</option>
+                  <option *ngFor="let genre of genres" [value]="genre.id">
+                    {{ genre.name }}
+                  </option>
+                </select>
+              </div>
+
+              <div>
+                <label
+                  class="block text-sm font-medium text-subtext1-light dark:text-subtext1 mb-1"
+                >
+                  Source
+                </label>
+                <select
+                  name="source"
+                  [(ngModel)]="filter.source"
+                  class="w-full rounded-lg bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-4 py-2 border border-surface1-light dark:border-surface1 focus:border-blue-light dark:focus:border-blue cursor-pointer"
+                >
+                  <option value="">All Sources</option>
+                  <option *ngFor="let source of sources" [value]="source.name">
+                    {{ source.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <h3
+            class="text-lg font-semibold text-text-light dark:text-text border-b border-surface1-light dark:border-surface1 pb-2 flex items-center gap-2"
+          >
+            <i class="bi bi-graph-up"></i> Metrics
+          </h3>
+
+          <div class="space-y-4">
+            <div>
+              <label
+                class="block text-sm font-medium text-subtext1-light dark:text-subtext1 mb-2"
+              >
+                Score Range
+              </label>
+              <div class="grid grid-cols-2 gap-3">
+                <input
+                  type="number"
+                  name="min_score"
+                  [(ngModel)]="filter.min_score"
+                  placeholder="Min"
+                  step="0.1"
+                  min="0"
+                  max="10"
+                  class="w-full rounded-lg bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-4 py-2 border border-surface1-light dark:border-surface1 cursor-pointer"
+                />
+                <input
+                  type="number"
+                  name="max_score"
+                  [(ngModel)]="filter.max_score"
+                  placeholder="Max"
+                  step="0.1"
+                  min="0"
+                  max="10"
+                  class="w-full rounded-lg bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-4 py-2 border border-surface1-light dark:border-surface1 cursor-pointer"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                class="block text-sm font-medium text-subtext1-light dark:text-subtext1 mb-2"
+              >
+                Episodes
+              </label>
+              <div class="grid grid-cols-2 gap-3">
+                <input
+                  type="number"
+                  name="min_episodes"
+                  [(ngModel)]="filter.min_episodes"
+                  placeholder="Min"
+                  min="1"
+                  class="w-full rounded-lg bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-4 py-2 border border-surface1-light dark:border-surface1 cursor-pointer"
+                />
+                <input
+                  type="number"
+                  name="max_episodes"
+                  [(ngModel)]="filter.max_episodes"
+                  placeholder="Max"
+                  min="1"
+                  class="w-full rounded-lg bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-4 py-2 border border-surface1-light dark:border-surface1 cursor-pointer"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                class="block text-sm font-medium text-subtext1-light dark:text-subtext1 mb-2"
+              >
+                Release Year
+              </label>
+              <div class="grid grid-cols-2 gap-3">
+                <input
+                  type="number"
+                  name="min_release_year"
+                  [(ngModel)]="filter.min_release_year"
+                  placeholder="1960"
+                  min="1960"
+                  max="2025"
+                  class="w-full rounded-lg bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-4 py-2 border border-surface1-light dark:border-surface1 cursor-pointer"
+                />
+                <input
+                  type="number"
+                  name="max_release_year"
+                  [(ngModel)]="filter.max_release_year"
+                  placeholder="2025"
+                  min="1960"
+                  max="2025"
+                  class="w-full rounded-lg bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-4 py-2 border border-surface1-light dark:border-surface1 cursor-pointer"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="mt-8 border-t border-surface1-light dark:border-surface1 pt-6"
       >
-        Reset
-      </span>
+        <div class="space-y-6">
+          <div>
+            <h4
+              class="text-md font-semibold text-text-light dark:text-text mb-3"
+            >
+              Air Date Range
+            </h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label
+                  class="block text-sm font-medium text-subtext0-light dark:text-subtext0 mb-1"
+                  >Started Airing</label
+                >
+                <div class="grid grid-cols-2 gap-2">
+                  <input
+                    type="date"
+                    name="start_date_from"
+                    [(ngModel)]="filter.start_date_from"
+                    class="w-full rounded-lg bg-surface0-light dark:bg-surface0 px-4 py-2 text-text-light dark:text-text border border-surface1-light dark:border-surface1 cursor-pointer"
+                  />
+                  <input
+                    type="date"
+                    name="start_date_to"
+                    [(ngModel)]="filter.start_date_to"
+                    class="w-full rounded-lg bg-surface0-light dark:bg-surface0 px-4 py-2 text-text-light dark:text-text border border-surface1-light dark:border-surface1 cursor-pointer"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  class="block text-sm font-medium text-subtext0-light dark:text-subtext0 mb-1"
+                  >Finished Airing</label
+                >
+                <div class="grid grid-cols-2 gap-2">
+                  <input
+                    type="date"
+                    name="end_date_from"
+                    [(ngModel)]="filter.end_date_from"
+                    class="w-full rounded-lg bg-surface0-light dark:bg-surface0 px-4 py-2 text-text-light dark:text-text border border-surface1-light dark:border-surface1 cursor-pointer"
+                  />
+                  <input
+                    type="date"
+                    name="end_date_to"
+                    [(ngModel)]="filter.end_date_to"
+                    class="w-full rounded-lg bg-surface0-light dark:bg-surface0 px-4 py-2 text-text-light dark:text-text border border-surface1-light dark:border-surface1 cursor-pointer"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <div class="relative inline-block w-11 h-5">
+              <input
+                [(ngModel)]="filter.include_adult_content"
+                id="include_adult_content"
+                name="include_adult_content"
+                type="checkbox"
+                class="peer appearance-none w-11 h-5 rounded-full bg-surface2-light dark:bg-surface2 checked:bg-peach-light dark:checked:bg-peach cursor-pointer transition-colors duration-300"
+              />
+              <label
+                for="include_adult_content"
+                class="absolute top-0 left-0 w-5 h-5 bg-white rounded-full border shadow-sm transition-transform duration-300 peer-checked:translate-x-6 cursor-pointer"
+              ></label>
+            </div>
+            <span>Include adult content</span>
+          </div>
+
+          <div class="flex gap-4">
+            <button
+              type="submit"
+              class="flex-1 bg-blue-light dark:bg-blue text-white font-semibold rounded-full py-3.5 hover:opacity-90 transition cursor-pointer"
+            >
+              Apply Filters
+            </button>
+            <a
+              routerLink="/explore"
+              class="flex-1 bg-peach-light dark:bg-peach text-center text-white font-semibold rounded-full py-3.5 hover:opacity-90 transition cursor-pointer"
+            >
+              Reset
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </form>
 </div>
 
 <div *ngIf="!isOpen" class="mx-auto text-center">
   <button
-    class="px-3 py-2 shadow rounded-full bg-surface0-light dark:bg-surface1 text-text-light dark:text-text hover:opacity-75"
+    class="px-4 py-3 shadow-lg rounded-full bg-blue-light dark:bg-blue text-white hover:opacity-90 transition cursor-pointer"
     (click)="toggleMenu()"
   >
     <i class="text-2xl bi bi-filter"></i>

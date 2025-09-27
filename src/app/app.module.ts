@@ -21,7 +21,7 @@ import { ErrorComponent } from './error/error.component';
 import { AnimeSummaryCardComponent } from './anime-summary-card/anime-summary-card.component';
 import { FilterComponent } from './filter/filter.component';
 import { GoogleButtonComponent } from './auth/google-button/google-button.component';
-import { NavAuthComponent } from './auth/nav-auth/nav-auth.component';
+import { SigninComponent } from './auth/signin/signin.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +42,7 @@ import { NavAuthComponent } from './auth/nav-auth/nav-auth.component';
     AnimeSummaryCardComponent,
     FilterComponent,
     GoogleButtonComponent,
-    NavAuthComponent,
+    SigninComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [provideHttpClient()],
