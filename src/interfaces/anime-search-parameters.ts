@@ -7,7 +7,7 @@ export interface AnimeSearchParameters {
   licensor_id?: number | null;
   licensor?: string | null;
   licensors?: string[] | null;
-  genreId?: number | null;
+  genre_id?: number | null;
   genre?: string | null;
   genres?: string[] | null;
   status?: string | null;

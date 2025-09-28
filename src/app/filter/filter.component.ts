@@ -34,7 +34,7 @@ export class FilterComponent implements OnInit, OnDestroy {
   @Input() filter: AnimeSearchParameters = {
     producer_id: null,
     licensor_id: null,
-    genreId: null,
+    genre_id: null,
     status: '',
     rating: '',
     type: '',

@@ -71,7 +71,7 @@ export class AnimeService {
     return this.http.get<PaginatedAnime>(request);
   }
 
-  buildQuery(parameters: AnimeSearchParameters): string {
+  private buildQuery(parameters: AnimeSearchParameters): string {
     const params: string[] = [];
 
     Object.entries(parameters).forEach(([key, value]) => {
