@@ -55,12 +55,14 @@
       >
         fan favourite
       </a>
-      <span
+      <a
+        [routerLink]="['/search']"
+        [queryParams]="{ min_episodes: '2', max_episodes: '12' }"
         *ngIf="short"
-        class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-green-light dark:bg-green dark:text-crust"
+        class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-green-light dark:bg-green dark:text-crust hover:opacity-85"
       >
         short
-      </span>
+      </a>
     </div>
 
     <div *ngIf="anime.genres" class="mb-2">

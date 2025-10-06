@@ -20,7 +20,7 @@ export class AnimeSearchResultsComponent implements OnInit {
   anime!: PaginatedAnime | null;
   suggestions: AnimeSummary[] = [];
   notFound: boolean = false;
-  params: AnimeSearchParameters = {};
+  params: Partial<AnimeSearchParameters> = {};
 
   constructor(
     private route: ActivatedRoute,

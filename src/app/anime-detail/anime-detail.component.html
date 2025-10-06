@@ -47,12 +47,14 @@
         >
           <h3 class="font-semibold mb-3 lg:mb-4 text-sm">Genres</h3>
           <div class="flex flex-wrap gap-2">
-            <span
+            <a
+              [routerLink]="['/search']"
+              [queryParams]="{ genre_id: genre.id }"
               *ngFor="let genre of anime.genres"
-              class="px-2 lg:px-3 py-1 text-white bg-blue dark:text-crust text-xs lg:text-sm rounded-full"
+              class="px-2 lg:px-3 py-1 text-white bg-blue dark:text-crust text-xs lg:text-sm rounded-full hover:opacity-85"
             >
               {{ genre.name }}
-            </span>
+            </a>
           </div>
         </section>
 
@@ -61,34 +63,40 @@
         >
           <div *ngIf="anime.studio">
             <h3 class="font-semibold mb-2 text-sm">Studio</h3>
-            <span
-              class="px-2 lg:px-3 py-1 text-white bg-lavender-light dark:text-crust dark:bg-green text-xs lg:text-sm rounded-full"
+            <a
+              [routerLink]="['/search']"
+              [queryParams]="{ studio: anime.studio }"
+              class="px-2 lg:px-3 py-1 text-white bg-lavender-light dark:text-crust dark:bg-green text-xs lg:text-sm rounded-full hover:opacity-85"
             >
               {{ anime.studio }}
-            </span>
+            </a>
           </div>
 
           <div *ngIf="anime.producers">
             <h3 class="font-semibold mb-2 text-sm">Producers</h3>
             <div class="flex flex-wrap gap-2">
-              <span
+              <a
+                [routerLink]="['/search']"
+                [queryParams]="{ producer_id: producer.id }"
                 *ngFor="let producer of anime.producers"
-                class="px-2 lg:px-3 py-1 text-white bg-lavender dark:text-crust text-xs lg:text-sm rounded-full"
+                class="px-2 lg:px-3 py-1 text-white bg-lavender dark:text-crust text-xs lg:text-sm rounded-full hover:opacity-85"
               >
                 {{ producer.name }}
-              </span>
+              </a>
             </div>
           </div>
 
           <div *ngIf="anime.licensors">
             <h3 class="font-semibold mb-2 text-sm">Licensors</h3>
             <div class="flex flex-wrap gap-2">
-              <span
+              <a
+                [routerLink]="['/search']"
+                [queryParams]="{ licensor_id: licensor.id }"
                 *ngFor="let licensor of anime.licensors"
-                class="px-2 lg:px-3 py-1 text-white bg-peach dark:text-crust text-xs lg:text-sm rounded-full"
+                class="px-2 lg:px-3 py-1 text-white bg-peach dark:text-crust text-xs lg:text-sm rounded-full hover:opacity-85"
               >
                 {{ licensor.name }}
-              </span>
+              </a>
             </div>
           </div>
         </section>
