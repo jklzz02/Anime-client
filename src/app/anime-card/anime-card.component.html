@@ -68,7 +68,7 @@
     <div *ngIf="anime.genres" class="mb-2">
       <a
         [routerLink]="['/search']"
-        [queryParams]="{ genreId: genre.id }"
+        [queryParams]="{ genre_id: genre.id }"
         *ngFor="let genre of anime.genres | slice : 0 : 3"
         class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-blue-light dark:bg-blue dark:text-crust hover:opacity-85"
       >
