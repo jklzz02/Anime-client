@@ -6,7 +6,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth/auth.service';
 
 declare const google: any;
 
@@ -19,9 +20,10 @@ declare const google: any;
 export class GoogleButtonComponent implements OnInit, AfterViewInit {
   @ViewChild('googleBtn', { static: true }) googleBtn!: ElementRef;
 
-  private credential: string = '';
+  isLoading = false;
+  errorMessage = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     google.accounts.id.initialize({
@@ -39,7 +41,22 @@ export class GoogleButtonComponent implements OnInit, AfterViewInit {
     });
   }
 
-  public handleResponse(data: any) {
-    this.credential = data.credential;
+  public handleResponse(data: any): void {
+    if (!data.credential) {
+      this.errorMessage = 'No credential received from Google';
+      return;
+    }
+
+    this.errorMessage = '';
+
+    this.authService.googleLogin(data.credential).subscribe({
+      next: (response) => {
+        this.router.navigate(['/']);
+      },
+      error: (error) => {
+        this.errorMessage =
+          error.error?.message || 'Login failed. Please try again.';
+      },
+    });
   }
 }
