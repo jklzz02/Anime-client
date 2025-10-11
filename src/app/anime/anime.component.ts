@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AnimeService } from '../../services/anime.service';
+import { AnimeService } from '../../services/http/anime.service';
 import { PaginatedAnime } from '../../interfaces/paginated-anime';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';

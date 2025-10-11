@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AnimeService } from '../../services/anime.service';
+import { AnimeService } from '../../services/http/anime.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Anime } from '../../interfaces/anime';

@@ -1,5 +1,5 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { ThemeService, Theme } from '../../services/theme.service';
+import { ThemeService, Theme } from '../../services/theme/theme.service';
 import { debounceTime, fromEvent, Subscription } from 'rxjs';
 
 @Component({

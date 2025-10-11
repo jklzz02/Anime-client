@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PaginatedAnime } from '../../interfaces/paginated-anime';
-import { AnimeService } from '../../services/anime.service';
+import { AnimeService } from '../../services/http/anime.service';
 import { AnimeSummary } from '../../interfaces/anime-summary';
 import levenshtein from 'js-levenshtein';
 import { AnimeSearchParameters } from '../../interfaces/anime-search-parameters';

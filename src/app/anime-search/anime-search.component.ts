@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AnimeService } from '../../services/anime.service';
+import { AnimeService } from '../../services/http/anime.service';
 import { AnimeSummary } from '../../interfaces/anime-summary';
 import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { filter } from 'rxjs';
