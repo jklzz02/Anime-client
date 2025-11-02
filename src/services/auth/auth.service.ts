@@ -1,18 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap, catchError, of } from 'rxjs';
+import { BehaviorSubject, Observable, tap, catchError, of, map } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
-
-export interface User {
-  id: string;
-  email: string;
-  username: string;
-  picture?: string;
-}
+import { UserService } from '../user/user.service';
 
 interface AuthResponse {
-  user: User;
+  user: any;
   access_token: string;
 }
 
@@ -20,30 +14,29 @@ interface AuthResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  private currentUserSubject = new BehaviorSubject<User | null>(null);
-  public currentUser$ = this.currentUserSubject.asObservable();
-
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
   private readonly API_URL = environment.anime_api_domain;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private userService: UserService
+  ) {
+    this.checkAuthStatus();
+  }
 
   googleLogin(idToken: string): Observable<AuthResponse> {
     return this.http
       .post<AuthResponse>(
         `${this.API_URL}/auth/cookie/google`,
-        {
-          id_token: idToken,
-        },
-        {
-          withCredentials: true,
-        }
+        { id_token: idToken },
+        { withCredentials: true }
       )
       .pipe(
-        tap((response) => {
-          this.setAuthState(response.user);
+        tap(() => {
+          this.isAuthenticatedSubject.next(true);
         }),
         catchError((error) => {
           console.error('Login failed:', error);
@@ -51,25 +44,20 @@ export class AuthService {
         })
       );
   }
-
-  refreshToken(): Observable<AuthResponse | null> {
+  refreshToken(): Observable<boolean> {
     return this.http
-      .post<AuthResponse>(
+      .post<{ access_token: string }>(
         `${this.API_URL}/auth/cookie/refresh`,
         {},
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       )
       .pipe(
-        tap((response) => {
-          this.setAuthState(response.user);
+        tap(() => this.isAuthenticatedSubject.next(true)),
+        catchError(() => {
+          this.isAuthenticatedSubject.next(false);
+          return of(false);
         }),
-        catchError((error) => {
-          console.error('Token refresh failed:', error);
-          this.clearAuthState();
-          return of(null);
-        })
+        map((response) => !!response)
       );
   }
 
@@ -78,39 +66,28 @@ export class AuthService {
       .post<void>(
         `${this.API_URL}/auth/cookie/logout`,
         {},
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       )
       .pipe(
         tap(() => {
-          this.clearAuthState();
-          this.router.navigate(['/login']);
+          this.isAuthenticatedSubject.next(false);
+          this.userService.clearUser();
+          this.router.navigate(['/signin']);
         }),
-        catchError((error) => {
-          console.error('Logout failed:', error);
-          this.clearAuthState();
-          this.router.navigate(['/login']);
+        catchError(() => {
+          this.isAuthenticatedSubject.next(false);
+          this.userService.clearUser();
+          this.router.navigate(['/signin']);
           return of(undefined);
         })
       );
   }
 
-  getCurrentUser(): User | null {
-    return this.currentUserSubject.value;
+  checkAuthStatus(): void {
+    this.refreshToken().subscribe();
   }
 
   isAuthenticated(): boolean {
     return this.isAuthenticatedSubject.value;
-  }
-
-  private setAuthState(user: User): void {
-    this.currentUserSubject.next(user);
-    this.isAuthenticatedSubject.next(true);
-  }
-
-  private clearAuthState(): void {
-    this.currentUserSubject.next(null);
-    this.isAuthenticatedSubject.next(false);
   }
 }

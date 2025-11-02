@@ -22,6 +22,7 @@ import { AnimeSummaryCardComponent } from './anime-summary-card/anime-summary-ca
 import { FilterComponent } from './filter/filter.component';
 import { GoogleButtonComponent } from './auth/google-button/google-button.component';
 import { SigninComponent } from './auth/signin/signin.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { SigninComponent } from './auth/signin/signin.component';
     FilterComponent,
     GoogleButtonComponent,
     SigninComponent,
+    ProfileComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [provideHttpClient()],

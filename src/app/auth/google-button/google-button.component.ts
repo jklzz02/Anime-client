@@ -51,7 +51,7 @@ export class GoogleButtonComponent implements OnInit, AfterViewInit {
 
     this.authService.googleLogin(data.credential).subscribe({
       next: (response) => {
-        this.router.navigate(['/']);
+        this.router.navigate(['/profile']);
       },
       error: (error) => {
         this.errorMessage =

@@ -78,11 +78,11 @@
             class="flex items-center gap-2 p-1 rounded hover:bg-lavender-light/20 hover:dark:bg-lavender/20"
           >
             <img
-              [src]="user.avatar"
-              [alt]="user.name"
+              [src]="user.profile_picture"
+              [alt]="user.username"
               class="w-8 h-8 rounded-full"
             />
-            <span class="text-sm">{{ user.name }}</span>
+            <span class="text-sm">{{ user.username }}</span>
             <i
               class="bi bi-chevron-down text-xs"
               [class.rotate-180]="isUserMenuOpen"
@@ -167,11 +167,11 @@
         <div *ngIf="isLoggedIn" class="space-y-1">
           <div class="flex items-center gap-2 px-2 py-1">
             <img
-              [src]="user.avatar"
-              [alt]="user.name"
+              [src]="user.profile_picture"
+              [alt]="user.username"
               class="w-6 h-6 rounded-full"
             />
-            <span class="text-sm">{{ user.name }}</span>
+            <span class="text-sm">{{ user.username }}</span>
           </div>
           <a
             routerLink="profile"

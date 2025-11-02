@@ -1,6 +1,8 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ThemeService, Theme } from '../../services/theme/theme.service';
 import { debounceTime, fromEvent, Subscription } from 'rxjs';
+import { AuthService } from '../../services/auth/auth.service';
+import { UserService, User } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-header',
@@ -13,19 +15,28 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean = false;
   isUserMenuOpen = false;
   currentTheme: Theme = 'light';
-
-  user = {
-    name: '',
-    avatar: '',
-  };
+  user: Partial<User> = {};
 
   private lastScrollTop = 0;
   private scrollSub?: Subscription;
   private themeSub?: Subscription;
 
-  constructor(private themeService: ThemeService) {}
+  constructor(
+    private themeService: ThemeService,
+    private auth: AuthService,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
+    this.auth.isAuthenticated$.subscribe((isAuth) => {
+      this.isLoggedIn = isAuth;
+      if (isAuth) {
+        this.userService.getCurrentUser().subscribe((user) => {
+          this.user = user;
+        });
+      }
+    });
+
     this.scrollSub = fromEvent(window, 'scroll')
       .pipe(debounceTime(10))
       .subscribe(() => this.handleScroll());
