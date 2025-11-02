@@ -28,6 +28,13 @@ export class FilterComponent implements OnInit, OnDestroy {
   types: Type[] = [];
   sources: Source[] = [];
   isOpen: boolean = false;
+  sortOrders = {
+    Ascending: 'asc',
+    Descending: 'desc',
+  };
+
+  sortFields: string[] = ['Title', 'Year', 'Score', 'Release Date'];
+
   private header = document.querySelector('header');
   private body = document.querySelector('body');
 

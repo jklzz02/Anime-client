@@ -68,6 +68,7 @@ export class AnimeService {
       '&size=' +
       count;
 
+    console.log('Anime search request:', request);
     return this.http.get<PaginatedAnime>(request);
   }
 

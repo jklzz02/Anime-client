@@ -307,6 +307,35 @@
           </div>
 
           <div class="flex items-center gap-2">
+            <select
+              name="order_by"
+              [(ngModel)]="filter.order_by"
+              class="w-full rounded-lg bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-4 py-2 border border-surface1-light dark:border-surface1 focus:border-blue-light dark:focus:border-blue cursor-pointer"
+            >
+              <option value="">None</option>
+              <option
+                *ngFor="let field of sortFields"
+                [value]="field.toLowerCase().replace(' ', '_')"
+              >
+                {{ field }}
+              </option>
+            </select>
+
+            <select
+              name="sort_order"
+              [(ngModel)]="filter.sort_order"
+              class="w-full rounded-lg bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-4 py-2 border border-surface1-light dark:border-surface1 focus:border-blue-light dark:focus:border-blue cursor-pointer"
+            >
+              <option
+                *ngFor="let order of sortOrders | keyvalue"
+                [value]="order.value"
+              >
+                {{ order.key }}
+              </option>
+            </select>
+          </div>
+
+          <div class="flex items-center gap-2">
             <div class="relative inline-block w-11 h-5">
               <input
                 [(ngModel)]="filter.include_adult_content"

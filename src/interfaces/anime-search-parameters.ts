@@ -28,4 +28,9 @@ export interface AnimeSearchParameters {
   start_date_to?: string | null;
   end_date_from?: string | null;
   end_date_to?: string | null;
+  order_by?: AnimeSortField | null;
+  sort_order?: SortOrder | null;
 }
+
+type SortOrder = 'asc' | 'desc';
+type AnimeSortField = 'title' | 'year' | 'score' | 'type' | 'release_date';
