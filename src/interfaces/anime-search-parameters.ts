@@ -33,4 +33,10 @@ export interface AnimeSearchParameters {
 }
 
 type SortOrder = 'asc' | 'desc';
-type AnimeSortField = 'title' | 'year' | 'score' | 'type' | 'release_date';
+type AnimeSortField =
+  | 'title'
+  | 'year'
+  | 'score'
+  | 'type'
+  | 'release_date'
+  | 'episodes';

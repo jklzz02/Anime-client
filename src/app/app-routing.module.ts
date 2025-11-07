@@ -10,7 +10,6 @@ import { ErrorComponent } from './error/error.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from '../guards/auth.guard';
-import { GuestGuard } from '../guards/guest.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -22,7 +21,7 @@ const routes: Routes = [
     title: 'AnimeHub | Explore',
   },
   { path: 'detail/:id', component: AnimeDetailComponent },
-  { path: 'signin', component: SigninComponent, canActivate: [GuestGuard] },
+  { path: 'signin', component: SigninComponent },
   {
     path: 'search',
     component: AnimeSearchResultsComponent,

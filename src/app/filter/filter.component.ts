@@ -33,7 +33,7 @@ export class FilterComponent implements OnInit, OnDestroy {
     Descending: 'desc',
   };
 
-  sortFields: string[] = ['Title', 'Year', 'Score', 'Release Date'];
+  sortFields: string[] = ['Title', 'Year', 'Score', 'Release Date', 'Episodes'];
 
   private header = document.querySelector('header');
   private body = document.querySelector('body');
