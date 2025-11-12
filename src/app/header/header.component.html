@@ -75,7 +75,7 @@
         <div *ngIf="isLoggedIn" class="relative">
           <button
             (click)="isUserMenuOpen = !isUserMenuOpen"
-            class="flex items-center gap-2 p-1 rounded hover:bg-lavender-light/20 hover:dark:bg-lavender/20"
+            class="flex items-center gap-2 p-1 rounded-lg hover:bg-lavender-light/20 hover:dark:bg-lavender/20"
           >
             <img
               [src]="user.profile_picture"
@@ -100,16 +100,10 @@
               Profile
             </a>
             <a
-              routerLink="watchlist"
+              routerLink="/watchlist"
               class="block px-4 py-2 hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
             >
               My Watchlist
-            </a>
-            <a
-              routerLink="settings"
-              class="block px-4 py-2 hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
-            >
-              Settings
             </a>
             <button
               (click)="signOut()"
@@ -181,7 +175,7 @@
             Profile
           </a>
           <a
-            routerLink="watchlist"
+            routerLink="/watchlist"
             class="block px-2 py-1 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
             (click)="isMenuOpen = false"
           >

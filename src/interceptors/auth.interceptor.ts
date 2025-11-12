@@ -13,6 +13,7 @@ import { AuthService } from '../services/auth/auth.service';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   private isRefreshing = false;
+  private isLoggingOut = false;
   private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(
     null
   );
@@ -25,9 +26,17 @@ export class AuthInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     request = this.addCredentials(request);
 
+    if (request.url.includes('/auth/cookie/logout')) {
+      this.isLoggingOut = true;
+    }
+
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 401 && !this.isAuthEndpoint(request.url)) {
+        if (
+          error.status === 401 &&
+          !this.isLoggingOut &&
+          !this.isAuthEndpoint(request.url)
+        ) {
           return this.handle401Error(request, next);
         }
         return throwError(() => error);
@@ -52,18 +61,16 @@ export class AuthInterceptor implements HttpInterceptor {
       return this.authService.refreshToken().pipe(
         switchMap((response) => {
           this.isRefreshing = false;
-
           if (response) {
             this.refreshTokenSubject.next(response);
             return next.handle(this.addCredentials(request));
           }
-
-          this.authService.logout().subscribe();
+          this.performLogout();
           return throwError(() => new Error('Token refresh failed'));
         }),
         catchError((err) => {
           this.isRefreshing = false;
-          this.authService.logout().subscribe();
+          this.performLogout();
           return throwError(() => err);
         })
       );
@@ -73,6 +80,19 @@ export class AuthInterceptor implements HttpInterceptor {
         take(1),
         switchMap(() => next.handle(this.addCredentials(request)))
       );
+    }
+  }
+
+  private performLogout(): void {
+    if (!this.isLoggingOut) {
+      this.isLoggingOut = true;
+      this.authService.logout().subscribe({
+        complete: () => {
+          setTimeout(() => {
+            this.isLoggingOut = false;
+          }, 500);
+        },
+      });
     }
   }
 

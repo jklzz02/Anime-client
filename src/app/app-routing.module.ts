@@ -8,8 +8,9 @@ import { AboutComponent } from './about/about.component';
 import { AnimeSearchResultsComponent } from './anime-search-results/anime-search-results.component';
 import { ErrorComponent } from './error/error.component';
 import { SigninComponent } from './auth/signin/signin.component';
-import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from '../guards/auth.guard';
+import { ProfileComponent } from './user/profile/profile.component';
+import { WatchlistComponent } from './user/watchlist/watchlist.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -28,6 +29,11 @@ const routes: Routes = [
     title: 'AnimeHub | Explore',
   },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  {
+    path: 'watchlist',
+    component: WatchlistComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'home', component: HomeComponent, title: 'AnimeHub' },
   { path: 'error', component: ErrorComponent },
   { path: '**', component: NotFoundComponent },

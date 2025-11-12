@@ -22,7 +22,8 @@ import { AnimeSummaryCardComponent } from './anime-summary-card/anime-summary-ca
 import { FilterComponent } from './filter/filter.component';
 import { GoogleButtonComponent } from './auth/google-button/google-button.component';
 import { SigninComponent } from './auth/signin/signin.component';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from './user/profile/profile.component';
+import { WatchlistComponent } from './user/watchlist/watchlist.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { ProfileComponent } from './profile/profile.component';
     GoogleButtonComponent,
     SigninComponent,
     ProfileComponent,
+    WatchlistComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [provideHttpClient()],

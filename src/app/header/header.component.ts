@@ -73,8 +73,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   signOut() {
-    this.isLoggedIn = false;
-    this.isUserMenuOpen = false;
+    this.auth.logout().subscribe(() => {
+      this.isLoggedIn = false;
+      this.isUserMenuOpen = false;
+    });
   }
 
   @HostListener('document:click', ['$event'])
