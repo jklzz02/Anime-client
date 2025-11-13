@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Anime } from '../../interfaces/anime';
 import { AnimeSummary } from '../../interfaces/anime-summary';
+import { UserService } from '../../services/user/user.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-anime-detail',
@@ -14,14 +16,31 @@ import { AnimeSummary } from '../../interfaces/anime-summary';
 export class AnimeDetailComponent implements OnInit {
   anime: Anime | any;
   relatedSummaries: AnimeSummary[] = [];
+  favourites: Anime[] = [];
+  isLoggedIn: boolean = false;
+  isFavourite: boolean = false;
 
   constructor(
     private title: Title,
     private animeService: AnimeService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private userService: UserService,
+    private auth: AuthService
   ) {}
   ngOnInit(): void {
+    this.auth.isAuthenticated$.subscribe((isAuth) => {
+      this.isLoggedIn = isAuth;
+      if (isAuth) {
+        this.userService.getFavourites().subscribe((favourites) => {
+          this.favourites = favourites;
+          this.isFavourite = this.favourites.some(
+            (fav) => fav.id === this.anime?.id
+          );
+        });
+      }
+    });
+
     this.route.paramMap.subscribe((param) => {
       const id: number = Number(param.get('id'));
       this.animeService.getAnimeById(id).subscribe({
@@ -51,5 +70,26 @@ export class AnimeDetailComponent implements OnInit {
       left: direction * scrollAmount,
       behavior: 'smooth',
     });
+  }
+
+  toggleFavourite() {
+    if (!this.isLoggedIn) return;
+
+    this.userService.getFavourites().subscribe((favourites) => {
+      this.favourites = favourites;
+      this.isFavourite = this.favourites.some(
+        (fav) => fav.id === this.anime?.id
+      );
+    });
+
+    if (this.isFavourite) {
+      this.userService.removeFavourite(this.anime.id).subscribe(() => {
+        this.isFavourite = false;
+      });
+    } else {
+      this.userService.addFavourite(this.anime.id).subscribe(() => {
+        this.isFavourite = true;
+      });
+    }
   }
 }

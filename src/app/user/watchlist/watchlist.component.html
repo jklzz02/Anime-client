@@ -1,1 +1,5 @@
-<p>watchlist works!</p>
+<div class="space-y-4 lg:space-y-6">
+  <div *ngFor="let anime of favourites" class="dark:text-text">
+    {{ anime.title }}
+  </div>
+</div>
