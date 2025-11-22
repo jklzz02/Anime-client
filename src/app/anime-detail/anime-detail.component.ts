@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Anime } from '../../interfaces/anime';
 import { AnimeSummary } from '../../interfaces/anime-summary';
-import { UserService } from '../../services/user/user.service';
+import { UserFavourite, UserService } from '../../services/user/user.service';
 import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
@@ -16,7 +16,7 @@ import { AuthService } from '../../services/auth/auth.service';
 export class AnimeDetailComponent implements OnInit {
   anime: Anime | any;
   relatedSummaries: AnimeSummary[] = [];
-  favourites: Anime[] = [];
+  favourites: UserFavourite[] = [];
   isLoggedIn: boolean = false;
   isFavourite: boolean = false;
 
@@ -35,7 +35,7 @@ export class AnimeDetailComponent implements OnInit {
         this.userService.getFavourites().subscribe((favourites) => {
           this.favourites = favourites;
           this.isFavourite = this.favourites.some(
-            (fav) => fav.id === this.anime?.id
+            (fav) => fav.anime_id === this.anime?.id
           );
         });
       }
@@ -78,7 +78,7 @@ export class AnimeDetailComponent implements OnInit {
     this.userService.getFavourites().subscribe((favourites) => {
       this.favourites = favourites;
       this.isFavourite = this.favourites.some(
-        (fav) => fav.id === this.anime?.id
+        (fav) => fav.anime_id === this.anime?.id
       );
     });
 

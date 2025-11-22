@@ -12,6 +12,11 @@ export interface User {
   admin: boolean;
 }
 
+export interface UserFavourite {
+  anime_id: number;
+  user_id: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -31,16 +36,20 @@ export class UserService {
       .pipe(tap((user) => this.currentUserSubject.next(user)));
   }
 
-  getFavourites(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.API_URL}/user/favourite`, {
+  getFavourites(): Observable<UserFavourite[]> {
+    return this.http.get<UserFavourite[]>(`${this.API_URL}/user/favourite`, {
       withCredentials: true,
     });
   }
 
-  addFavourite(animeId: number): Observable<any> {
-    return this.http.post(`${this.API_URL}/user/favourite`, animeId, {
-      withCredentials: true,
-    });
+  addFavourite(animeId: number): Observable<UserFavourite> {
+    return this.http.post<UserFavourite>(
+      `${this.API_URL}/user/favourite`,
+      animeId,
+      {
+        withCredentials: true,
+      }
+    );
   }
 
   removeFavourite(animeId: number): Observable<void> {
