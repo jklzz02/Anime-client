@@ -73,7 +73,9 @@ export class AnimeDetailComponent implements OnInit {
   }
 
   toggleFavourite() {
-    if (!this.isLoggedIn) return;
+    if (!this.isLoggedIn) {
+      return;
+    }
 
     this.userService.getFavourites().subscribe((favourites) => {
       this.favourites = favourites;
