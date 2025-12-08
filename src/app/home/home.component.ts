@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AnimeService } from '../../services/http/anime.service';
 import { Anime } from '../../interfaces/anime';
-import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
 @Component({
