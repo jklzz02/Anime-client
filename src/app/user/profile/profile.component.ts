@@ -28,4 +28,12 @@ export class ProfileComponent implements OnInit {
   onExplore(): void {
     this.router.navigate(['/explore']);
   }
+
+  onReviews(): void {
+    this.router.navigate(['/reviews']);
+  }
+
+  onWatchlist(): void {
+    this.router.navigate(['/watchlist']);
+  }
 }

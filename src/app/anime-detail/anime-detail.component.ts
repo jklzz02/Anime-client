@@ -36,9 +36,7 @@ export class AnimeDetailComponent implements OnInit {
       if (isAuth) {
         this.userService.getFavourites().subscribe((favourites) => {
           this.favourites = favourites;
-          this.isFavourite = this.favourites.some(
-            (fav) => fav.anime_id === this.anime?.id
-          );
+          this.updateFavouriteStatus();
         });
       }
     });
@@ -49,6 +47,7 @@ export class AnimeDetailComponent implements OnInit {
         next: (data) => {
           this.anime = data;
           this.title.setTitle('AnimeHub | ' + this.anime.title);
+          this.updateFavouriteStatus();
         },
         error: (error) => {
           console.log(error);
@@ -81,13 +80,6 @@ export class AnimeDetailComponent implements OnInit {
       return;
     }
 
-    this.userService.getFavourites().subscribe((favourites) => {
-      this.favourites = favourites;
-      this.isFavourite = this.favourites.some(
-        (fav) => fav.anime_id === this.anime?.id
-      );
-    });
-
     if (this.isFavourite) {
       this.userService.removeFavourite(this.anime.id).subscribe(() => {
         this.isFavourite = false;
@@ -96,6 +88,14 @@ export class AnimeDetailComponent implements OnInit {
       this.userService.addFavourite(this.anime.id).subscribe(() => {
         this.isFavourite = true;
       });
+    }
+  }
+
+  private updateFavouriteStatus(): void {
+    if (this.anime && this.favourites.length >= 0) {
+      this.isFavourite = this.favourites.some(
+        (fav) => fav.anime_id === this.anime.id
+      );
     }
   }
 }
