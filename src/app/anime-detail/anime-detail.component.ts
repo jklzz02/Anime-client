@@ -6,7 +6,6 @@ import { Anime } from '../../interfaces/anime';
 import { UserFavourite, UserService } from '../../services/user/user.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { RecommenderService } from '../../services/recommender/recommender.service';
-import { AnimeRecommendation } from '../../interfaces/anime-recommendation';
 import { AnimeSummary } from '../../interfaces/anime-summary';
 
 @Component({
