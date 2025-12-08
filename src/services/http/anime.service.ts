@@ -48,12 +48,6 @@ export class AnimeService {
     return this.http.get<AnimeSummary[]>(`${this.BASE}/summary?count=${count}`);
   }
 
-  getRelatedSummaries(id: number, count: number): Observable<AnimeSummary[]> {
-    return this.http.get<AnimeSummary[]>(
-      `${this.BASE}/related?id=${id}&count=${count}`
-    );
-  }
-
   searchAnime(
     parameters: AnimeSearchParameters,
     page: number,

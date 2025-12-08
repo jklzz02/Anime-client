@@ -3,9 +3,11 @@ import { AnimeService } from '../../services/http/anime.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Anime } from '../../interfaces/anime';
-import { AnimeSummary } from '../../interfaces/anime-summary';
 import { UserFavourite, UserService } from '../../services/user/user.service';
 import { AuthService } from '../../services/auth/auth.service';
+import { RecommenderService } from '../../services/recommender/recommender.service';
+import { AnimeRecommendation } from '../../interfaces/anime-recommendation';
+import { AnimeSummary } from '../../interfaces/anime-summary';
 
 @Component({
   selector: 'app-anime-detail',
@@ -23,6 +25,7 @@ export class AnimeDetailComponent implements OnInit {
   constructor(
     private title: Title,
     private animeService: AnimeService,
+    private recommenderService: RecommenderService,
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
@@ -54,9 +57,11 @@ export class AnimeDetailComponent implements OnInit {
         },
       });
 
-      this.animeService
-        .getRelatedSummaries(id, 10)
-        .subscribe((data) => (this.relatedSummaries = data));
+      this.recommenderService.getRelated(id, 10).subscribe((data) => {
+        this.animeService.getAnimeById(data).subscribe((anime) => {
+          this.relatedSummaries = anime as AnimeSummary[];
+        });
+      });
     });
   }
 
