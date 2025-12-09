@@ -18,6 +18,7 @@ export class AnimeDetailComponent implements OnInit {
   anime: Anime | any;
   relatedSummaries: AnimeSummary[] = [];
   favourites: UserFavourite[] = [];
+  compatibilityScore: number | null = null;
   isLoggedIn: boolean = false;
   isFavourite: boolean = false;
 
@@ -37,6 +38,7 @@ export class AnimeDetailComponent implements OnInit {
         this.userService.getFavourites().subscribe((favourites) => {
           this.favourites = favourites;
           this.updateFavouriteStatus();
+          this.updateCompatibilityScore();
         });
       }
     });
@@ -48,6 +50,7 @@ export class AnimeDetailComponent implements OnInit {
           this.anime = data;
           this.title.setTitle('AnimeHub | ' + this.anime.title);
           this.updateFavouriteStatus();
+          this.updateCompatibilityScore();
         },
         error: (error) => {
           console.log(error);
@@ -88,6 +91,17 @@ export class AnimeDetailComponent implements OnInit {
       this.userService.addFavourite(this.anime.id).subscribe(() => {
         this.isFavourite = true;
       });
+    }
+  }
+
+  private updateCompatibilityScore(): void {
+    if (this.anime && this.favourites.length > 0) {
+      const favouriteIds = this.favourites.map((fav) => fav.anime_id);
+      this.recommenderService
+        .getCompatibility(this.anime.id, favouriteIds)
+        .subscribe((data) => {
+          this.compatibilityScore = data.compatibility_score;
+        });
     }
   }
 

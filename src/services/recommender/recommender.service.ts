@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { AnimeRecommendation } from '../../interfaces/anime-recommendation';
 import { Observable } from 'rxjs';
+import { CompatibilityResponse } from '../../interfaces/recommender/compatibility-response';
 
 @Injectable({
   providedIn: 'root',
@@ -12,12 +13,33 @@ export class RecommenderService {
 
   private BASE: string = environment.recommender_api_domain + '/v1';
 
-  getRelated(id: number, count: number): Observable<number[]> {
-    console.log(`${this.BASE}/recommend?anime_id=${id}&limit=${count}`);
-
-    return this.http.get<number[]>(
-      `${this.BASE}/recommend?anime_id=${id}&limit=${count}`
+  getCompatibility(
+    targetAnime: number,
+    userFavourites: number[]
+  ): Observable<CompatibilityResponse> {
+    return this.http.post<CompatibilityResponse>(
+      `${this.BASE}/compatibility/score`,
+      {
+        target_anime_id: targetAnime,
+        user_favourite_ids: userFavourites,
+      }
     );
+  }
+
+  getRelated(id: number, count: number): Observable<number[]> {
+    return this.http.get<number[]>(
+      `${this.BASE}/recommend/?anime_id=${id}&limit=${count}`
+    );
+  }
+
+  getRecommendedForUser(
+    userFavourites: number[],
+    count: number
+  ): Observable<number[]> {
+    return this.http.post<number[]>(`${this.BASE}/cf/recommend/user`, {
+      user_favourite_ids: userFavourites,
+      limit: count,
+    });
   }
 
   getRelatedDetailed(

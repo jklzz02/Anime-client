@@ -2,6 +2,12 @@
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
     <div class="lg:col-span-1 order-1 lg:order-1">
       <div class="lg:sticky lg:top-8">
+        <h3
+          *ngIf="isLoggedIn && compatibilityScore"
+          class="dark:text-text text-text-light text-xl text-start font-semibold mb-2"
+        >
+          Compatibility {{ compatibilityScore | number : "1.1-1" }}%
+        </h3>
         <div
           class="relative rounded-xl overflow-hidden mb-4 lg:mb-6 max-w-sm mx-auto lg:max-w-none"
         >
