@@ -1,5 +1,70 @@
-<div class="m-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
-  <div *ngFor="let anime of favourites" class="dark:text-text">
-    <app-anime-summary-card [summary]="anime"></app-anime-summary-card>
+<section class="my-6">
+  <div
+    class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 2xl:grid-cols-6 gap-3"
+  >
+    <ng-container *ngIf="!loading">
+      <article
+        *ngFor="let anime of favourites"
+        class="group rounded-xl overflow-hidden bg-mantle-light dark:bg-mantle ring-1 ring-surface0-light dark:ring-surface0 hover:bg-surface0-light dark:hover:bg-surface0 transition"
+      >
+        <a [routerLink]="'/detail/' + anime.id">
+          <div class="relative w-full overflow-hidden">
+            <img
+              class="w-full aspect-[4/5] object-cover transition-transform duration-300 group-hover:scale-105"
+              [src]="anime.image_url"
+              [alt]="anime.title"
+              (error)="anime.image_url = 'assets/placeholder.png'"
+            />
+
+            <div
+              class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3 sm:p-4 text-white"
+            >
+              <h3 class="text-lg sm:text-lg font-semibold drop-shadow-lg">
+                {{ anime.title }}
+              </h3>
+            </div>
+          </div>
+        </a>
+
+        <div class="px-2 py-2 flex items-center justify-between">
+          <span class="text-[11px] font-medium text-blue-light dark:text-blue">
+            <i class="bi bi-collection-play me-1"></i>
+            {{ anime.episodes }}
+          </span>
+
+          <button
+            (click)="removeFromWatchlist(anime.id)"
+            class="text-surface2-light dark:text-surface2 hover:text-peach-light dark:hover:text-peach transition"
+            title="Remove from library"
+          >
+            <i class="bi bi-trash3 text-xs"></i>
+          </button>
+        </div>
+      </article> </ng-container
+    ><ng-container *ngIf="loading">
+      <div
+        *ngFor="let _ of [].constructor(placeholdersCount)"
+        class="rounded-xl overflow-hidden bg-mantle-light dark:bg-mantle ring-1 ring-surface0-light dark:ring-surface0 animate-pulse"
+      >
+        <div
+          class="w-full aspect-[4/5] bg-surface0-light dark:bg-surface0"
+        ></div>
+
+        <div class="px-2 py-2 flex items-center justify-between">
+          <div
+            class="h-3 w-12 bg-surface1-light dark:bg-surface1 rounded"
+          ></div>
+
+          <div class="flex gap-2">
+            <div
+              class="h-4 w-4 bg-surface1-light dark:bg-surface1 rounded"
+            ></div>
+            <div
+              class="h-4 w-4 bg-surface1-light dark:bg-surface1 rounded"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
   </div>
-</div>
+</section>

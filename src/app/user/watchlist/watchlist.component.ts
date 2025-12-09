@@ -12,6 +12,8 @@ import { Title } from '@angular/platform-browser';
 })
 export class WatchlistComponent implements OnInit {
   favourites: Anime[] = [];
+  loading: boolean = true;
+  placeholdersCount: number = 20;
 
   constructor(
     private title: Title,
@@ -21,10 +23,22 @@ export class WatchlistComponent implements OnInit {
   ngOnInit(): void {
     this.title.setTitle('AnimeHub | Watchlist');
 
+    this.loadFavourites();
+  }
+
+  removeFromWatchlist(animeId: number): void {
+    this.userService.removeFavourite(animeId).subscribe(() => {
+      this.favourites = this.favourites.filter((anime) => anime.id !== animeId);
+      this.loadFavourites();
+    });
+  }
+
+  private loadFavourites(): void {
     this.userService.getFavourites().subscribe((favourites) => {
       const animeIds = favourites.map((fav) => fav.anime_id);
       this.animeService.getAnimeById(animeIds).subscribe((animeList) => {
         this.favourites = animeList;
+        this.loading = false;
       });
     });
   }
