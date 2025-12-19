@@ -1,9 +1,10 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { AnimeRecommendation } from '../../interfaces/anime-recommendation';
 import { Observable } from 'rxjs';
 import { CompatibilityResponse } from '../../interfaces/recommender/compatibility-response';
+import { CompatibleAnimeResponse } from '../../interfaces/recommender/compatible-anime-response';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,16 @@ export class RecommenderService {
   constructor(private http: HttpClient) {}
 
   private BASE: string = environment.recommender_api_domain + '/v1';
+
+  getCompatible(
+    userFavourites: number[],
+    count: number
+  ): Observable<CompatibleAnimeResponse> {
+    return this.http.post<CompatibleAnimeResponse>(`${this.BASE}/compatible`, {
+      user_favourite_ids: userFavourites,
+      limit: count,
+    });
+  }
 
   getCompatibility(
     targetAnime: number,

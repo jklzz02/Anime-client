@@ -12,7 +12,7 @@ import { Title } from '@angular/platform-browser';
 })
 export class WatchlistComponent implements OnInit {
   favourites: Anime[] = [];
-  loading: boolean = true;
+  loadingFavourites: boolean = true;
   placeholdersCount: number = 20;
 
   constructor(
@@ -38,7 +38,7 @@ export class WatchlistComponent implements OnInit {
       const animeIds = favourites.map((fav) => fav.anime_id);
       this.animeService.getAnimeById(animeIds).subscribe((animeList) => {
         this.favourites = animeList;
-        this.loading = false;
+        this.loadingFavourites = false;
       });
     });
   }

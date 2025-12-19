@@ -2,7 +2,7 @@
   <div
     class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 2xl:grid-cols-6 gap-3"
   >
-    <ng-container *ngIf="!loading">
+    <ng-container *ngIf="!loadingFavourites">
       <article
         *ngFor="let anime of favourites"
         class="group rounded-xl overflow-hidden bg-mantle-light dark:bg-mantle ring-1 ring-surface0-light dark:ring-surface0 hover:bg-surface0-light dark:hover:bg-surface0 transition"
@@ -41,7 +41,7 @@
           </button>
         </div>
       </article> </ng-container
-    ><ng-container *ngIf="loading">
+    ><ng-container *ngIf="loadingFavourites">
       <div
         *ngFor="let _ of [].constructor(placeholdersCount)"
         class="rounded-xl overflow-hidden bg-mantle-light dark:bg-mantle ring-1 ring-surface0-light dark:ring-surface0 animate-pulse"

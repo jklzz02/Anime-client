@@ -80,6 +80,7 @@
             <img
               [src]="user.profile_picture"
               [alt]="user.username"
+              (error)="user.profile_picture = 'assets/placeholder.png'"
               class="w-8 h-8 rounded-full"
             />
             <span class="text-sm">{{ user.username }}</span>
@@ -163,6 +164,7 @@
             <img
               [src]="user.profile_picture"
               [alt]="user.username"
+              (error)="user.profile_picture = 'assets/placeholder.png'"
               class="w-6 h-6 rounded-full"
             />
             <span class="text-sm">{{ user.username }}</span>
