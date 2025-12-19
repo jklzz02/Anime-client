@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { AnimeRecommendation } from '../../interfaces/anime-recommendation';
-import { Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { CompatibilityResponse } from '../../interfaces/recommender/compatibility-response';
 import { CompatibleAnimeResponse } from '../../interfaces/recommender/compatible-anime-response';
 
@@ -34,6 +34,17 @@ export class RecommenderService {
         target_anime_id: targetAnime,
         user_favourite_ids: userFavourites,
       }
+    );
+  }
+
+  getCompatibilityScores(
+    targetAnimes: number[],
+    userFavourites: number[]
+  ): Observable<CompatibilityResponse[]> {
+    return forkJoin(
+      targetAnimes.map((animeId) =>
+        this.getCompatibility(animeId, userFavourites)
+      )
     );
   }
 

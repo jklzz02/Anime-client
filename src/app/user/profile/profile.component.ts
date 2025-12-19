@@ -5,7 +5,8 @@ import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { RecommenderService } from '../../../services/recommender/recommender.service';
 import { AnimeService } from '../../../services/http/anime.service';
-import { Anime } from '../../../interfaces/anime';
+import { CompatibilityResponse } from '../../../interfaces/recommender/compatibility-response';
+import { ScoredAnime } from '../../../interfaces/scored-anime';
 
 @Component({
   selector: 'app-profile',
@@ -15,7 +16,7 @@ import { Anime } from '../../../interfaces/anime';
 })
 export class ProfileComponent implements OnInit {
   user$!: Observable<User | null>;
-  compatibles: Anime[] = [];
+  compatibles: ScoredAnime[] = [];
 
   loadingCompatibles = false;
   compatibleCount = 6;
@@ -70,24 +71,46 @@ export class ProfileComponent implements OnInit {
       .getFavourites()
       .pipe(
         map((favs) => favs.map((f) => f.anime_id)),
-
         switchMap((favouriteIds) =>
-          this.recommenderService.getRecommendedForUser(
-            favouriteIds,
-            this.compatibleCount
-          )
+          this.recommenderService
+            .getRecommendedForUser(favouriteIds, this.compatibleCount)
+            .pipe(map((response) => ({ favouriteIds, response })))
         ),
+        switchMap(({ favouriteIds, response }) =>
+          this.animeService
+            .getAnimeById(response)
+            .pipe(map((animes) => ({ favouriteIds, animes })))
+        ),
+        switchMap(({ favouriteIds, animes }) =>
+          this.recommenderService
+            .getCompatibilityScores(
+              animes.map((a) => a.id),
+              favouriteIds
+            )
+            .pipe(
+              map((scores: CompatibilityResponse[]) => {
+                const scoreMap = scores.reduce((acc, score) => {
+                  acc[score.target_anime_id] = score.compatibility_score;
+                  return acc;
+                }, {} as Record<number, number>);
 
-        switchMap((response) => {
-          return this.animeService.getAnimeById(response);
-        }),
-
+                return animes
+                  .map(
+                    (anime): ScoredAnime => ({
+                      anime: anime,
+                      score: scoreMap[anime.id] || 0,
+                    })
+                  )
+                  .sort((a, b) => b.score - a.score);
+              })
+            )
+        ),
         finalize(() => {
           this.loadingCompatibles = false;
         })
       )
       .subscribe({
-        next: (result) => {
+        next: (result: ScoredAnime[]) => {
           this.compatibles = result;
         },
         error: (err) => {
