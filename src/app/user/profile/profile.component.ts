@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { RecommenderService } from '../../../services/recommender/recommender.service';
 import { AnimeService } from '../../../services/http/anime.service';
-import { ScoredAnime } from '../../../interfaces/scored-anime';
+import { Anime } from '../../../interfaces/anime';
 
 @Component({
   selector: 'app-profile',
@@ -15,7 +15,7 @@ import { ScoredAnime } from '../../../interfaces/scored-anime';
 })
 export class ProfileComponent implements OnInit {
   user$!: Observable<User | null>;
-  compatibles: ScoredAnime[] = [];
+  compatibles: Anime[] = [];
 
   loadingCompatibles = false;
   compatibleCount = 6;
@@ -72,26 +72,14 @@ export class ProfileComponent implements OnInit {
         map((favs) => favs.map((f) => f.anime_id)),
 
         switchMap((favouriteIds) =>
-          this.recommenderService.getCompatible(
+          this.recommenderService.getRecommendedForUser(
             favouriteIds,
             this.compatibleCount
           )
         ),
 
         switchMap((response) => {
-          const scored = response.data;
-          const ids = scored.map((s) => s.anime_id);
-
-          return this.animeService.getAnimeById(ids).pipe(
-            map((animeList) =>
-              animeList.map((anime) => ({
-                anime,
-                score:
-                  scored.find((s) => s.anime_id === anime.id)
-                    ?.compatibility_score ?? 0,
-              }))
-            )
-          );
+          return this.animeService.getAnimeById(response);
         }),
 
         finalize(() => {

@@ -79,21 +79,21 @@
         class="flex items-center gap-4 mb-4 p-4 bg-[var(--color-mantle-light)] dark:bg-[var(--color-mantle)] rounded-lg shadow-sm"
       >
         <img
-          [src]="compatible.anime.image_url"
-          [alt]="compatible.anime.title"
+          [src]="compatible.image_url"
+          [alt]="compatible.title"
           class="w-16 h-20 rounded-lg object-cover border-2 border-[var(--color-blue-light)] dark:border-[var(--color-blue)]"
-          (error)="compatible.anime.image_url = 'assets/placeholder.png'"
+          (error)="compatible.image_url = 'assets/placeholder.png'"
         />
         <div>
           <h3
             class="text-lg font-semibold text-[var(--color-text-light)] dark:text-[var(--color-text)]"
           >
-            {{ compatible.anime.title }}
+            {{ compatible.title }}
           </h3>
           <p
             class="text-sm text-[var(--color-text-secondary-light)] dark:text-[var(--color-text-secondary)]"
           >
-            Compatibility Score: {{ compatible.score }}%
+            User's Score: {{ compatible.score }}
           </p>
         </div>
       </div>
