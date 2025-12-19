@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User, UserService } from '../../../services/user/user.service';
-import { finalize, map, Observable, shareReplay, switchMap } from 'rxjs';
+import { finalize, map, Observable, switchMap } from 'rxjs';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { RecommenderService } from '../../../services/recommender/recommender.service';
