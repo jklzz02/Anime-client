@@ -17,6 +17,9 @@ export class AuthService {
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
+  private authCheckComplete = new BehaviorSubject<boolean>(false);
+  public authCheckComplete$ = this.authCheckComplete.asObservable();
+
   private readonly API_URL = environment.anime_api_domain;
 
   constructor(
@@ -44,6 +47,7 @@ export class AuthService {
         })
       );
   }
+
   refreshToken(): Observable<boolean> {
     return this.http
       .post<{ access_token: string }>(
@@ -84,7 +88,9 @@ export class AuthService {
   }
 
   checkAuthStatus(): void {
-    this.refreshToken().subscribe();
+    this.refreshToken().subscribe({
+      complete: () => this.authCheckComplete.next(true),
+    });
   }
 
   isAuthenticated(): boolean {
