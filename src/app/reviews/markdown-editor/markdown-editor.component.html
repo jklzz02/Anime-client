@@ -1,1 +1,90 @@
-<p>markdown-editor works!</p>
+<div
+  class="border rounded-md bg-base-light text-text-light dark:bg-base dark:text-text border-surface1-light dark:border-surface1"
+>
+  <div
+    class="flex overflow-x-auto border-b border-surface1-light dark:border-surface1"
+  >
+    <button
+      type="button"
+      class="px-4 py-2 text-sm font-medium border-b-2"
+      [ngClass]="
+        activeTab === 'write'
+          ? 'border-blue-light text-blue-light dark:border-blue dark:text-blue'
+          : 'border-transparent opacity-70'
+      "
+      (click)="activeTab = 'write'"
+    >
+      Write
+    </button>
+
+    <button
+      type="button"
+      class="px-4 py-2 text-sm font-medium border-b-2"
+      [ngClass]="
+        activeTab === 'preview'
+          ? 'border-blue-light text-blue-light dark:border-blue dark:text-blue'
+          : 'border-transparent opacity-70'
+      "
+      (click)="activeTab = 'preview'"
+    >
+      Preview
+    </button>
+  </div>
+
+  <div
+    *ngIf="activeTab === 'write'"
+    class="flex items-center gap-1 overflow-x-auto px-2 py-2 border-b border-surface1-light dark:border-surface1"
+  >
+    <button class="toolbar-btn" title="Bold" (click)="wrapSelection('**')">
+      <i class="bi bi-type-bold"></i>
+    </button>
+
+    <button class="toolbar-btn" title="Italic" (click)="wrapSelection('*')">
+      <i class="bi bi-type-italic"></i>
+    </button>
+
+    <button
+      class="toolbar-btn"
+      title="Inline code"
+      (click)="wrapSelection('`')"
+    >
+      <i class="bi bi-code"></i>
+    </button>
+
+    <button
+      class="toolbar-btn"
+      title="Spoiler"
+      (click)="wrapSelection('>! ', ' !<')"
+    >
+      <i class="bi bi-eye-slash"></i>
+    </button>
+  </div>
+
+  <div *ngIf="activeTab === 'write'" class="p-3">
+    <textarea
+      #textarea
+      [name]="name"
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      [attr.maxLength]="maxLength"
+      [value]="value"
+      rows="6"
+      (input)="updateValue($any($event.target).value)"
+      (blur)="onTouched()"
+      class="w-full resize-y rounded-md p-3 text-sm md:text-base bg-mantle-light text-text-light border border-surface1-light focus:outline-none focus:ring-2 focus:ring-blue-light dark:bg-mantle dark:text-text dark:border-surface1 dark:focus:ring-blue"
+    ></textarea>
+
+    <div
+      class="mt-1 text-right text-xs opacity-70"
+      [ngClass]="
+        value.length > maxLength * 0.9 ? 'text-peach-light dark:text-peach' : ''
+      "
+    >
+      {{ value.length }} / {{ maxLength }}
+    </div>
+  </div>
+
+  <div *ngIf="activeTab === 'preview'" class="p-4 prose max-w-none">
+    <markdown [data]="previewContent"></markdown>
+  </div>
+</div>

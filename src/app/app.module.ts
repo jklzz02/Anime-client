@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { MarkdownModule } from 'ngx-markdown';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,7 +9,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { AnimeDetailComponent } from './anime-detail/anime-detail.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { VideoEmbedComponent } from './video-embed/video-embed.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { AnimeSearchComponent } from './anime-search/anime-search.component';
@@ -24,6 +25,8 @@ import { GoogleButtonComponent } from './auth/google-button/google-button.compon
 import { SigninComponent } from './auth/signin/signin.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { WatchlistComponent } from './user/watchlist/watchlist.component';
+import { CommonModule } from '@angular/common';
+import { MarkdownEditorComponent } from './reviews/markdown-editor/markdown-editor.component';
 
 @NgModule({
   declarations: [
@@ -47,8 +50,16 @@ import { WatchlistComponent } from './user/watchlist/watchlist.component';
     SigninComponent,
     ProfileComponent,
     WatchlistComponent,
+    MarkdownEditorComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule],
+  imports: [
+    BrowserModule,
+    CommonModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MarkdownModule.forRoot(),
+  ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent],
 })
