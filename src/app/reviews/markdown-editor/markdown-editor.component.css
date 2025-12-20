@@ -1,0 +1,25 @@
+@layer components {
+  .toolbar-btn {
+    @apply flex items-center justify-center
+      min-w-[44px] min-h-[44px]
+      rounded-md
+      text-lg
+      transition-colors
+      text-[var(--color-text-light)]
+      hover:bg-[var(--color-surface0-light)]
+      dark:text-[var(--color-text)]
+      dark:hover:bg-[var(--color-surface0)];
+  }
+}
+
+.spoiler {
+  background-color: var(--color-surface2);
+  color: transparent;
+  border-radius: 4px;
+  padding: 0 4px;
+  cursor: pointer;
+}
+
+.spoiler:hover {
+  color: var(--color-text);
+}
