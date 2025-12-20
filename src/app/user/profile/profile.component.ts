@@ -19,6 +19,7 @@ export class ProfileComponent implements OnInit {
   compatibles: ScoredAnime[] = [];
 
   loadingCompatibles = false;
+  hasSearched = false;
   compatibleCount = 6;
 
   constructor(
@@ -34,8 +35,6 @@ export class ProfileComponent implements OnInit {
 
     this.user$ = this.userService.currentUser$;
     this.userService.getCurrentUser().subscribe();
-
-    this.loadCompatibles();
   }
 
   loadMore(): void {
@@ -49,6 +48,7 @@ export class ProfileComponent implements OnInit {
     if (this.loadingCompatibles) return;
 
     this.compatibleCount = 6;
+    this.hasSearched = true;
     this.loadCompatibles();
   }
 
