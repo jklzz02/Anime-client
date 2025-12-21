@@ -17,8 +17,8 @@ export class GuestGuard implements CanActivate {
       switchMap(() => this.authService.isAuthenticated$),
       take(1),
       map((isAuthenticated) => {
-        if (isAuthenticated) {
-          return false;
+        if (!isAuthenticated) {
+          return true;
         }
         return this.router.createUrlTree(['/']);
       })

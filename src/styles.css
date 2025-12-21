@@ -6,7 +6,7 @@
   --color-base-light: #eff1f5;
   --color-mantle-light: #e6e9ef;
   --color-crust-light: #dce0e8;
-  --color-surface2-light: #acb0be;
+  --color-surface2-light: #9b9eab;
   --color-surface1-light: #bcc0cc;
   --color-surface0-light: #ccd0da;
   --color-text-light: #4c4f69;
@@ -20,7 +20,7 @@
   --color-base: #1e1e2e;
   --color-mantle: #181825;
   --color-crust: #11111b;
-  --color-surface2: #585b70;
+  --color-surface2: #61647b;
   --color-surface1: #45475a;
   --color-surface0: #313244;
   --color-text: #cdd6f4;
@@ -36,16 +36,16 @@ body {
 }
 
 /* Markdown Prose Styles */
-.prose > h1 {
-  @apply text-2xl text-peach-light dark:text-peach font-bold mb-4 mt-8 border-b;
+.prose h1 {
+  @apply text-2xl text-peach-light dark:text-peach font-bold mb-4 mt-8 border-b border-b-surface1-light dark:border-b-surface1;
 }
 
-.prose > h2 {
-  @apply text-xl text-lavender-light dark:text-lavender font-semibold mb-3 mt-6 border-b;
+.prose h2 {
+  @apply text-xl text-lavender-light dark:text-lavender font-semibold mb-3 mt-6 border-b border-b-surface1-light dark:border-b-surface1;
 }
 
-.prose > h3 {
-  @apply text-lg text-green-light dark:text-green font-semibold mb-2 mt-4 border-b;
+.prose h3 {
+  @apply text-lg text-green-light dark:text-green font-semibold mb-2 mt-4 border-b border-b-surface1-light dark:border-b-surface1;
 }
 
 .prose a {
@@ -64,12 +64,52 @@ body {
   @apply bg-surface1-light dark:bg-surface1 rounded p-4 overflow-x-auto;
 }
 
-.prose > ul {
+.prose ul {
   @apply list-disc list-inside;
 }
 
-.prose > ol {
+.prose ol {
   @apply list-decimal list-inside;
+}
+
+.prose ul ul li {
+  @apply ml-2;
+}
+
+.prose ol ol li {
+  @apply ml-2;
+}
+
+.prose img {
+  @apply rounded p-1 border border-surface2-light dark:border-surface2;
+}
+
+.prose table {
+  @apply overflow-x-auto w-full border border-surface1-light dark:border-surface1 text-sm border-collapse;
+}
+
+.prose th {
+  @apply border border-surface1-light dark:border-surface1 bg-surface2-light dark:bg-surface2 px-2 py-1 text-left font-semibold;
+}
+
+.prose td {
+  @apply border border-surface1-light dark:border-surface1 px-2 py-1;
+}
+
+.prose thead {
+  @apply bg-surface2-light dark:bg-surface2;
+}
+
+.prose tbody tr:nth-child(even) {
+  @apply bg-surface0-light dark:bg-surface0;
+}
+
+.prose hr {
+  @apply border-t border-surface1-light dark:border-surface1 my-4;
+}
+
+.prose a img {
+  @apply border-0 p-0 inline my-2;
 }
 
 .spoiler {
