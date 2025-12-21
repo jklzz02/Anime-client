@@ -35,27 +35,23 @@
     *ngIf="activeTab === 'write'"
     class="flex items-center gap-1 overflow-x-auto px-2 py-2 border-b border-surface1-light dark:border-surface1"
   >
-    <button class="toolbar-btn" title="Image" (click)="insertImage()">
+    <button title="Image" (click)="insertImage()">
       <i class="bi bi-file-earmark-image"></i>
     </button>
 
-    <button class="toolbar-btn" title="Link" (click)="insertLink()">
+    <button title="Link" (click)="insertLink()">
       <i class="bi bi-link"></i>
     </button>
 
-    <button class="toolbar-btn" title="Bold" (click)="wrapSelection('**')">
+    <button title="Bold" (click)="wrapSelection('**')">
       <i class="bi bi-type-bold"></i>
     </button>
 
-    <button class="toolbar-btn" title="Italic" (click)="wrapSelection('*')">
+    <button title="Italic" (click)="wrapSelection('*')">
       <i class="bi bi-type-italic"></i>
     </button>
 
-    <button
-      class="toolbar-btn"
-      title="Spoiler"
-      (click)="wrapSelection('>! ', ' !<')"
-    >
+    <button title="Spoiler" (click)="wrapSelection('>! ', ' !<')">
       <i class="bi bi-eye-slash"></i>
     </button>
   </div>
