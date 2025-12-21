@@ -34,3 +34,52 @@ body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
+
+/* Markdown Prose Styles */
+.prose > h1 {
+  @apply text-2xl text-peach-light dark:text-peach font-bold mb-4 mt-8 border-b;
+}
+
+.prose > h2 {
+  @apply text-xl text-lavender-light dark:text-lavender font-semibold mb-3 mt-6 border-b;
+}
+
+.prose > h3 {
+  @apply text-lg text-green-light dark:text-green font-semibold mb-2 mt-4 border-b;
+}
+
+.prose a {
+  @apply text-blue-light dark:text-blue underline;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-surface1-light dark:border-surface1 pl-4 italic text-surface2-light dark:text-surface2;
+}
+
+.prose code {
+  @apply bg-surface0-light dark:bg-surface0 rounded px-1 py-0.5 text-sm font-mono;
+}
+
+.prose pre {
+  @apply bg-surface1-light dark:bg-surface1 rounded p-4 overflow-x-auto;
+}
+
+.prose > ul {
+  @apply list-disc list-inside;
+}
+
+.prose > ol {
+  @apply list-decimal list-inside;
+}
+
+.spoiler {
+  background-color: var(--color-surface2);
+  color: transparent;
+  border-radius: 4px;
+  padding: 0 4px;
+  cursor: pointer;
+}
+
+.spoiler:hover {
+  color: var(--color-text);
+}

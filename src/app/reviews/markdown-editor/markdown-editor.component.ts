@@ -27,8 +27,8 @@ export class MarkdownEditorComponent implements ControlValueAccessor {
 
   @ViewChild('textarea') textareaRef!: ElementRef<HTMLTextAreaElement>;
 
-  value = '';
-  disabled = false;
+  value: string = '';
+  disabled: boolean = false;
   activeTab: 'write' | 'preview' = 'write';
 
   onChange = (_: string) => {};
@@ -50,12 +50,12 @@ export class MarkdownEditorComponent implements ControlValueAccessor {
     this.disabled = isDisabled;
   }
 
-  updateValue(value: string) {
+  updateValue(value: string): void {
     this.value = value;
     this.onChange(value);
   }
 
-  wrapSelection(prefix: string, suffix = prefix) {
+  wrapSelection(prefix: string, suffix = prefix): void {
     const textarea = this.textareaRef.nativeElement;
 
     const start = textarea.selectionStart;
@@ -67,6 +67,10 @@ export class MarkdownEditorComponent implements ControlValueAccessor {
 
     const newValue = before + prefix + selected + suffix + after;
 
+    if (newValue.length > this.maxLength) {
+      return;
+    }
+
     this.updateValue(newValue);
 
     const cursorStart = start + prefix.length;
@@ -76,6 +80,14 @@ export class MarkdownEditorComponent implements ControlValueAccessor {
       textarea.focus();
       textarea.setSelectionRange(cursorStart, cursorEnd);
     });
+  }
+
+  insertLink(): void {
+    this.wrapSelection('[', '](url)');
+  }
+
+  insertImage(): void {
+    this.wrapSelection('![', '](url)');
   }
 
   get previewContent(): string {
