@@ -17,6 +17,10 @@ export class MultiDropdownComponent {
     this.isOpen = !this.isOpen;
   }
 
+  close() {
+    this.isOpen = false;
+  }
+
   toggleValue(value: string) {
     const index = this.selected.indexOf(value);
     if (index === -1) {
