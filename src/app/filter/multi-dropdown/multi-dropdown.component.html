@@ -1,0 +1,60 @@
+<div class="relative w-full">
+  <label
+    class="block text-sm font-medium text-subtext1-light dark:text-subtext1 mb-1"
+  >
+    {{ label }}
+  </label>
+
+  <button
+    type="button"
+    (click)="toggle()"
+    class="w-full px-4 py-2 rounded-lg bg-surface0-light dark:bg-surface0 text-text-light dark:text-text border border-surface1-light dark:border-surface1 flex items-center justify-between focus:border-blue-light dark:focus:border-blue transition-colors cursor-pointer"
+  >
+    <span
+      class="truncate"
+      [class.text-subtext0-light]="!selected.length"
+      [class.dark:text-subtext0]="!selected.length"
+    >
+      {{ selected.length ? selected.join(", ") : "All " + label }}
+    </span>
+
+    <i
+      class="bi bi-chevron-down text-subtext0-light dark:text-subtext0 text-sm transition-transform"
+      [class.rotate-180]="isOpen"
+    ></i>
+  </button>
+
+  <div
+    *ngIf="isOpen"
+    class="absolute z-50 mt-2 w-full rounded-xl shadow-xl bg-mantle-light dark:bg-mantle border border-surface1-light dark:border-surface1 overflow-hidden"
+  >
+    <div
+      class="max-h-64 overflow-y-auto divide-y divide-surface1-light dark:divide-surface1"
+    >
+      <button
+        *ngFor="let option of options"
+        type="button"
+        (click)="toggleValue(option)"
+        class="w-full flex items-center justify-between px-4 py-2.5 text-left text-text-light dark:text-text hover:bg-surface0-light dark:hover:bg-surface0 transition-colors"
+        [class.bg-surface0-light]="selected.includes(option)"
+        [class.dark:bg-surface0]="selected.includes(option)"
+      >
+        <span class="text-sm">
+          {{ option }}
+        </span>
+
+        <i
+          *ngIf="selected.includes(option)"
+          class="bi bi-check-lg text-blue-light dark:text-blue text-sm"
+        ></i>
+      </button>
+
+      <div
+        *ngIf="!options.length"
+        class="px-4 py-3 text-sm text-subtext0-light dark:text-subtext0"
+      >
+        No options available
+      </div>
+    </div>
+  </div>
+</div>

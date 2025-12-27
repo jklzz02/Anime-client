@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 import { Anime } from '../../interfaces/anime';
@@ -53,28 +53,24 @@ export class AnimeService {
     page: number,
     count: number
   ): Observable<PaginatedAnime> {
-    const request =
-      this.BASE +
-      '/search' +
-      this.buildQuery(parameters) +
-      '&page=' +
-      page +
-      '&size=' +
-      count;
-
-    console.log('Anime search request:', request);
-    return this.http.get<PaginatedAnime>(request);
-  }
-
-  private buildQuery(parameters: AnimeSearchParameters): string {
-    const params: string[] = [];
+    let params = new HttpParams();
 
     Object.entries(parameters).forEach(([key, value]) => {
-      if (value !== undefined && value !== null) {
-        params.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+      if (value === null || value === undefined) return;
+
+      if (Array.isArray(value)) {
+        value.forEach((v) => {
+          if (v) params = params.append(key, v);
+        });
+      } else if (value !== '') {
+        params = params.append(key, value.toString());
       }
     });
 
-    return params.length ? '?' + params.join('&') : '';
+    params = params
+      .append('page', page.toString())
+      .append('size', count.toString());
+
+    return this.http.get<PaginatedAnime>(`${this.BASE}/search`, { params });
   }
 }

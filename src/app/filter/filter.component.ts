@@ -23,8 +23,11 @@ import { filter } from 'rxjs';
 })
 export class FilterComponent implements OnInit, OnDestroy {
   genres: Genre[] = [];
+  genreNames: string[] = [];
   producers: Producer[] = [];
+  producerNames: string[] = [];
   licensors: Licensor[] = [];
+  licensorNames: string[] = [];
   types: Type[] = [];
   sources: Source[] = [];
   isOpen: boolean = false;
@@ -35,6 +38,27 @@ export class FilterComponent implements OnInit, OnDestroy {
 
   sortFields: string[] = ['Title', 'Year', 'Score', 'Release Date', 'Episodes'];
 
+  statuses = [
+    { name: 'Finished Airing' },
+    { name: 'Currently Airing' },
+    { name: 'Not yet aired' },
+  ];
+
+  sortOrdersArray = [
+    { key: 'Ascending', value: 'asc' },
+    { key: 'Descending', value: 'desc' },
+  ];
+
+  typeFn = (type: any) => type.name;
+  statusFn = (status: any) => status.name;
+  sourceFn = (source: any) => source.name;
+
+  sortFieldValueFn = (field: string) => field.toLowerCase().replace(' ', '_');
+  sortFieldLabelFn = (field: string) => field;
+
+  sortOrderValueFn = (order: any) => order.value;
+  sortOrderLabelFn = (order: any) => order.key;
+
   private header = document.querySelector('header');
   private body = document.querySelector('body');
 
@@ -42,6 +66,9 @@ export class FilterComponent implements OnInit, OnDestroy {
     producer_id: null,
     licensor_id: null,
     genre_id: null,
+    genres: [],
+    licensors: [],
+    producers: [],
     status: '',
     rating: '',
     type: '',
@@ -73,15 +100,20 @@ export class FilterComponent implements OnInit, OnDestroy {
         }
       });
 
-    this.genreService.getGenres().subscribe((data) => (this.genres = data));
+    this.genreService.getGenres().subscribe((data) => {
+      this.genres = data;
+      this.genreNames = data.map((genre) => genre.name).sort();
+    });
 
-    this.producerService
-      .getProducers()
-      .subscribe((data) => (this.producers = data));
+    this.producerService.getProducers().subscribe((data) => {
+      this.producers = data;
+      this.producerNames = data.map((producer) => producer.name).sort();
+    });
 
-    this.licensorService
-      .getLicensors()
-      .subscribe((data) => (this.licensors = data));
+    this.licensorService.getLicensors().subscribe((data) => {
+      this.licensors = data;
+      this.licensorNames = data.map((licensor) => licensor.name).sort();
+    });
 
     this.typeService.getTypes().subscribe((data) => (this.types = data));
 

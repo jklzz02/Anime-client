@@ -27,6 +27,8 @@ import { ProfileComponent } from './user/profile/profile.component';
 import { WatchlistComponent } from './user/watchlist/watchlist.component';
 import { CommonModule } from '@angular/common';
 import { MarkdownEditorComponent } from './reviews/markdown-editor/markdown-editor.component';
+import { MultiDropdownComponent } from './filter/multi-dropdown/multi-dropdown.component';
+import { SingleDropdownComponent } from './filter/single-dropdown/single-dropdown.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,8 @@ import { MarkdownEditorComponent } from './reviews/markdown-editor/markdown-edit
     ProfileComponent,
     WatchlistComponent,
     MarkdownEditorComponent,
+    MultiDropdownComponent,
+    SingleDropdownComponent,
   ],
   imports: [
     BrowserModule,

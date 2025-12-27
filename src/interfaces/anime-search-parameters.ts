@@ -3,7 +3,7 @@ export interface AnimeSearchParameters {
   title?: string | null;
   producer_id?: number | null;
   producer?: string | null;
-  licensorNames?: string[] | null;
+  producers?: string[] | null;
   licensor_id?: number | null;
   licensor?: string | null;
   licensors?: string[] | null;
