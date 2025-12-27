@@ -12,6 +12,7 @@ import { AuthGuard } from '../guards/auth.guard';
 import { ProfileComponent } from './user/profile/profile.component';
 import { WatchlistComponent } from './user/watchlist/watchlist.component';
 import { GuestGuard } from '../guards/guest-guard.guard';
+import { ReviewComponent } from './reviews/review/review.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -24,6 +25,11 @@ const routes: Routes = [
   },
   { path: 'detail/:id', component: AnimeDetailComponent },
   { path: 'signin', component: SigninComponent, canActivate: [GuestGuard] },
+  {
+    path: 'reviews/:page',
+    component: ReviewComponent,
+    title: 'AnimeHub | Reviews',
+  },
   {
     path: 'search',
     component: AnimeSearchResultsComponent,

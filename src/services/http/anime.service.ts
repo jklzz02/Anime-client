@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 import { Anime } from '../../interfaces/anime';
-import { PaginatedAnime } from '../../interfaces/paginated-anime';
+import { PaginatedResult } from '../../interfaces/paginated-result';
 import { AnimeSummary } from '../../interfaces/anime-summary';
 import { AnimeSearchParameters } from '../../interfaces/anime-search-parameters';
 import { environment } from '../../environments/environment';
@@ -28,16 +28,26 @@ export class AnimeService {
     title: string,
     page: number,
     count: number
-  ): Observable<PaginatedAnime> {
-    return this.http.get<PaginatedAnime>(
-      `${this.BASE}/search?title=${title}&page=${page}&size=${count}`
-    );
+  ): Observable<PaginatedResult<Anime>> {
+    const params: HttpParams = new HttpParams()
+      .set('title', title)
+      .set('page', page.toString())
+      .set('size', count.toString());
+
+    return this.http.get<PaginatedResult<Anime>>(`${this.BASE}/search`, {
+      params,
+    });
   }
 
-  getPaginatedAnime(page: number, count: number): Observable<PaginatedAnime> {
-    return this.http.get<PaginatedAnime>(
-      `${this.BASE}?page=${page}&size=${count}`
-    );
+  getPaginatedAnime(
+    page: number,
+    count: number
+  ): Observable<PaginatedResult<Anime>> {
+    const params: HttpParams = new HttpParams()
+      .set('page', page.toString())
+      .set('size', count.toString());
+
+    return this.http.get<PaginatedResult<Anime>>(this.BASE, { params });
   }
 
   getRecent(count: number): Observable<Anime[]> {
@@ -52,7 +62,7 @@ export class AnimeService {
     parameters: AnimeSearchParameters,
     page: number,
     count: number
-  ): Observable<PaginatedAnime> {
+  ): Observable<PaginatedResult<Anime>> {
     let params = new HttpParams();
 
     Object.entries(parameters).forEach(([key, value]) => {
@@ -71,6 +81,8 @@ export class AnimeService {
       .append('page', page.toString())
       .append('size', count.toString());
 
-    return this.http.get<PaginatedAnime>(`${this.BASE}/search`, { params });
+    return this.http.get<PaginatedResult<Anime>>(`${this.BASE}/search`, {
+      params,
+    });
   }
 }

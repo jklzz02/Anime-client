@@ -43,12 +43,12 @@
           Explore
         </a>
         <a
-          routerLink="about"
+          routerLink="reviews/1"
           routerLinkActive="bg-blue-light text-white dark:bg-blue dark:text-white"
-          [routerLinkActiveOptions]="{ exact: true }"
+          [routerLinkActiveOptions]="{ exact: false }"
           class="py-1.5 px-3 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
         >
-          About
+          Reviews
         </a>
       </div>
       <div class="hidden lg:flex items-center justify-end w-full gap-3">
@@ -138,13 +138,13 @@
         Explore
       </a>
       <a
-        routerLink="about"
+        routerLink="reviews/1"
         routerLinkActive="bg-blue-light text-white dark:bg-blue dark:text-white"
-        [routerLinkActiveOptions]="{ exact: true }"
+        [routerLinkActiveOptions]="{ exact: false }"
         class="block px-2 py-1 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
         (click)="isMenuOpen = false"
       >
-        About
+        Reviews
       </a>
 
       <div class="pt-2">

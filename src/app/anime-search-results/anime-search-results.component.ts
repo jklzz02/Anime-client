@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { PaginatedAnime } from '../../interfaces/paginated-anime';
+import { PaginatedResult } from '../../interfaces/paginated-result';
 import { AnimeService } from '../../services/http/anime.service';
 import { AnimeSummary } from '../../interfaces/anime-summary';
 import levenshtein from 'js-levenshtein';
 import { AnimeSearchParameters } from '../../interfaces/anime-search-parameters';
+import { Anime } from '../../interfaces/anime';
 
 @Component({
   selector: 'app-anime-search-results',
@@ -18,7 +19,7 @@ export class AnimeSearchResultsComponent implements OnInit {
   count: number = 33;
   counter: number[] = Array(this.count).fill(0);
 
-  anime: PaginatedAnime | null = null;
+  anime: PaginatedResult<Anime> | null = null;
   suggestions: AnimeSummary[] = [];
   notFound = false;
 

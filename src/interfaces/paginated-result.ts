@@ -1,6 +1,4 @@
-import { Anime } from './anime';
-
-export interface PaginatedAnime {
+export interface PaginatedResult<T> {
   page: number;
   result_count: number;
   page_size: number;
@@ -9,5 +7,5 @@ export interface PaginatedAnime {
   has_previous_page: boolean;
   has_next_page: boolean;
   has_items: boolean;
-  data: Anime[];
+  data: T[];
 }

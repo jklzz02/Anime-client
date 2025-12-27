@@ -29,6 +29,7 @@ import { CommonModule } from '@angular/common';
 import { MarkdownEditorComponent } from './reviews/markdown-editor/markdown-editor.component';
 import { MultiDropdownComponent } from './filter/multi-dropdown/multi-dropdown.component';
 import { SingleDropdownComponent } from './filter/single-dropdown/single-dropdown.component';
+import { ReviewComponent } from './reviews/review/review.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { SingleDropdownComponent } from './filter/single-dropdown/single-dropdow
     MarkdownEditorComponent,
     MultiDropdownComponent,
     SingleDropdownComponent,
+    ReviewComponent,
   ],
   imports: [
     BrowserModule,

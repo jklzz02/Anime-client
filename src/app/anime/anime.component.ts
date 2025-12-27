@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AnimeService } from '../../services/http/anime.service';
-import { PaginatedAnime } from '../../interfaces/paginated-anime';
+import { PaginatedResult } from '../../interfaces/paginated-result';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { Anime } from '../../interfaces/anime';
 
 @Component({
   selector: 'app-anime',
@@ -11,7 +12,7 @@ import { Title } from '@angular/platform-browser';
   styleUrl: './anime.component.css',
 })
 export class AnimeComponent implements OnInit {
-  anime: PaginatedAnime | any;
+  anime: PaginatedResult<Anime> | any;
   page: number = 1;
   count: number = 33;
   counter: number[] = Array(33);

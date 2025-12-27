@@ -1,0 +1,17 @@
+<ul *ngFor="let review of reviews.data">
+  <li>user id: {{ review.user_id }}</li>
+  <li>anime id: {{ review.anime_id }}</li>
+  <li>content: {{ review.content }}</li>
+  <li>score: {{ review.score }}</li>
+  <li>created at: {{ review.created_at }}</li>
+</ul>
+
+<app-pagination
+  class="mb-3"
+  [currentPage]="page"
+  [totalPages]="reviews.total_pages ?? 0"
+  [path]="'explore'"
+  (next)="nextPage()"
+  (previous)="previousPage()"
+>
+</app-pagination>
