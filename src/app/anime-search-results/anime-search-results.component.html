@@ -20,11 +20,11 @@
 
   <app-filter [filter]="params" class="sticky bottom-1 z-30"></app-filter>
 </div>
-<div class="mx-auto px-4 py-8 max-w-screen-md" *ngIf="notFound">
+<div class="mx-auto px-4 py-8 h-dvh max-w-screen-md" *ngIf="notFound">
   <h1
-    class="text-4xl text-center font-bold text-lavender-light dark:text-lavender mb-6"
+    class="text-4xl text-center font-bold text-lavender-light dark:text-lavender"
   >
-    No results found for "{{ params.title }}"
+    No results found for "{{ params.query }}"
   </h1>
 
   <ng-container *ngIf="suggestions.length">
@@ -40,6 +40,13 @@
       </ng-container>
     </div>
   </ng-container>
+  <div class="mx-auto text-center">
+    <a
+      routerLink="/explore"
+      class="mt-8 px-6 py-3 inline-block bg-peach-light dark:bg-peach text-white rounded-md hover:opacity-85 transition"
+      >Back to Explore
+    </a>
+  </div>
 </div>
 
 <div *ngIf="!notFound && !anime" class="w-full max-w-screen-xl mx-auto my-8">
