@@ -114,6 +114,11 @@ export class AnimeSearchResultsComponent implements OnInit {
       producers: asArray(params['producers']),
       licensors: asArray(params['licensors']),
 
+      genre_id: asNumber(params['genre_id']),
+      producer_id: asNumber(params['producer_id']),
+      licensor_id: asNumber(params['licensor_id']),
+
+      studio: params['studio'],
       status: params['status'] ?? undefined,
       type: params['type'] ?? undefined,
       source: params['source'] ?? undefined,

@@ -68,7 +68,7 @@
     <div *ngIf="anime.genres" class="mb-2">
       <a
         [routerLink]="['/search']"
-        [queryParams]="{ genre_id: genre.id }"
+        [queryParams]="{ genres: [genre.name] }"
         *ngFor="let genre of anime.genres | slice : 0 : 3"
         class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-blue-light dark:bg-blue dark:text-crust hover:opacity-85"
       >
@@ -82,7 +82,7 @@
     <div *ngIf="anime.producers" class="mb-2">
       <a
         [routerLink]="['/search']"
-        [queryParams]="{ producer_id: producer.id }"
+        [queryParams]="{ producers: [producer.name] }"
         *ngFor="let producer of anime.producers | slice : 0 : 3"
         class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-lavender-light dark:bg-lavender dark:text-crust hover:opacity-85"
       >
@@ -99,7 +99,7 @@
     <div *ngIf="anime.licensors" class="mb-1">
       <a
         [routerLink]="['/search']"
-        [queryParams]="{ licensor_id: licensor.id }"
+        [queryParams]="{ licensors: [licensor.name] }"
         *ngFor="let licensor of anime.licensors | slice : 0 : 3"
         class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-peach-light dark:bg-peach dark:text-crust hover:opacity-85"
       >
