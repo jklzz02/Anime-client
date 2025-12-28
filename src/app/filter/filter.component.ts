@@ -62,7 +62,7 @@ export class FilterComponent implements OnInit, OnDestroy {
   private header = document.querySelector('header');
   private body = document.querySelector('body');
 
-  @Input() filter: AnimeSearchParameters = {
+  @Input() filter: Partial<AnimeSearchParameters> = {
     producer_id: null,
     licensor_id: null,
     genre_id: null,
@@ -143,9 +143,7 @@ export class FilterComponent implements OnInit, OnDestroy {
   }
 
   clearFilters(): void {
-    this.filter = { title: this.filter.title };
-    this.toggleMenu();
-    this.router.navigate(['/explore']);
+    this.filter = {};
   }
 
   ngOnDestroy(): void {
