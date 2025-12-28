@@ -137,6 +137,7 @@ export class FilterComponent implements OnInit, OnDestroy {
   }
 
   applyFilters(): void {
+    this.toggleMenu();
     this.router.navigate(['/search'], {
       queryParams: { ...this.filter } as Params,
     });
