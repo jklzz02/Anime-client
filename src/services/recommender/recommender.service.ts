@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { AnimeRecommendation } from '../../interfaces/anime-recommendation';
+import { AnimeRecommendation } from '../../interfaces/recommender/anime-recommendation';
 import { forkJoin, Observable } from 'rxjs';
 import { CompatibilityResponse } from '../../interfaces/recommender/compatibility-response';
 import { CompatibleAnimeResponse } from '../../interfaces/recommender/compatible-anime-response';
