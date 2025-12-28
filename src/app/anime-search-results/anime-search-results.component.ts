@@ -39,7 +39,12 @@ export class AnimeSearchResultsComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       this.params = this.parseQueryParams(params);
       this.anime = null;
-      this.page = 1;
+
+      this.page = params['page'] ? Number(params['page']) : 1;
+
+      if (this.page <= 0) {
+        this.page = 1;
+      }
 
       this.loadAnime(this.params, this.page, this.count);
     });
@@ -72,15 +77,23 @@ export class AnimeSearchResultsComponent implements OnInit {
   }
 
   nextPage(): void {
+    const nextPageNumber: number =
+      this.page + 1 > this.lastPage ? 1 : this.page + 1;
+
     this.router.navigate([], {
-      queryParams: { page: this.page + 1 },
+      relativeTo: this.route,
+      queryParams: { page: nextPageNumber },
       queryParamsHandling: 'merge',
     });
   }
 
   previousPage(): void {
+    const prevPageNumber: number =
+      this.page - 1 <= 0 ? this.lastPage : this.page - 1;
+
     this.router.navigate([], {
-      queryParams: { page: this.page - 1 },
+      relativeTo: this.route,
+      queryParams: { page: prevPageNumber },
       queryParamsHandling: 'merge',
     });
   }
@@ -122,7 +135,7 @@ export class AnimeSearchResultsComponent implements OnInit {
       order_by: params['order_by'] ?? undefined,
       sort_order: params['sort_order'] ?? undefined,
 
-      include_adult_content: params['include_adult_content'] === 'true',
+      include_adult_content: asBoolean(params['include_adult_content']),
     };
   }
 
