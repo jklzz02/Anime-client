@@ -98,7 +98,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   private isAuthEndpoint(url: string): boolean {
     return (
-      url.includes('/auth/cookie/google') ||
+      url.includes('/auth/cookie') ||
       url.includes('/auth/cookie/refresh') ||
       url.includes('/auth/cookie/logout')
     );

@@ -33,8 +33,8 @@ export class AuthService {
   googleLogin(idToken: string): Observable<AuthResponse> {
     return this.http
       .post<AuthResponse>(
-        `${this.API_URL}/auth/cookie/google`,
-        { id_token: idToken },
+        `${this.API_URL}/auth/cookie`,
+        { token: idToken, provider: 'google' },
         { withCredentials: true }
       )
       .pipe(
