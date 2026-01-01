@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 import { Anime } from '../../interfaces/anime';
@@ -13,6 +13,9 @@ import { environment } from '../../environments/environment';
 export class AnimeService {
   constructor(private http: HttpClient) {}
   private BASE: string = environment.anime_api_domain + '/api/Anime';
+  private headers: HttpHeaders = new HttpHeaders({
+    'X-Client-Key': environment.x_client_key,
+  });
 
   getAnimeById(animeId: number): Observable<Anime>;
   getAnimeById(animeIds: number[]): Observable<Anime[]>;
@@ -35,6 +38,7 @@ export class AnimeService {
       .set('size', count.toString());
 
     return this.http.get<PaginatedResult<Anime>>(`${this.BASE}/search`, {
+      headers: this.headers,
       params,
     });
   }
@@ -47,15 +51,25 @@ export class AnimeService {
       .set('page', page.toString())
       .set('size', count.toString());
 
-    return this.http.get<PaginatedResult<Anime>>(this.BASE, { params });
+    return this.http.get<PaginatedResult<Anime>>(this.BASE, {
+      headers: this.headers,
+      params,
+    });
   }
 
   getRecent(count: number): Observable<Anime[]> {
-    return this.http.get<Anime[]>(`${this.BASE}/recent?count=${count}`);
+    return this.http.get<Anime[]>(`${this.BASE}/recent?count=${count}`, {
+      headers: this.headers,
+    });
   }
 
   getSummaries(count: number): Observable<AnimeSummary[]> {
-    return this.http.get<AnimeSummary[]>(`${this.BASE}/summary?count=${count}`);
+    return this.http.get<AnimeSummary[]>(
+      `${this.BASE}/summary?count=${count}`,
+      {
+        headers: this.headers,
+      }
+    );
   }
 
   searchAnime(
