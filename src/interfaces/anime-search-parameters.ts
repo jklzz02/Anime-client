@@ -32,8 +32,8 @@ export interface AnimeSearchParameters {
   sort_order?: SortOrder | null;
 }
 
-type SortOrder = 'asc' | 'desc';
-type AnimeSortField =
+export type SortOrder = 'asc' | 'desc';
+export type AnimeSortField =
   | 'title'
   | 'year'
   | 'score'

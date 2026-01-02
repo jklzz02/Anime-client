@@ -1,11 +1,12 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { forkJoin, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Anime } from '../../interfaces/anime';
 import { PaginatedResult } from '../../interfaces/paginated-result';
 import { AnimeSummary } from '../../interfaces/anime-summary';
 import { AnimeSearchParameters } from '../../interfaces/anime-search-parameters';
 import { environment } from '../../environments/environment';
+import { AnimeTargetParameters } from '../../interfaces/anime-target-parameters';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,15 @@ export class AnimeService {
 
   getAnimeById(input: number | number[]): Observable<Anime | Anime[]> {
     if (Array.isArray(input)) {
-      return forkJoin(input.map((id) => this.getAnimeById(id)));
+      const params: AnimeTargetParameters = {
+        target_anime_ids: input,
+        order_by: 'score',
+        sort_order: 'desc',
+        include_adult_content: false,
+      };
+      return this.http.post<Anime[]>(`${this.BASE}/target`, params, {
+        headers: this.headers,
+      });
     }
     return this.http.get<Anime>(`${this.BASE}/${input}`, {
       headers: this.headers,
