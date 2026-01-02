@@ -10,6 +10,8 @@ interface AuthResponse {
   access_token: string;
 }
 
+type AuthProvider = 'google' | 'facebook';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -35,21 +37,11 @@ export class AuthService {
   }
 
   googleLogin(idToken: string): Observable<AuthResponse> {
-    return this.http
-      .post<AuthResponse>(
-        `${this.API_URL}/auth/cookie`,
-        { token: idToken, provider: 'google' },
-        { withCredentials: true, headers: this.headers }
-      )
-      .pipe(
-        tap(() => {
-          this.isAuthenticatedSubject.next(true);
-        }),
-        catchError((error) => {
-          console.error('Login failed:', error);
-          throw error;
-        })
-      );
+    return this.loginWithProvider('google', idToken);
+  }
+
+  facebookLogin(accessToken: string): Observable<AuthResponse> {
+    return this.loginWithProvider('facebook', accessToken);
   }
 
   refreshToken(): Observable<boolean> {
@@ -99,5 +91,26 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     return this.isAuthenticatedSubject.value;
+  }
+
+  private loginWithProvider(
+    provider: AuthProvider,
+    token: string
+  ): Observable<AuthResponse> {
+    return this.http
+      .post<AuthResponse>(
+        `${this.API_URL}/auth/cookie`,
+        { token: token, provider: provider },
+        { withCredentials: true, headers: this.headers }
+      )
+      .pipe(
+        tap(() => {
+          this.isAuthenticatedSubject.next(true);
+        }),
+        catchError((error) => {
+          console.error('Login failed:', error);
+          throw error;
+        })
+      );
   }
 }

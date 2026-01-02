@@ -30,6 +30,7 @@ import { MarkdownEditorComponent } from './reviews/markdown-editor/markdown-edit
 import { MultiDropdownComponent } from './filter/multi-dropdown/multi-dropdown.component';
 import { SingleDropdownComponent } from './filter/single-dropdown/single-dropdown.component';
 import { ReviewComponent } from './reviews/review/review.component';
+import { FacebookButtonComponent } from './auth/facebook-button/facebook-button.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { ReviewComponent } from './reviews/review/review.component';
     MultiDropdownComponent,
     SingleDropdownComponent,
     ReviewComponent,
+    FacebookButtonComponent,
   ],
   imports: [
     BrowserModule,
