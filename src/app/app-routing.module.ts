@@ -13,6 +13,7 @@ import { ProfileComponent } from './user/profile/profile.component';
 import { WatchlistComponent } from './user/watchlist/watchlist.component';
 import { GuestGuard } from '../guards/guest-guard.guard';
 import { ReviewComponent } from './reviews/review/review.component';
+import { OauthCallbackComponent } from './auth/oauth-callback/oauth-callback.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -42,6 +43,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: 'home', component: HomeComponent, title: 'AnimeHub' },
+  { path: 'auth/:provider/callback', component: OauthCallbackComponent },
   { path: 'error', component: ErrorComponent },
   { path: '**', component: NotFoundComponent },
 ];

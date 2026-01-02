@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../../services/auth/auth.service';
-import { Router } from '@angular/router';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
+import { PkceService } from '../../../services/pkce/pkce.service';
 
 @Component({
   selector: 'app-facebook-button',
@@ -11,43 +10,27 @@ import { environment } from '../../../environments/environment.development';
 })
 export class FacebookButtonComponent {
   private appId = environment.facebook_app_id;
-  private redirectUri = `${window.location.origin}/auth/facebook-callback`;
-  private scope = 'email,public_profile';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private pkceService: PkceService) {}
 
-  onLogin() {
-    const fbUrl = `https://www.facebook.com/v17.0/dialog/oauth?client_id=${
-      this.appId
-    }&redirect_uri=${encodeURIComponent(this.redirectUri)}&scope=${
-      this.scope
-    }&response_type=token&state=123`;
+  async onLogin() {
+    const codeVerifier = this.pkceService.generateVerifier(128);
+    sessionStorage.setItem('fb_code_verifier', codeVerifier);
 
-    const popup = window.open(fbUrl, 'Facebook Login', 'width=500,height=600');
+    const codeChallenge = await this.pkceService.generateChallenge(
+      codeVerifier
+    );
 
-    const interval = setInterval(() => {
-      try {
-        if (!popup || popup.closed) {
-          clearInterval(interval);
-        }
+    const params = new URLSearchParams({
+      client_id: this.appId,
+      redirect_uri: `${window.location.origin}/auth/facebook/callback`,
+      response_type: 'code',
+      scope: 'email,public_profile',
+      state: crypto.randomUUID(),
+      code_challenge: codeChallenge,
+      code_challenge_method: 'S256',
+    });
 
-        if (popup && popup.location.href.startsWith(this.redirectUri)) {
-          const hash = popup.location.hash;
-          const params = new URLSearchParams(hash.substring(1));
-          const accessToken = params.get('access_token');
-
-          if (accessToken) {
-            this.authService.facebookLogin(accessToken).subscribe(() => {
-              this.router.navigate(['/profile']);
-            });
-          }
-
-          popup.close();
-          clearInterval(interval);
-        }
-      } catch {
-        // cross-origin until redirected
-      }
-    }, 500);
+    window.location.href = `https://www.facebook.com/v17.0/dialog/oauth?${params}`;
   }
 }

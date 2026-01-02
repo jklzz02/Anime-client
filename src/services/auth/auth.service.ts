@@ -93,8 +93,8 @@ export class AuthService {
     return this.isAuthenticatedSubject.value;
   }
 
-  private loginWithProvider(
-    provider: AuthProvider,
+  loginWithProvider(
+    provider: AuthProvider | string,
     token: string
   ): Observable<AuthResponse> {
     return this.http
