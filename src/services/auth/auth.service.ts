@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap, catchError, of, map } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
@@ -14,6 +14,10 @@ interface AuthResponse {
   providedIn: 'root',
 })
 export class AuthService {
+  private headers: HttpHeaders = new HttpHeaders({
+    'X-Client-Key': environment.x_client_key,
+  });
+
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
@@ -35,7 +39,7 @@ export class AuthService {
       .post<AuthResponse>(
         `${this.API_URL}/auth/cookie`,
         { token: idToken, provider: 'google' },
-        { withCredentials: true }
+        { withCredentials: true, headers: this.headers }
       )
       .pipe(
         tap(() => {
@@ -53,7 +57,7 @@ export class AuthService {
       .post<{ access_token: string }>(
         `${this.API_URL}/auth/cookie/refresh`,
         {},
-        { withCredentials: true }
+        { withCredentials: true, headers: this.headers }
       )
       .pipe(
         tap(() => this.isAuthenticatedSubject.next(true)),
@@ -70,7 +74,7 @@ export class AuthService {
       .post<void>(
         `${this.API_URL}/auth/cookie/logout`,
         {},
-        { withCredentials: true }
+        { withCredentials: true, headers: this.headers }
       )
       .pipe(
         tap(() => {

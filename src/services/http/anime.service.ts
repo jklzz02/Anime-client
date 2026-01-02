@@ -24,7 +24,9 @@ export class AnimeService {
     if (Array.isArray(input)) {
       return forkJoin(input.map((id) => this.getAnimeById(id)));
     }
-    return this.http.get<Anime>(`${this.BASE}/${input}`);
+    return this.http.get<Anime>(`${this.BASE}/${input}`, {
+      headers: this.headers,
+    });
   }
 
   getAnimeByTitle(

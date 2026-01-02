@@ -21,7 +21,10 @@ export class AnimeSearchComponent implements OnInit {
   animeSummary: AnimeSummary[] = [];
   suggestions: AnimeSummary[] | any = [];
   isVisible: boolean = false;
-  params: Partial<AnimeSearchParameters> = {};
+  params: Partial<AnimeSearchParameters> = {
+    order_by: 'score',
+    sort_order: 'desc',
+  };
 
   ngOnInit(): void {
     this.animeService

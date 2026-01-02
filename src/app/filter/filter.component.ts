@@ -77,6 +77,8 @@ export class FilterComponent implements OnInit, OnDestroy {
     min_release_year: null,
     episodes: null,
     include_adult_content: null,
+    order_by: 'score',
+    sort_order: 'desc',
   };
 
   constructor(

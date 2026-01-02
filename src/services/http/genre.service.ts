@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Genre } from '../../interfaces/anime';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -10,8 +10,11 @@ import { environment } from '../../environments/environment';
 export class GenreService {
   constructor(private http: HttpClient) {}
   private BASE: string = environment.anime_api_domain + '/api/Genre';
+  private headers: HttpHeaders = new HttpHeaders({
+    'X-Client-Key': environment.x_client_key,
+  });
 
   public getGenres(): Observable<Genre[]> {
-    return this.http.get<Genre[]>(this.BASE);
+    return this.http.get<Genre[]>(this.BASE, { headers: this.headers });
   }
 }

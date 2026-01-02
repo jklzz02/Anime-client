@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -24,36 +24,43 @@ export class UserService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
-  private readonly API_URL = environment.anime_api_domain;
+  private BASE: string = environment.anime_api_domain;
+  private headers: HttpHeaders = new HttpHeaders({
+    'X-Client-Key': environment.x_client_key,
+  });
 
   constructor(private http: HttpClient) {}
 
   getCurrentUser(): Observable<User> {
     return this.http
-      .get<User>(`${this.API_URL}/user`, {
+      .get<User>(`${this.BASE}/user`, {
+        headers: this.headers,
         withCredentials: true,
       })
       .pipe(tap((user) => this.currentUserSubject.next(user)));
   }
 
   getFavourites(): Observable<UserFavourite[]> {
-    return this.http.get<UserFavourite[]>(`${this.API_URL}/user/favourite`, {
+    return this.http.get<UserFavourite[]>(`${this.BASE}/user/favourite`, {
+      headers: this.headers,
       withCredentials: true,
     });
   }
 
   addFavourite(animeId: number): Observable<UserFavourite> {
     return this.http.post<UserFavourite>(
-      `${this.API_URL}/user/favourite`,
+      `${this.BASE}/user/favourite`,
       animeId,
       {
+        headers: this.headers,
         withCredentials: true,
       }
     );
   }
 
   removeFavourite(animeId: number): Observable<void> {
-    return this.http.delete<void>(`${this.API_URL}/user/favourite/${animeId}`, {
+    return this.http.delete<void>(`${this.BASE}/user/favourite/${animeId}`, {
+      headers: this.headers,
       withCredentials: true,
     });
   }

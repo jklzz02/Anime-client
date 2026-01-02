@@ -27,6 +27,8 @@ export class AnimeSearchResultsComponent implements OnInit {
     genres: [],
     producers: [],
     licensors: [],
+    order_by: 'score',
+    sort_order: 'desc',
   };
 
   constructor(
