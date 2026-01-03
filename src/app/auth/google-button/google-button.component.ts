@@ -27,7 +27,7 @@ export class GoogleButtonComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     google.accounts.id.initialize({
-      client_id: environment.google_client_id as any,
+      client_id: environment.providers.google.google_client_id as any,
       callback: this.handleResponse.bind(this),
     });
   }

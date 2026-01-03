@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../services/auth/auth.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-oauth-callback',
@@ -9,6 +10,8 @@ import { AuthService } from '../../../services/auth/auth.service';
   styleUrl: './oauth-callback.component.css',
 })
 export class OauthCallbackComponent implements OnInit {
+  private allowedProviders: string[] = environment.providers.allowed;
+
   constructor(
     private route: ActivatedRoute,
     private auth: AuthService,
@@ -16,10 +19,19 @@ export class OauthCallbackComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const provider = this.route.snapshot.paramMap.get('provider');
+    const provider = this.route.snapshot.paramMap
+      .get('provider')
+      ?.trim()
+      .toLowerCase();
+
     const code = this.route.snapshot.queryParamMap.get('code');
 
     if (!provider || !code) {
+      this.router.navigate(['/signin']);
+      return;
+    }
+
+    if (!this.allowedProviders.includes(provider)) {
       this.router.navigate(['/signin']);
       return;
     }
@@ -51,7 +63,11 @@ export class OauthCallbackComponent implements OnInit {
           sessionStorage.removeItem(`${provider}_code_verifier`);
           this.router.navigate(['/profile']);
         },
-        error: () => this.router.navigate(['/signin']),
+        error: () => {
+          sessionStorage.removeItem(`${provider}_oauth_state`);
+          sessionStorage.removeItem(`${provider}_code_verifier`);
+          this.router.navigate(['/signin']);
+        },
       });
 
     return;

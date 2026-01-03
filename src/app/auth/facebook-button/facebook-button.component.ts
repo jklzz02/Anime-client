@@ -9,7 +9,11 @@ import { PkceService } from '../../../services/pkce/pkce.service';
   styleUrl: './facebook-button.component.css',
 })
 export class FacebookButtonComponent {
-  private appId = environment.facebook_app_id;
+  private appId = environment.providers.facebook.facebook_app_id;
+  private responseType = environment.providers.facebook.response_type;
+  private scope = environment.providers.facebook.scope;
+  private challengeMethod = environment.providers.facebook.challenge_method;
+  private oauthUrl = environment.providers.facebook.oauth_url;
 
   constructor(private pkceService: PkceService) {}
 
@@ -26,13 +30,13 @@ export class FacebookButtonComponent {
     const params = new URLSearchParams({
       client_id: this.appId,
       redirect_uri: `${window.location.origin}/auth/facebook/callback`,
-      response_type: 'code',
-      scope: 'email,public_profile',
+      response_type: this.responseType,
+      scope: this.scope,
       state: state,
       code_challenge: codeChallenge,
-      code_challenge_method: 'S256',
+      code_challenge_method: this.challengeMethod,
     });
 
-    window.location.href = `https://www.facebook.com/v17.0/dialog/oauth?${params}`;
+    window.location.href = `${this.oauthUrl}?${params}`;
   }
 }
