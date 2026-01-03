@@ -5,13 +5,7 @@ import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { UserService } from '../user/user.service';
 import { AuthRequest } from '../../interfaces/auth-request';
-
-interface AuthResponse {
-  user: any;
-  access_token: string;
-}
-
-type AuthProvider = 'google' | 'facebook';
+import { AuthResponse } from '../../interfaces/auth-response';
 
 @Injectable({
   providedIn: 'root',
