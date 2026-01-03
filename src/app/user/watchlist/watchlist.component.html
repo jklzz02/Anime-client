@@ -1,4 +1,4 @@
-<section class="my-6">
+<section class="my-6 h-dvh">
   <div
     class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 2xl:grid-cols-6 gap-3"
   >
@@ -63,5 +63,32 @@
         </div>
       </div>
     </ng-container>
+  </div>
+  <div
+    *ngIf="favourites.length === 0"
+    class="col-span-full flex flex-col items-center justify-center mt-16 px-4"
+  >
+    <div class="text-center space-y-4">
+      <div
+        class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-light dark:bg-blue mb-2"
+      >
+        <i class="bi bi-heart text-3xl text-white"></i>
+      </div>
+
+      <h3 class="text-xl font-semibold text-text-light dark:text-text">
+        Your watchlist is empty
+      </h3>
+
+      <p class="text-text-light dark:text-text leading-relaxed">
+        Browse anime and add titles to your watchlist to see them here.
+      </p>
+
+      <a
+        routerLink="/explore"
+        class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-light dark:bg-blue text-white rounded-lg font-medium hover:bg-lavender-light dark:hover:bg-lavender transition-colors duration-200"
+      >
+        <span>Explore</span>
+      </a>
+    </div>
   </div>
 </section>

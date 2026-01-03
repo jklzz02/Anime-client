@@ -31,26 +31,25 @@
     </div>
 
     <div class="flex flex-col gap-2">
-      <button
-        (click)="onReviews()"
+      <a
+        routerLink="/reviews"
         class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-surface0-light dark:bg-surface0 text-text-light dark:text-text rounded-lg font-medium hover:bg-surface1-light dark:hover:bg-surface1 transition-colors duration-200"
       >
         <span>Reviews</span>
-      </button>
-
-      <button
-        (click)="onWatchlist()"
+      </a>
+      <a
+        routerLink="/watchlist"
         class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-surface0-light dark:bg-surface0 text-text-light dark:text-text rounded-lg font-medium hover:bg-surface1-light dark:hover:bg-surface1 transition-colors duration-200"
       >
         <span>Watchlist</span>
-      </button>
+      </a>
 
-      <button
-        (click)="onExplore()"
+      <a
+        routerLink="/explore"
         class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-surface0-light dark:bg-surface0 text-text-light dark:text-text rounded-lg font-medium hover:bg-surface1-light dark:hover:bg-surface1 transition-colors duration-200"
       >
         <span>Explore</span>
-      </button>
+      </a>
     </div>
   </div>
 

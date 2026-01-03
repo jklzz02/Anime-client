@@ -53,18 +53,6 @@ export class ProfileComponent implements OnInit {
     this.loadCompatibles();
   }
 
-  onExplore(): void {
-    this.router.navigate(['/explore']);
-  }
-
-  onWatchlist(): void {
-    this.router.navigate(['/watchlist']);
-  }
-
-  onReviews(): void {
-    this.router.navigate(['/reviews']);
-  }
-
   private loadCompatibles(): void {
     this.loadingCompatibles = true;
 

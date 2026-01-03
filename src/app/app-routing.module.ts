@@ -26,6 +26,8 @@ const routes: Routes = [
   },
   { path: 'detail/:id', component: AnimeDetailComponent },
   { path: 'signin', component: SigninComponent, canActivate: [GuestGuard] },
+
+  { path: 'reviews', redirectTo: 'reviews/1', pathMatch: 'full' },
   {
     path: 'reviews/:page',
     component: ReviewComponent,

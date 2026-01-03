@@ -16,9 +16,9 @@ export class WatchlistComponent implements OnInit {
   placeholdersCount: number = 20;
 
   constructor(
+    private animeService: AnimeService,
     private title: Title,
-    private userService: UserService,
-    private animeService: AnimeService
+    private userService: UserService
   ) {}
   ngOnInit(): void {
     this.title.setTitle('AnimeHub | Watchlist');
@@ -36,6 +36,13 @@ export class WatchlistComponent implements OnInit {
   private loadFavourites(): void {
     this.userService.getFavourites().subscribe((favourites) => {
       const animeIds = favourites.map((fav) => fav.anime_id);
+
+      if (animeIds.length === 0) {
+        this.favourites = [];
+        this.loadingFavourites = false;
+        return;
+      }
+
       this.animeService.getAnimeById(animeIds).subscribe((animeList) => {
         this.favourites = animeList;
         this.loadingFavourites = false;
