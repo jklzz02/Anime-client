@@ -46,7 +46,11 @@ export class OauthCallbackComponent implements OnInit {
         code_verifier: codeVerifier,
       })
       .subscribe({
-        next: () => this.router.navigate(['/profile']),
+        next: () => {
+          sessionStorage.removeItem(`${provider}_oauth_state`);
+          sessionStorage.removeItem(`${provider}_code_verifier`);
+          this.router.navigate(['/profile']);
+        },
         error: () => this.router.navigate(['/signin']),
       });
 
