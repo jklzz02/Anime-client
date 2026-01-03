@@ -1,0 +1,15 @@
+<div
+  *ngIf="showCard; else spinnerOnly"
+  class="bg-mantle-light dark:bg-mantle rounded-xl shadow-lg flex flex-col items-center gap-4"
+  [ngClass]="cardPaddingClasses"
+>
+  <div [ngClass]="spinnerClasses"></div>
+  <p *ngIf="message" [ngClass]="messageClasses">{{ message }}</p>
+</div>
+
+<ng-template #spinnerOnly>
+  <div class="flex items-center gap-3">
+    <div [ngClass]="spinnerClasses"></div>
+    <p *ngIf="message" [ngClass]="messageClasses">{{ message }}</p>
+  </div>
+</ng-template>

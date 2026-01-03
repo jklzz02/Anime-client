@@ -32,6 +32,7 @@ import { SingleDropdownComponent } from './filter/single-dropdown/single-dropdow
 import { ReviewComponent } from './reviews/review/review.component';
 import { FacebookButtonComponent } from './auth/facebook-button/facebook-button.component';
 import { OauthCallbackComponent } from './auth/oauth-callback/oauth-callback.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { OauthCallbackComponent } from './auth/oauth-callback/oauth-callback.com
     ReviewComponent,
     FacebookButtonComponent,
     OauthCallbackComponent,
+    SpinnerComponent,
   ],
   imports: [
     BrowserModule,
