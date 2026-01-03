@@ -20,32 +20,27 @@ export class OauthCallbackComponent implements OnInit {
     const code = this.route.snapshot.queryParamMap.get('code');
 
     if (!provider || !code) {
-      console.error(
-        'Invalid OAuth callback parameters: provider or code missing'
-      );
       this.router.navigate(['/signin']);
       return;
     }
 
     if (provider === 'facebook') {
       const codeVerifier = sessionStorage.getItem('fb_code_verifier');
-      console.log('Facebook OAuth callback received');
       if (!codeVerifier) {
         console.error('Code verifier not found in session storage');
         this.router.navigate(['/signin']);
         return;
       }
 
-      console.log('Exchanging code for access token...');
       this.auth
         .loginWithProvider('facebook', {
-          code,
-          redirectUri: `${window.location.origin}/auth/facebook/callback`,
-          codeVerifier,
+          code: code,
+          redirect_uri: `${window.location.origin}/auth/facebook/callback`,
+          code_verifier: codeVerifier,
         })
         .subscribe({
           next: () => this.router.navigate(['/profile']),
-          error: () => this.router.navigate(['/login']),
+          error: () => this.router.navigate(['/signin']),
         });
 
       return;

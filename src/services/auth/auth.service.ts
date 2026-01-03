@@ -46,9 +46,9 @@ export class AuthService {
     codeVerifier: string
   ): Observable<AuthResponse> {
     return this.loginWithProvider('facebook', {
-      code,
-      redirectUri,
-      codeVerifier,
+      code: code,
+      redirect_uri: redirectUri,
+      code_verifier: codeVerifier,
     });
   }
 
@@ -105,7 +105,7 @@ export class AuthService {
     provider: string,
     payload:
       | { token: string }
-      | { code: string; redirectUri: string; codeVerifier: string }
+      | { code: string; redirect_uri: string; code_verifier: string }
   ): Observable<AuthResponse> {
     return this.http
       .post<AuthResponse>(
