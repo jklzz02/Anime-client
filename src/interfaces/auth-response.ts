@@ -1,4 +1,6 @@
+import { User } from './user';
+
 export interface AuthResponse {
-  user: any;
+  user: User;
   access_token: string;
 }

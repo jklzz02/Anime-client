@@ -2,7 +2,8 @@ import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ThemeService, Theme } from '../../services/theme/theme.service';
 import { debounceTime, fromEvent, Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth/auth.service';
-import { UserService, User } from '../../services/user/user.service';
+import { UserService } from '../../services/user/user.service';
+import { User } from '../../interfaces/user';
 
 @Component({
   selector: 'app-header',

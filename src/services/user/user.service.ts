@@ -2,20 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
-
-export interface User {
-  id: number;
-  email: string;
-  username: string;
-  profile_picture: string;
-  created_at: string;
-  admin: boolean;
-}
-
-export interface UserFavourite {
-  anime_id: number;
-  user_id: string;
-}
+import { User } from '../../interfaces/user';
+import { UserFavourite } from '../../interfaces/user-favourite';
 
 @Injectable({
   providedIn: 'root',

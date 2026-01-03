@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { User, UserService } from '../../../services/user/user.service';
+import { UserService } from '../../../services/user/user.service';
 import { finalize, map, Observable, switchMap } from 'rxjs';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -7,6 +7,7 @@ import { RecommenderService } from '../../../services/recommender/recommender.se
 import { AnimeService } from '../../../services/http/anime.service';
 import { CompatibilityResponse } from '../../../interfaces/recommender/compatibility-response';
 import { ScoredAnime } from '../../../interfaces/scored-anime';
+import { User } from '../../../interfaces/user';
 
 @Component({
   selector: 'app-profile',
