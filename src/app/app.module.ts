@@ -33,6 +33,7 @@ import { ReviewComponent } from './reviews/review/review.component';
 import { FacebookButtonComponent } from './auth/facebook-button/facebook-button.component';
 import { OauthCallbackComponent } from './auth/oauth-callback/oauth-callback.component';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { DiscordButtonComponent } from './auth/discord-button/discord-button.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
     FacebookButtonComponent,
     OauthCallbackComponent,
     SpinnerComponent,
+    DiscordButtonComponent,
   ],
   imports: [
     BrowserModule,
