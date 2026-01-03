@@ -28,7 +28,7 @@ export class FacebookButtonComponent {
       redirect_uri: `${window.location.origin}/auth/facebook/callback`,
       response_type: 'code',
       scope: 'email,public_profile',
-      state: crypto.randomUUID(),
+      state: state,
       code_challenge: codeChallenge,
       code_challenge_method: 'S256',
     });
