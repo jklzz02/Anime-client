@@ -37,11 +37,19 @@ export class AuthService {
   }
 
   googleLogin(idToken: string): Observable<AuthResponse> {
-    return this.loginWithProvider('google', idToken);
+    return this.loginWithProvider('google', { token: idToken });
   }
 
-  facebookLogin(accessToken: string): Observable<AuthResponse> {
-    return this.loginWithProvider('facebook', accessToken);
+  facebookLogin(
+    code: string,
+    redirectUri: string,
+    codeVerifier: string
+  ): Observable<AuthResponse> {
+    return this.loginWithProvider('facebook', {
+      code,
+      redirectUri,
+      codeVerifier,
+    });
   }
 
   refreshToken(): Observable<boolean> {
@@ -94,19 +102,19 @@ export class AuthService {
   }
 
   loginWithProvider(
-    provider: AuthProvider | string,
-    token: string
+    provider: string,
+    payload:
+      | { token: string }
+      | { code: string; redirectUri: string; codeVerifier: string }
   ): Observable<AuthResponse> {
     return this.http
       .post<AuthResponse>(
         `${this.API_URL}/auth/cookie`,
-        { token: token, provider: provider },
+        { provider, ...payload },
         { withCredentials: true, headers: this.headers }
       )
       .pipe(
-        tap(() => {
-          this.isAuthenticatedSubject.next(true);
-        }),
+        tap(() => this.isAuthenticatedSubject.next(true)),
         catchError((error) => {
           console.error('Login failed:', error);
           throw error;

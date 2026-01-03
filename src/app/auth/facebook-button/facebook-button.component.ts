@@ -14,10 +14,12 @@ export class FacebookButtonComponent {
   constructor(private pkceService: PkceService) {}
 
   async onLogin() {
-    const codeVerifier = this.pkceService.generateVerifier(128);
+    const codeVerifier: string = this.pkceService.generateVerifier(128);
+    const state: string = crypto.randomUUID();
+    sessionStorage.setItem('fb_oauth_state', state);
     sessionStorage.setItem('fb_code_verifier', codeVerifier);
 
-    const codeChallenge = await this.pkceService.generateChallenge(
+    const codeChallenge: string = await this.pkceService.generateChallenge(
       codeVerifier
     );
 
