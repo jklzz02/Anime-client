@@ -23,4 +23,12 @@ export class ReviewsService {
       params,
     });
   }
+
+  getByUser(userId: number): Observable<Review[]> {
+    const params = new HttpParams().set('user_id', userId);
+    return this.http.get<Review[]>(`${this.BASE}/by-user`, {
+      headers: this.headers,
+      params,
+    });
+  }
 }

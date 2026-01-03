@@ -1,0 +1,10 @@
+<div *ngIf="reviews">
+  <div *ngFor="let review of reviews">
+    <h3>{{ review.title }}</h3>
+    <p>{{ review.content }}</p>
+  </div>
+</div>
+
+<div *ngIf="!reviews || reviews.length === 0">
+  <p>No reviews yet.</p>
+</div>
