@@ -24,26 +24,24 @@ export class OauthCallbackComponent implements OnInit {
       return;
     }
 
-    if (provider === 'facebook') {
-      const codeVerifier = sessionStorage.getItem('fb_code_verifier');
-      if (!codeVerifier) {
-        console.error('Code verifier not found in session storage');
-        this.router.navigate(['/signin']);
-        return;
-      }
-
-      this.auth
-        .loginWithProvider('facebook', {
-          code: code,
-          redirect_uri: `${window.location.origin}/auth/facebook/callback`,
-          code_verifier: codeVerifier,
-        })
-        .subscribe({
-          next: () => this.router.navigate(['/profile']),
-          error: () => this.router.navigate(['/signin']),
-        });
-
+    const codeVerifier = sessionStorage.getItem(`${provider}_code_verifier`);
+    if (!codeVerifier) {
+      this.router.navigate(['/signin']);
       return;
     }
+
+    this.auth
+      .loginWithProvider({
+        provider: provider,
+        code: code,
+        redirect_uri: `${window.location.origin}/auth/${provider}/callback`,
+        code_verifier: codeVerifier,
+      })
+      .subscribe({
+        next: () => this.router.navigate(['/profile']),
+        error: () => this.router.navigate(['/signin']),
+      });
+
+    return;
   }
 }

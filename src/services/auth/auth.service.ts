@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, tap, catchError, of, map } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { UserService } from '../user/user.service';
+import { AuthRequest } from '../../interfaces/auth-request';
 
 interface AuthResponse {
   user: any;
@@ -37,7 +38,7 @@ export class AuthService {
   }
 
   googleLogin(idToken: string): Observable<AuthResponse> {
-    return this.loginWithProvider('google', { token: idToken });
+    return this.loginWithProvider({ provider: 'google', token: idToken });
   }
 
   facebookLogin(
@@ -45,7 +46,8 @@ export class AuthService {
     redirectUri: string,
     codeVerifier: string
   ): Observable<AuthResponse> {
-    return this.loginWithProvider('facebook', {
+    return this.loginWithProvider({
+      provider: 'facebook',
       code: code,
       redirect_uri: redirectUri,
       code_verifier: codeVerifier,
@@ -101,16 +103,11 @@ export class AuthService {
     return this.isAuthenticatedSubject.value;
   }
 
-  loginWithProvider(
-    provider: string,
-    payload:
-      | { token: string }
-      | { code: string; redirect_uri: string; code_verifier: string }
-  ): Observable<AuthResponse> {
+  loginWithProvider(payload: AuthRequest): Observable<AuthResponse> {
     return this.http
       .post<AuthResponse>(
         `${this.API_URL}/auth/cookie`,
-        { provider, ...payload },
+        { ...payload },
         { withCredentials: true, headers: this.headers }
       )
       .pipe(

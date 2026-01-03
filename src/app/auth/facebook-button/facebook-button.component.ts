@@ -16,8 +16,8 @@ export class FacebookButtonComponent {
   async onLogin() {
     const codeVerifier: string = this.pkceService.generateVerifier(128);
     const state: string = crypto.randomUUID();
-    sessionStorage.setItem('fb_oauth_state', state);
-    sessionStorage.setItem('fb_code_verifier', codeVerifier);
+    sessionStorage.setItem('facebook_oauth_state', state);
+    sessionStorage.setItem('facebook_code_verifier', codeVerifier);
 
     const codeChallenge: string = await this.pkceService.generateChallenge(
       codeVerifier
