@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user/user.service';
-import { Anime } from '../../../interfaces/anime';
 import { AnimeService } from '../../../services/http/anime.service';
 import { Title } from '@angular/platform-browser';
+import { AnimeSummary } from '../../../interfaces/anime-summary';
 
 @Component({
   selector: 'app-watchlist',
@@ -11,7 +11,7 @@ import { Title } from '@angular/platform-browser';
   styleUrl: './watchlist.component.css',
 })
 export class WatchlistComponent implements OnInit {
-  favourites: Anime[] = [];
+  favourites: AnimeSummary[] = [];
   loadingFavourites: boolean = true;
   placeholdersCount: number = 20;
 
@@ -43,7 +43,7 @@ export class WatchlistComponent implements OnInit {
         return;
       }
 
-      this.animeService.getAnimeById(animeIds).subscribe((animeList) => {
+      this.animeService.getSummariesByIds(animeIds).subscribe((animeList) => {
         this.favourites = animeList;
         this.loadingFavourites = false;
       });

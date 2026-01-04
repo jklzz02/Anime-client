@@ -74,6 +74,20 @@ export class AnimeService {
     });
   }
 
+  getSummariesByIds(animeIds: number[]): Observable<AnimeSummary[]> {
+    return this.http.post<AnimeSummary[]>(
+      `${this.BASE}/summaries/target`,
+      {
+        target_anime_ids: animeIds,
+        order_by: 'score',
+        sort_order: 'desc',
+      },
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
   getSummaries(count: number): Observable<AnimeSummary[]> {
     return this.http.get<AnimeSummary[]>(
       `${this.BASE}/summaries/count/${count}`,
