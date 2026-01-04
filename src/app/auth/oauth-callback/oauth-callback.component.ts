@@ -39,9 +39,6 @@ export class OauthCallbackComponent implements OnInit {
     const storedState = sessionStorage.getItem(`${provider}_oauth_state`);
     const returnedState = this.route.snapshot.queryParamMap.get('state');
 
-    console.log('Stored State:', storedState);
-    console.log('Returned State:', returnedState);
-
     if (storedState !== returnedState) {
       this.router.navigate(['/signin']);
       return;
