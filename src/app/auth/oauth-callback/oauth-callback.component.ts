@@ -69,7 +69,5 @@ export class OauthCallbackComponent implements OnInit {
           this.router.navigate(['/signin']);
         },
       });
-
-    return;
   }
 }
