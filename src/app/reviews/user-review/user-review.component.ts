@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ReviewDetailed } from '../../../interfaces/review-detailed';
-import { ReviewsService } from '../../../services/http/reviews.service';
+import { ReviewService } from '../../../services/http/review.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -16,7 +16,7 @@ export class UserReviewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private reviewsService: ReviewsService
+    private reviewsService: ReviewService
   ) {}
 
   ngOnInit(): void {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ReviewsService } from '../../../services/http/reviews.service';
+import { ReviewService } from '../../../services/http/review.service';
 import { PaginatedResult } from '../../../interfaces/paginated-result';
 import { ReviewDetailed } from '../../../interfaces/review-detailed';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,7 +17,7 @@ export class ReviewComponent implements OnInit {
   counter: number[] = Array(this.count);
 
   constructor(
-    private reviewsService: ReviewsService,
+    private reviewsService: ReviewService,
     private route: ActivatedRoute,
     private router: Router
   ) {}

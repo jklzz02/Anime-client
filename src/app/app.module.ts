@@ -35,6 +35,7 @@ import { OauthCallbackComponent } from './auth/oauth-callback/oauth-callback.com
 import { SpinnerComponent } from './spinner/spinner.component';
 import { DiscordButtonComponent } from './auth/discord-button/discord-button.component';
 import { UserReviewComponent } from './reviews/user-review/user-review.component';
+import { ReviewDetailComponent } from './reviews/review-detail/review-detail.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { UserReviewComponent } from './reviews/user-review/user-review.component
     SpinnerComponent,
     DiscordButtonComponent,
     UserReviewComponent,
+    ReviewDetailComponent,
   ],
   imports: [
     BrowserModule,

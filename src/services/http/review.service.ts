@@ -8,7 +8,7 @@ import { ReviewDetailed } from '../../interfaces/review-detailed';
 @Injectable({
   providedIn: 'root',
 })
-export class ReviewsService {
+export class ReviewService {
   constructor(private http: HttpClient) {}
 
   private BASE: string = environment.anime_api_domain + '/api/Review';
@@ -28,6 +28,12 @@ export class ReviewsService {
         params,
       }
     );
+  }
+
+  getDetailedById(id: number): Observable<ReviewDetailed> {
+    return this.http.get<ReviewDetailed>(`${this.BASE}/detailed/${id}`, {
+      headers: this.headers,
+    });
   }
 
   getByUser(userId: number): Observable<ReviewDetailed[]> {

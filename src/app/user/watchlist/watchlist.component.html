@@ -1,24 +1,15 @@
 <section class="my-6">
-  <div
-    class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 2xl:grid-cols-6 gap-3"
-  >
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 2xl:grid-cols-6 gap-3">
     <ng-container *ngIf="!loadingFavourites">
-      <article
-        *ngFor="let anime of favourites"
-        class="group rounded-xl overflow-hidden bg-mantle-light dark:bg-mantle ring-1 ring-surface0-light dark:ring-surface0 hover:bg-surface0-light dark:hover:bg-surface0 transition"
-      >
+      <article *ngFor="let anime of favourites"
+        class="group rounded-xl overflow-hidden bg-mantle-light dark:bg-mantle ring-1 ring-surface0-light dark:ring-surface0 hover:bg-surface0-light dark:hover:bg-surface0 transition animate-fade-in">
         <a [routerLink]="'/detail/' + anime.id">
           <div class="relative w-full overflow-hidden">
-            <img
-              class="w-full aspect-[4/5] object-cover transition-transform duration-300 group-hover:scale-105"
-              [src]="anime.image_url"
-              [alt]="anime.title"
-              (error)="anime.image_url = 'assets/placeholder.png'"
-            />
+            <img class="w-full aspect-[4/5] object-cover transition-transform duration-300 group-hover:scale-105"
+              [src]="anime.image_url" [alt]="anime.title" (error)="anime.image_url = 'assets/placeholder.png'" />
 
             <div
-              class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3 sm:p-4 text-white"
-            >
+              class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3 sm:p-4 text-white">
               <h3 class="text-lg sm:text-lg font-semibold drop-shadow-lg">
                 {{ anime.title }}
               </h3>
@@ -32,46 +23,31 @@
             {{ anime.score }}
           </span>
 
-          <button
-            (click)="removeFromWatchlist(anime.id)"
+          <button (click)="removeFromWatchlist(anime.id)"
             class="text-surface2-light dark:text-surface2 hover:text-peach-light dark:hover:text-peach transition"
-            title="Remove from library"
-          >
+            title="Remove from library">
             <i class="bi bi-trash3 text-xs"></i>
           </button>
         </div>
-      </article> </ng-container
-    ><ng-container *ngIf="loadingFavourites">
-      <div
-        *ngFor="let _ of [].constructor(placeholdersCount)"
-        class="rounded-xl overflow-hidden bg-mantle-light dark:bg-mantle ring-1 ring-surface0-light dark:ring-surface0 animate-pulse"
-      >
-        <div
-          class="w-full aspect-[4/5] bg-surface0-light dark:bg-surface0"
-        ></div>
+      </article>
+    </ng-container><ng-container *ngIf="loadingFavourites">
+      <div *ngFor="let _ of [].constructor(placeholdersCount)"
+        class="rounded-xl overflow-hidden bg-mantle-light dark:bg-mantle ring-1 ring-surface0-light dark:ring-surface0 animate-pulse">
+        <div class="w-full aspect-[4/5] bg-surface0-light dark:bg-surface0"></div>
 
         <div class="px-2 py-2 flex items-center justify-between">
-          <div
-            class="h-3 w-12 bg-surface1-light dark:bg-surface1 rounded"
-          ></div>
+          <div class="h-3 w-12 bg-surface1-light dark:bg-surface1 rounded"></div>
 
           <div class="flex gap-2">
-            <div
-              class="h-4 w-4 bg-surface1-light dark:bg-surface1 rounded"
-            ></div>
+            <div class="h-4 w-4 bg-surface1-light dark:bg-surface1 rounded"></div>
           </div>
         </div>
       </div>
     </ng-container>
   </div>
-  <div
-    *ngIf="favourites.length === 0"
-    class="col-span-full flex flex-col items-center justify-center mt-16 px-4"
-  >
+  <div *ngIf="favourites.length === 0" class="col-span-full flex flex-col items-center justify-center mt-16 px-4">
     <div class="text-center space-y-4">
-      <div
-        class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-light dark:bg-blue mb-2"
-      >
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-light dark:bg-blue mb-2">
         <i class="bi bi-heart text-3xl text-white"></i>
       </div>
 
@@ -83,10 +59,8 @@
         Browse anime and add titles to your watchlist to see them here.
       </p>
 
-      <a
-        routerLink="/explore"
-        class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-light dark:bg-blue text-white rounded-lg font-medium hover:bg-lavender-light dark:hover:bg-lavender transition-colors duration-200"
-      >
+      <a routerLink="/explore"
+        class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-light dark:bg-blue text-white rounded-lg font-medium hover:bg-lavender-light dark:hover:bg-lavender transition-colors duration-200">
         <span>Explore</span>
       </a>
     </div>

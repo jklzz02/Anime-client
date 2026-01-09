@@ -1,8 +1,9 @@
 <div class="container mx-auto px-4 py-8">
   <div class="grid grid-cols-1 gap-6">
-    <div
+    <a
+      [routerLink]="['/review', review.id]"
       *ngFor="let review of reviews.data"
-      class="bg-base-light dark:bg-base rounded-xl shadow-lg border border-surface0-light dark:border-surface0 overflow-hidden hover:shadow-xl transition-shadow duration-300"
+      class="bg-base-light dark:bg-base rounded-xl shadow-lg border border-surface0-light dark:border-surface0 overflow-hidden hover:shadow-xl animate-fade-in transition-shadow duration-300"
     >
       <div class="flex flex-col md:flex-row">
         <div class="md:w-48 h-64 md:h-auto relative shrink-0">
@@ -36,9 +37,9 @@
                 </h3>
               </div>
               <div class="flex items-center gap-2">
-                 <span class="text-sm text-text-light dark:text-text opacity-75">
-                    {{ review.created_at | date:'mediumDate' }}
-                 </span>
+                <span class="text-sm text-text-light dark:text-text opacity-75">
+                  {{ review.created_at | date : "mediumDate" }}
+                </span>
               </div>
             </div>
 
@@ -65,7 +66,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </a>
   </div>
 
   <app-pagination

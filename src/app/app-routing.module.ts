@@ -15,6 +15,7 @@ import { GuestGuard } from '../guards/guest-guard.guard';
 import { ReviewComponent } from './reviews/review/review.component';
 import { OauthCallbackComponent } from './auth/oauth-callback/oauth-callback.component';
 import { UserReviewComponent } from './reviews/user-review/user-review.component';
+import { ReviewDetailComponent } from './reviews/review-detail/review-detail.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -37,6 +38,10 @@ const routes: Routes = [
   {
     path: 'reviews/user/:userId',
     component: UserReviewComponent,
+  },
+  {
+    path: 'review/:id',
+    component: ReviewDetailComponent,
   },
   {
     path: 'search',
