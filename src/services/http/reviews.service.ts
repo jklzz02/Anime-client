@@ -16,17 +16,26 @@ export class ReviewsService {
     'X-Client-Key': environment.x_client_key,
   });
 
-  getAll(page: number, count: number): Observable<PaginatedResult<ReviewDetailed>> {
+  getAll(
+    page: number,
+    count: number
+  ): Observable<PaginatedResult<ReviewDetailed>> {
     const params = new HttpParams().set('page', page).set('size', count);
-    return this.http.get<PaginatedResult<ReviewDetailed>>(this.BASE, {
-      headers: this.headers,
-      params,
-    });
+    return this.http.get<PaginatedResult<ReviewDetailed>>(
+      `${this.BASE}/detailed`,
+      {
+        headers: this.headers,
+        params,
+      }
+    );
   }
 
   getByUser(userId: number): Observable<ReviewDetailed[]> {
-    return this.http.get<ReviewDetailed[]>(`${this.BASE}/user/${userId}`, {
-      headers: this.headers,
-    });
+    return this.http.get<ReviewDetailed[]>(
+      `${this.BASE}/user/${userId}/detailed`,
+      {
+        headers: this.headers,
+      }
+    );
   }
 }
