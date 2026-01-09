@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { PaginatedResult } from '../../interfaces/paginated-result';
-import { Review } from '../../interfaces/review';
+import { ReviewDetailed } from '../../interfaces/review-detailed';
 
 @Injectable({
   providedIn: 'root',
@@ -16,19 +16,17 @@ export class ReviewsService {
     'X-Client-Key': environment.x_client_key,
   });
 
-  getAll(page: number, count: number): Observable<PaginatedResult<Review>> {
+  getAll(page: number, count: number): Observable<PaginatedResult<ReviewDetailed>> {
     const params = new HttpParams().set('page', page).set('size', count);
-    return this.http.get<PaginatedResult<Review>>(this.BASE, {
+    return this.http.get<PaginatedResult<ReviewDetailed>>(this.BASE, {
       headers: this.headers,
       params,
     });
   }
 
-  getByUser(userId: number): Observable<Review[]> {
-    const params = new HttpParams().set('user_id', userId);
-    return this.http.get<Review[]>(`${this.BASE}/by-user`, {
+  getByUser(userId: number): Observable<ReviewDetailed[]> {
+    return this.http.get<ReviewDetailed[]>(`${this.BASE}/user/${userId}`, {
       headers: this.headers,
-      params,
     });
   }
 }

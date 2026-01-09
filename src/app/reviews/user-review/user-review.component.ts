@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Review } from '../../../interfaces/review';
+import { ReviewDetailed } from '../../../interfaces/review-detailed';
 import { ReviewsService } from '../../../services/http/reviews.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -10,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './user-review.component.css',
 })
 export class UserReviewComponent implements OnInit {
-  reviews: Review[] = [];
+  reviews: ReviewDetailed[] = [];
   loading: boolean = true;
 
   constructor(
@@ -33,6 +33,11 @@ export class UserReviewComponent implements OnInit {
           this.loading = false;
         },
         error: (err) => {
+          if (err.status === 404) {
+            this.reviews = [];
+            this.loading = false;
+            return;
+          }
           if (err.status >= 500 || err.status == 0) {
             this.router.navigate(['/error'], {
               queryParams: { status: err.status },

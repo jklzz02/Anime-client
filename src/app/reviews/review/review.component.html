@@ -1,18 +1,80 @@
-<ul *ngFor="let review of reviews.data">
-  <li>user id: {{ review.user_id }}</li>
-  <li>anime id: {{ review.anime_id }}</li>
-  <li>title: {{ review.title }}</li>
-  <li>content: {{ review.content }}</li>
-  <li>score: {{ review.score }}</li>
-  <li>created at: {{ review.created_at }}</li>
-</ul>
+<div class="container mx-auto px-4 py-8">
+  <div class="grid grid-cols-1 gap-6">
+    <div
+      *ngFor="let review of reviews.data"
+      class="bg-base-light dark:bg-base rounded-xl shadow-lg border border-surface0-light dark:border-surface0 overflow-hidden hover:shadow-xl transition-shadow duration-300"
+    >
+      <div class="flex flex-col md:flex-row">
+        <div class="md:w-48 h-64 md:h-auto relative shrink-0">
+          <img
+            [src]="review.anime.image_url"
+            [alt]="review.anime.title"
+            class="w-full h-full object-cover"
+            loading="lazy"
+          />
+          <div
+            class="absolute top-2 left-2 bg-base-light dark:bg-base/90 backdrop-blur-sm px-2 py-1 rounded-md shadow-sm border border-surface0-light dark:border-surface0"
+          >
+            <span class="font-bold text-peach-light dark:text-peach">{{
+              review.score
+            }}</span>
+            <span class="text-xs text-text-light dark:text-text">/10</span>
+          </div>
+        </div>
 
-<app-pagination
-  class="mb-3"
-  [currentPage]="page"
-  [totalPages]="reviews.total_pages ?? 0"
-  [path]="'explore'"
-  (next)="nextPage()"
-  (previous)="previousPage()"
->
-</app-pagination>
+        <div class="p-6 flex flex-col justify-between flex-grow">
+          <div>
+            <div class="flex items-start justify-between mb-4">
+              <div>
+                <h2
+                  class="text-2xl font-bold text-lavender-light dark:text-lavender mb-1"
+                >
+                  {{ review.title }}
+                </h2>
+                <h3 class="text-lg text-blue-light dark:text-blue mb-2">
+                  {{ review.anime.title }}
+                </h3>
+              </div>
+              <div class="flex items-center gap-2">
+                 <span class="text-sm text-text-light dark:text-text opacity-75">
+                    {{ review.created_at | date:'mediumDate' }}
+                 </span>
+              </div>
+            </div>
+
+            <div
+              class="prose dark:prose-invert max-w-none text-text-light dark:text-text mb-4 leading-relaxed"
+            >
+              <markdown [data]="review.content"></markdown>
+            </div>
+          </div>
+
+          <div
+            class="flex items-center gap-3 pt-4 border-t border-surface0-light dark:border-surface0"
+          >
+            <img
+              [src]="review.user.picture_url"
+              [alt]="review.user.username"
+              class="w-10 h-10 rounded-full object-cover border-2 border-lavender-light dark:border-lavender"
+            />
+            <div class="flex flex-col">
+              <span class="font-semibold text-text-light dark:text-text">
+                {{ review.user.username }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-pagination
+    class="mt-8 block"
+    [currentPage]="page"
+    [totalPages]="reviews.total_pages ?? 0"
+    [path]="'explore'"
+    (next)="nextPage()"
+    (previous)="previousPage()"
+  >
+  </app-pagination>
+</div>

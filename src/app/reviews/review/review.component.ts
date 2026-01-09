@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ReviewsService } from '../../../services/http/reviews.service';
 import { PaginatedResult } from '../../../interfaces/paginated-result';
-import { Review } from '../../../interfaces/review';
+import { ReviewDetailed } from '../../../interfaces/review-detailed';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './review.component.css',
 })
 export class ReviewComponent implements OnInit {
-  reviews: Partial<PaginatedResult<Review>> = {};
+  reviews: Partial<PaginatedResult<ReviewDetailed>> = {};
   page: number = 1;
   count: number = 10;
   counter: number[] = Array(this.count);
