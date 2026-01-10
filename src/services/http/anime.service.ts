@@ -7,6 +7,7 @@ import { AnimeSummary } from '../../interfaces/anime-summary';
 import { AnimeSearchParameters } from '../../interfaces/anime-search-parameters';
 import { environment } from '../../environments/environment';
 import { AnimeTargetParameters } from '../../interfaces/anime-target-parameters';
+import { AnimeListItem } from '../../interfaces/anime-list-item';
 
 @Injectable({
   providedIn: 'root',
@@ -95,6 +96,22 @@ export class AnimeService {
         headers: this.headers,
       }
     );
+  }
+
+  getList(
+    count: number,
+    query: string | null = ''
+  ): Observable<AnimeListItem[]> {
+    const params: HttpParams = new HttpParams().set('count', count.toString());
+
+    if (query) {
+      params.set('query', query);
+    }
+
+    return this.http.get<AnimeListItem[]>(`${this.BASE}/list`, {
+      headers: this.headers,
+      params,
+    });
   }
 
   searchAnime(

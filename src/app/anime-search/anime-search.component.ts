@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AnimeService } from '../../services/http/anime.service';
-import { AnimeSummary } from '../../interfaces/anime-summary';
 import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { AnimeSearchParameters } from '../../interfaces/anime-search-parameters';
+import { AnimeListItem } from '../../interfaces/anime-list-item';
 
 @Component({
   selector: 'app-anime-search',
@@ -18,8 +18,8 @@ export class AnimeSearchComponent implements OnInit {
     private router: Router
   ) {}
 
-  animeSummary: AnimeSummary[] = [];
-  suggestions: AnimeSummary[] | any = [];
+  animeSummary: AnimeListItem[] = [];
+  suggestions: AnimeListItem[] | any = [];
   isVisible: boolean = false;
   params: Partial<AnimeSearchParameters> = {
     order_by: 'score',
@@ -28,7 +28,7 @@ export class AnimeSearchComponent implements OnInit {
 
   ngOnInit(): void {
     this.animeService
-      .getSummaries(1000)
+      .getList(1000)
       .subscribe((data) => (this.animeSummary = data));
 
     this.route.queryParams.subscribe((params) => {
