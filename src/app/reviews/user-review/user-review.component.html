@@ -115,7 +115,9 @@
         <div
           class="prose dark:prose-invert prose-sm max-w-none text-text-light dark:text-text leading-relaxed h-[4.5rem] overflow-hidden relative"
         >
-          <markdown [data]="review.content"></markdown>
+          <markdown
+            [data]="review.content.substring(0, 100) + '...'"
+          ></markdown>
           <div
             class="absolute bottom-0 left-0 w-full h-8 bg-gradient-to-t from-base-light dark:from-base to-transparent"
           ></div>

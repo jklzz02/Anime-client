@@ -46,7 +46,9 @@
             <div
               class="prose dark:prose-invert max-w-none text-text-light dark:text-text mb-4 leading-relaxed"
             >
-              <markdown [data]="review.content"></markdown>
+              <markdown
+                [data]="review.content.substring(0, 100) + '...'"
+              ></markdown>
             </div>
           </div>
 
