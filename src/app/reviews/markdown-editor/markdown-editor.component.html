@@ -80,7 +80,7 @@
     </div>
   </div>
 
-  <div *ngIf="activeTab === 'preview'" class="p-4 prose max-w-none">
+  <div *ngIf="activeTab === 'preview'" class="p-4 prose max-w-full break-words">
     <markdown class="prose" [data]="previewContent"></markdown>
   </div>
 </div>
