@@ -32,18 +32,24 @@
 
     <div class="flex flex-col gap-2">
       <a
-        [routerLink]="['/reviews/user/', user.id]"
-        class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-surface0-light dark:bg-surface0 text-text-light dark:text-text rounded-lg font-medium hover:bg-surface1-light dark:hover:bg-surface1 transition-colors duration-200"
-      >
-        <span>Reviews</span>
-      </a>
-      <a
         routerLink="/watchlist"
         class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-surface0-light dark:bg-surface0 text-text-light dark:text-text rounded-lg font-medium hover:bg-surface1-light dark:hover:bg-surface1 transition-colors duration-200"
       >
-        <span>Watchlist</span>
+        <span>Your Watchlist</span>
+      </a>
+      <a
+        [routerLink]="['/reviews/user/', user.id]"
+        class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-surface0-light dark:bg-surface0 text-text-light dark:text-text rounded-lg font-medium hover:bg-surface1-light dark:hover:bg-surface1 transition-colors duration-200"
+      >
+        <span>Your Reviews</span>
       </a>
 
+      <a
+        class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-surface0-light dark:bg-surface0 text-text-light dark:text-text rounded-lg font-medium hover:bg-surface1-light dark:hover:bg-surface1 transition-colors duration-200"
+        routerLink="/review/create"
+      >
+        <span>Write a review</span>
+      </a>
       <a
         routerLink="/explore"
         class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-surface0-light dark:bg-surface0 text-text-light dark:text-text rounded-lg font-medium hover:bg-surface1-light dark:hover:bg-surface1 transition-colors duration-200"

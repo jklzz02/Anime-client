@@ -1,44 +1,165 @@
-<form (ngSubmit)="onSubmit()">
-  <app-anime-select
-    (animeSelected)="onAnimeSelected($event)"
-  ></app-anime-select>
+<form
+  #form="ngForm"
+  (ngSubmit)="onSubmit(form)"
+  class="max-w-3xl mx-auto p-4 sm:p-6 space-y-8"
+>
+  <div
+    *ngIf="submitAttempted && form.invalid"
+    class="rounded-lg border border-red-500/40 bg-red-500/10 p-4 text-sm text-red-500"
+  >
+    <p class="font-semibold mb-2">Please fix the following issues:</p>
+    <ul class="list-disc list-inside space-y-1">
+      <li *ngFor="let error of getErrorMessages(form)">{{ error }}</li>
+    </ul>
+  </div>
 
-  <p *ngIf="selectedAnime">
-    Selected: <strong>{{ selectedAnime.title }}</strong>
-  </p>
+  <section
+    #formSection
+    class="rounded-lg border relative bg-base-light dark:bg-base border-surface1-light dark:border-surface1 p-4 sm:p-5"
+  >
+    <h2
+      class="text-sm font-semibold mb-3 opacity-80 text-text-light dark:text-text"
+    >
+      Anime
+    </h2>
 
-  <input
-    type="text"
-    [(ngModel)]="review.title"
-    name="title"
-    minlength="10"
-    maxlength="30"
-    required
-    (ngModelChange)="updateValidity()"
-  />
+    <app-anime-select
+      name="anime_id"
+      required
+      [(ngModel)]="review.anime_id"
+      (animeSelected)="onAnimeSelected($event)"
+      #anime="ngModel"
+    ></app-anime-select>
 
-  <app-markdown-editor
-    [(ngModel)]="review.content"
-    name="content"
-    (ngModelChange)="updateValidity()"
-  ></app-markdown-editor>
+    <p
+      *ngIf="selectedAnime"
+      class="mt-2 text-sm opacity-70 text-text-light dark:text-text"
+    >
+      Selected: <strong>{{ selectedAnime.title }}</strong>
+    </p>
 
-  <label for="score">score</label>
-  <input
-    type="number"
-    [(ngModel)]="review.score"
-    name="score"
-    min="0"
-    max="10"
-    required
-    (ngModelChange)="updateValidity()"
-  />
+    <p
+      *ngIf="(anime.touched || submitAttempted) && anime.invalid"
+      class="mt-2 text-sm text-red-500"
+    >
+      Anime selection is required.
+    </p>
+  </section>
 
-  <button type="submit" [disabled]="!isValid">Publish Review</button>
+  <section
+    #formSection
+    class="rounded-lg border bg-base-light dark:bg-base border-surface1-light dark:border-surface1 p-4 sm:p-5"
+  >
+    <h2
+      class="text-sm font-semibold mb-3 opacity-80 text-text-light dark:text-text"
+    >
+      Title
+    </h2>
+
+    <input
+      type="text"
+      name="title"
+      [(ngModel)]="review.title"
+      required
+      minlength="10"
+      maxlength="30"
+      #title="ngModel"
+      [disabled]="isSubmitting"
+      class="w-full rounded-md px-4 py-3 text-sm text-text-light dark:text-text bg-mantle-light dark:bg-mantle border border-surface1-light dark:border-surface1 focus:outline-none focus:ring-2 focus:ring-blue-light dark:focus:ring-blue disabled:opacity-50"
+    />
+
+    <div
+      *ngIf="(title.touched || submitAttempted) && title.invalid"
+      class="mt-2 space-y-1"
+    >
+      <p *ngIf="title.errors?.['required']" class="text-sm text-red-500">
+        Title is required.
+      </p>
+      <p *ngIf="title.errors?.['minlength']" class="text-sm text-red-500">
+        Minimum 10 characters required.
+      </p>
+      <p *ngIf="title.errors?.['maxlength']" class="text-sm text-red-500">
+        Maximum 30 characters allowed.
+      </p>
+    </div>
+  </section>
+
+  <section
+    #formSection
+    class="rounded-lg border bg-base-light dark:bg-base border-surface1-light dark:border-surface1"
+  >
+    <app-markdown-editor
+      name="content"
+      required
+      minlength="100"
+      [maxLength]="5000"
+      [disabled]="isSubmitting"
+      [(ngModel)]="review.content"
+      #content="ngModel"
+    ></app-markdown-editor>
+
+    <div
+      *ngIf="(content.touched || submitAttempted) && content.invalid"
+      class="px-4 mt-2 pb-4 space-y-1"
+    >
+      <p *ngIf="content.errors?.['required']" class="text-sm text-red-500">
+        Content is required.
+      </p>
+      <p *ngIf="content.errors?.['minlength']" class="text-sm text-red-500">
+        At least 100 characters required.
+      </p>
+    </div>
+  </section>
+
+  <section
+    #formSection
+    class="rounded-lg border bg-base-light dark:bg-base border-surface1-light dark:border-surface1 p-4 sm:p-5"
+  >
+    <h2
+      class="text-sm font-semibold mb-2 opacity-80 text-text-light dark:text-text"
+    >
+      Score
+    </h2>
+
+    <input
+      type="number"
+      name="score"
+      [(ngModel)]="review.score"
+      required
+      min="1"
+      max="10"
+      #score="ngModel"
+      [disabled]="isSubmitting"
+      class="w-24 rounded-md px-3 py-2 text-sm text-text-light dark:text-text bg-mantle-light dark:bg-mantle border border-surface1-light dark:border-surface1 focus:outline-none focus:ring-2 focus:ring-blue-light dark:focus:ring-blue disabled:opacity-50"
+    />
+
+    <div
+      *ngIf="(score.touched || submitAttempted) && score.invalid"
+      class="mt-2 space-y-1"
+    >
+      <p *ngIf="score.errors?.['required']" class="text-sm text-red-500">
+        Score is required.
+      </p>
+      <p *ngIf="score.errors?.['min']" class="text-sm text-red-500">
+        Minimum score is 1.
+      </p>
+      <p *ngIf="score.errors?.['max']" class="text-sm text-red-500">
+        Maximum score is 10.
+      </p>
+    </div>
+  </section>
+
+  <div class="flex justify-end">
+    <button
+      type="submit"
+      [disabled]="isSubmitting"
+      class="inline-flex items-center justify-center px-6 py-3 rounded-md font-medium bg-blue-light text-white hover:bg-blue-light/90 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-blue dark:hover:bg-blue/90"
+    >
+      <span *ngIf="!isSubmitting">Publish Review</span>
+      <span *ngIf="isSubmitting" class="flex items-center gap-2">
+        <i class="bi bi-arrow-repeat animate-spin"></i>
+        Publishing...
+      </span>
+    </button>
+  </div>
 </form>
-
-<ul>
-  <li *ngFor="let error of errors | keyvalue" class="text-red-600">
-    {{ error.key }}: {{ error.value }}
-  </li>
-</ul>

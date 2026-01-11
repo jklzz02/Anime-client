@@ -3,18 +3,52 @@
     type="text"
     [(ngModel)]="query"
     (input)="onInput()"
-    placeholder="Search anime..."
-    class="w-full"
+    (blur)="onBlur()"
+    (focus)="onFocus()"
+    [disabled]="disabled"
+    [placeholder]="placeholder"
+    class="w-full rounded-md px-4 py-3 text-sm text-text-light dark:text-text bg-mantle-light dark:bg-mantle border border-surface1-light dark:border-surface1 focus:outline-none focus:ring-2 focus:ring-blue-light dark:focus:ring-blue disabled:opacity-50"
   />
 
-  <ul *ngIf="isVisible && suggestions.length" class="dropdown">
+  <button
+    *ngIf="query && !disabled"
+    type="button"
+    class="absolute right-3 top-1/2 -translate-y-1/2 opacity-60 hover:opacity-100 transition-opacity"
+    (click)="clear()"
+    title="Clear selection"
+  >
+    <i class="bi bi-x-lg"></i>
+  </button>
+
+  <div
+    *ngIf="isLoading"
+    class="absolute right-3 top-1/2 -translate-y-1/2 opacity-60"
+  >
+    <i class="bi bi-arrow-repeat animate-spin"></i>
+  </div>
+
+  <ul
+    *ngIf="isVisible && suggestions.length > 0"
+    class="absolute z-20 mt-1 w-full max-h-64 overflow-auto rounded-md border bg-base-light dark:bg-base border-surface1-light dark:border-surface1 shadow-lg"
+  >
     <li
       *ngFor="let anime of suggestions"
-      (click)="selectAnime(anime)"
-      class="cursor-pointer"
+      (mousedown)="selectAnime(anime)"
+      class="px-4 py-2 cursor-pointer text-sm hover:bg-surface1-light dark:hover:bg-surface1 transition-colors"
     >
-      {{ anime.title }}
-      <span *ngIf="anime.english_title"> ({{ anime.english_title }}) </span>
+      <span class="font-medium">{{ anime.title }}</span>
+      <span *ngIf="anime.english_title" class="opacity-70 ml-1">
+        ({{ anime.english_title }})
+      </span>
     </li>
   </ul>
+
+  <div
+    *ngIf="
+      isVisible && !isLoading && query.length >= 3 && suggestions.length === 0
+    "
+    class="absolute z-20 mt-1 w-full rounded-md border bg-base-light dark:bg-base border-surface1-light dark:border-surface1 shadow-lg p-4 text-sm text-center opacity-70"
+  >
+    No anime found matching "{{ query }}"
+  </div>
 </div>
