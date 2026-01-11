@@ -100,7 +100,7 @@
           >
             <button
               (click)="deleteReview()"
-              class="rounded-md px-3 py-1.5 text-sm dark:bg-peach bg-peach-light text-white cursor-pointer hover:opacity-90 transition-opacity"
+              class="rounded-md px-3 py-1.5 text-sm dark:bg-peach bg-peach-light dark:text-surface0 text-white cursor-pointer hover:opacity-90 transition-opacity"
             >
               <i class="bi bi-trash"></i>
               <span class="ml-1 hidden sm:inline">Delete</span>
@@ -108,7 +108,7 @@
 
             <button
               [routerLink]="['/review/edit/', review.id]"
-              class="rounded-md px-3 py-1.5 text-sm dark:bg-green bg-green-light text-white cursor-pointer hover:opacity-90 transition-opacity"
+              class="rounded-md px-3 py-1.5 text-sm dark:bg-green bg-green-light dark:text-surface0 text-white cursor-pointer hover:opacity-90 transition-opacity"
             >
               <i class="bi bi-pencil-square"></i>
               <span class="ml-1 hidden sm:inline">Edit</span>
