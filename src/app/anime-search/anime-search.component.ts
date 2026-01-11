@@ -72,10 +72,15 @@ export class AnimeSearchComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe((results) => {
-        const filtered = results.filter((a) =>
-          a.title
-            .toLowerCase()
-            .includes(this.params.query?.toLowerCase().trim() ?? '')
+        const filtered = results.filter(
+          (a) =>
+            a.title
+              .toLowerCase()
+              .includes(this.params.query?.toLowerCase().trim() ?? '') ||
+            a.english_title
+              ?.trim()
+              .toLowerCase()
+              .includes(this.params.query?.toLowerCase().trim() ?? '')
         );
 
         this.suggestions = filtered.map((a) => ({

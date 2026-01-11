@@ -36,6 +36,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { DiscordButtonComponent } from './auth/discord-button/discord-button.component';
 import { UserReviewComponent } from './reviews/user-review/user-review.component';
 import { ReviewDetailComponent } from './reviews/review-detail/review-detail.component';
+import { ReviewCreateComponent } from './reviews/review-create/review-create.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { ReviewDetailComponent } from './reviews/review-detail/review-detail.com
     DiscordButtonComponent,
     UserReviewComponent,
     ReviewDetailComponent,
+    ReviewCreateComponent,
   ],
   imports: [
     BrowserModule,
