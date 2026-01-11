@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { PaginatedResult } from '../../interfaces/paginated-result';
 import { ReviewDetailed } from '../../interfaces/review-detailed';
+import { Review } from '../../interfaces/review';
 
 @Injectable({
   providedIn: 'root',
@@ -43,5 +44,12 @@ export class ReviewService {
         headers: this.headers,
       }
     );
+  }
+
+  create(review: Partial<Review>): Observable<Review> {
+    return this.http.post<Review>(this.BASE, review, {
+      headers: this.headers,
+      withCredentials: true,
+    });
   }
 }
