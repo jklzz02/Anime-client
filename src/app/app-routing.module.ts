@@ -40,36 +40,50 @@ const routes: Routes = [
   {
     path: 'reviews/user/:userId',
     component: UserReviewComponent,
+    title: "AnimeHub | User's review",
   },
   {
     path: 'review/create',
     component: ReviewCreateComponent,
     canActivate: [AuthGuard],
+    title: 'AnimeHub | Review',
   },
   {
     path: 'review/edit/:id',
     component: ReviewUpdateComponent,
     canActivate: [AuthGuard],
+    title: 'AnimeHub | Review',
   },
   {
     path: 'review/:id',
     component: ReviewDetailComponent,
+    title: 'AnimeHub | Review',
   },
   {
     path: 'search',
     component: AnimeSearchResultsComponent,
     title: 'AnimeHub | Explore',
   },
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuard],
+    title: 'AnimeHub | Profile',
+  },
   {
     path: 'watchlist',
     component: WatchlistComponent,
+    title: 'AnimeHub | Watchlist',
     canActivate: [AuthGuard],
   },
   { path: 'home', component: HomeComponent, title: 'AnimeHub' },
-  { path: 'auth/:provider/callback', component: OauthCallbackComponent },
+  {
+    path: 'auth/:provider/callback',
+    component: OauthCallbackComponent,
+    title: 'AnimeHub | Callback..',
+  },
   { path: 'error', component: ErrorComponent },
-  { path: '**', component: NotFoundComponent },
+  { path: '**', component: NotFoundComponent, title: 'AnimeHub | Not found' },
 ];
 
 @NgModule({
