@@ -69,7 +69,7 @@ export class ReviewUpdateComponent implements OnInit {
   updateReview(): void {
     this.reviewService.update(this.review).subscribe({
       next: (updatedReview) => {
-        this.router.navigate(['/reviews', updatedReview.id]);
+        this.router.navigate(['/review', updatedReview.id]);
       },
       error: (err) => {
         if (err.status === 401) {
