@@ -35,19 +35,6 @@ export class AuthService {
     return this.loginWithProvider({ provider: 'google', token: idToken });
   }
 
-  facebookLogin(
-    code: string,
-    redirectUri: string,
-    codeVerifier: string
-  ): Observable<AuthResponse> {
-    return this.loginWithProvider({
-      provider: 'facebook',
-      code: code,
-      redirect_uri: redirectUri,
-      code_verifier: codeVerifier,
-    });
-  }
-
   refreshToken(): Observable<boolean> {
     return this.http
       .post<{ access_token: string }>(
