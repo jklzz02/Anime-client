@@ -25,8 +25,9 @@ export class AnimeSearchComponent implements OnInit, OnDestroy {
     private router: Router
   ) {}
 
-  animeSummary: AnimeListItem[] = [];
+  warmAnimeList: AnimeListItem[] = [];
   suggestions: AnimeListItem[] | any = [];
+
   isVisible: boolean = false;
   params: Partial<AnimeSearchParameters> = {
     order_by: 'score',
@@ -38,7 +39,7 @@ export class AnimeSearchComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.animeService
       .getList(300)
-      .subscribe((data) => (this.animeSummary = data));
+      .subscribe((data) => (this.warmAnimeList = data));
 
     this.route.queryParams.subscribe((params) => {
       this.params = { ...params };
@@ -57,33 +58,27 @@ export class AnimeSearchComponent implements OnInit, OnDestroy {
         debounceTime(200),
         distinctUntilChanged(),
         switchMap((query) => {
-          if (!query?.trim()) {
+          const q = query.trim();
+
+          if (!q) {
             return of([]);
           }
 
-          if (query.trim().length < 3) {
-            return of(this.animeSummary);
+          if (q.length < 3) {
+            return of(
+              this.warmAnimeList.filter(
+                (a) =>
+                  a.title.toLowerCase().includes(q.toLowerCase()) ||
+                  a.english_title?.toLowerCase().includes(q.toLowerCase())
+              )
+            );
           }
 
-          return this.animeService.getList(300, query.trim());
-        }),
-        tap((results) => {
-          this.animeSummary = results;
+          return this.animeService.getList(300, q);
         })
       )
       .subscribe((results) => {
-        const filtered = results.filter(
-          (a) =>
-            a.title
-              .toLowerCase()
-              .includes(this.params.query?.toLowerCase().trim() ?? '') ||
-            a.english_title
-              ?.trim()
-              .toLowerCase()
-              .includes(this.params.query?.toLowerCase().trim() ?? '')
-        );
-
-        this.suggestions = filtered.map((a) => ({
+        this.suggestions = results.map((a) => ({
           ...a,
           loaded: false,
         }));
