@@ -41,6 +41,7 @@ import { UserReviewComponent } from './reviews/user-review/user-review.component
 import { ReviewDetailComponent } from './reviews/review-detail/review-detail.component';
 import { ReviewCreateComponent } from './reviews/review-create/review-create.component';
 import { AnimeSelectComponent } from './reviews/review-create/anime-select/anime-select.component';
+import { ReviewUpdateComponent } from './reviews/review-update/review-update.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { AnimeSelectComponent } from './reviews/review-create/anime-select/anime
     ReviewDetailComponent,
     ReviewCreateComponent,
     AnimeSelectComponent,
+    ReviewUpdateComponent,
   ],
   imports: [
     BrowserModule,

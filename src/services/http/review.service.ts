@@ -31,6 +31,12 @@ export class ReviewService {
     );
   }
 
+  getById(id: number): Observable<Review> {
+    return this.http.get<Review>(`${this.BASE}/${id}`, {
+      headers: this.headers,
+    });
+  }
+
   getDetailedById(id: number): Observable<ReviewDetailed> {
     return this.http.get<ReviewDetailed>(`${this.BASE}/detailed/${id}`, {
       headers: this.headers,
@@ -48,6 +54,22 @@ export class ReviewService {
 
   create(review: Partial<Review>): Observable<Review> {
     return this.http.post<Review>(this.BASE, review, {
+      headers: this.headers,
+      withCredentials: true,
+    });
+  }
+
+  update(review: Partial<Review>): Observable<Review> {
+    const patchDoc = [];
+
+    console.log('Updating review:', review);
+    patchDoc.push({ op: 'replace', path: '/score', value: review.score });
+    patchDoc.push({ op: 'replace', path: '/title', value: review.title });
+    patchDoc.push({ op: 'replace', path: '/content', value: review.content });
+
+    console.log('Patch document:', patchDoc);
+
+    return this.http.patch<Review>(`${this.BASE}/${review.id}`, patchDoc, {
       headers: this.headers,
       withCredentials: true,
     });

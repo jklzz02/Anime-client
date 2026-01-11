@@ -17,6 +17,7 @@ import { OauthCallbackComponent } from './auth/oauth-callback/oauth-callback.com
 import { UserReviewComponent } from './reviews/user-review/user-review.component';
 import { ReviewDetailComponent } from './reviews/review-detail/review-detail.component';
 import { ReviewCreateComponent } from './reviews/review-create/review-create.component';
+import { ReviewUpdateComponent } from './reviews/review-update/review-update.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -43,6 +44,11 @@ const routes: Routes = [
   {
     path: 'review/create',
     component: ReviewCreateComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'review/edit/:id',
+    component: ReviewUpdateComponent,
     canActivate: [AuthGuard],
   },
   {
