@@ -102,10 +102,10 @@ export class AnimeService {
     count: number,
     query: string | null = ''
   ): Observable<AnimeListItem[]> {
-    const params: HttpParams = new HttpParams().set('count', count.toString());
+    let params: HttpParams = new HttpParams().set('count', count.toString());
 
     if (query) {
-      params.set('query', query);
+      params = params.set('q', query);
     }
 
     return this.http.get<AnimeListItem[]>(`${this.BASE}/list`, {
