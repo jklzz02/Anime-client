@@ -52,6 +52,15 @@
         </div>
         <span class="text-peach-light dark:text-peach text-sm truncate">
           {{ suggestion.title }}
+          <ng-container
+            *ngIf="
+              suggestion.english_title &&
+              suggestion.title != suggestion.english_title
+            "
+          >
+            <br />
+            {{ suggestion.english_title ?? "" }}
+          </ng-container>
         </span>
       </a>
     </li>
