@@ -37,15 +37,15 @@ body {
 
 /* Markdown Prose Styles */
 .prose h1 {
-  @apply text-2xl text-peach-light dark:text-peach font-bold mb-4 mt-8 border-b border-b-surface1-light dark:border-b-surface1;
+  @apply text-2xl text-peach-light dark:text-peach font-bold mb-4 mt-8;
 }
 
 .prose h2 {
-  @apply text-xl text-lavender-light dark:text-lavender font-semibold mb-3 mt-6 border-b border-b-surface1-light dark:border-b-surface1;
+  @apply text-xl text-lavender-light dark:text-lavender font-semibold mb-3 mt-6;
 }
 
 .prose h3 {
-  @apply text-lg text-green-light dark:text-green font-semibold mb-2 mt-4 border-b border-b-surface1-light dark:border-b-surface1;
+  @apply text-lg text-green-light dark:text-green font-semibold mb-2 mt-4;
 }
 
 .prose a {
