@@ -6,7 +6,6 @@ import {
   debounceTime,
   distinctUntilChanged,
   switchMap,
-  tap,
 } from 'rxjs/operators';
 import { Subject, of } from 'rxjs';
 import { AnimeSearchParameters } from '../../interfaces/anime-search-parameters';
