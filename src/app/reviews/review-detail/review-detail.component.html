@@ -98,8 +98,22 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       <div class="lg:col-span-2">
         <div
-          class="bg-base-light dark:bg-base rounded-2xl shadow-lg border border-surface0-light dark:border-surface0 p-6 md:p-8"
+          class="bg-base-light relative dark:bg-base rounded-2xl shadow-lg border border-surface0-light dark:border-surface0 p-6 md:p-8"
         >
+        <div *ngIf="isOwner" class="flex p-1 gap-2 align-middle absolute top-4 right-4">
+          <button
+            (click)="deleteReview()"
+            class="rounded-md px-3 py-1.5  text-lg dark:bg-red-400 bg-red-600 text-white cursor-pointer"
+          >
+            <i class="bi bi-trash"></i>
+          </button>
+
+          <button
+            class="rounded-md px-3 py-1.5 text-lg dark:bg-green bg-green-light text-white cursor-pointer"
+          >
+            <i class="bi bi-pencil-square"></i>          
+          </button>
+        </div>
           <article
             class="prose dark:prose-invert md:prose-lg max-w-none text-text-light dark:text-text"
           >

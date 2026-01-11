@@ -11,7 +11,7 @@
   />
 
   <button
-    *ngIf="query && !disabled"
+    *ngIf="query && !disabled && !isLoading"
     type="button"
     class="absolute right-3 top-1/2 -translate-y-1/2 opacity-60 hover:opacity-100 transition-opacity"
     (click)="clear()"
