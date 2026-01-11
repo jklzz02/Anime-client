@@ -1,26 +1,29 @@
 <form
   #form="ngForm"
   (ngSubmit)="onSubmit(form)"
-  class="max-w-3xl mx-auto p-4 sm:p-6 space-y-8"
+  class="max-w-4xl mx-auto p-4 sm:p-8 space-y-8"
 >
   <div
     *ngIf="submitAttempted && form.invalid"
-    class="rounded-lg border border-red-500/40 bg-red-500/10 p-4 text-sm text-red-500"
+    class="rounded-xl border border-red-500/30 bg-red-500/10 backdrop-blur-sm p-4 text-sm text-red-500 animate-fade-in"
   >
-    <p class="font-semibold mb-2">Please fix the following issues:</p>
-    <ul class="list-disc list-inside space-y-1">
+    <div class="flex items-center gap-2 mb-2">
+      <i class="bi bi-exclamation-circle-fill"></i>
+      <p class="font-semibold">Please fix the following issues:</p>
+    </div>
+    <ul class="list-disc list-inside space-y-1 opacity-90 ml-1">
       <li *ngFor="let error of getErrorMessages(form)">{{ error }}</li>
     </ul>
   </div>
 
   <section
     #formSection
-    class="rounded-lg border relative bg-base-light dark:bg-base border-surface1-light dark:border-surface1 p-4 sm:p-5"
+    class="rounded-xl border bg-base-light dark:bg-base border-surface1-light dark:border-surface1 p-6"
   >
     <h2
-      class="text-sm font-semibold mb-3 opacity-80 text-text-light dark:text-text"
+      class="text-lg font-bold mb-4 bg-gradient-to-r from-blue-light to-lavender-light dark:from-blue dark:to-lavender bg-clip-text text-transparent"
     >
-      Anime
+      Select Anime
     </h2>
 
     <app-anime-select
@@ -29,31 +32,36 @@
       [(ngModel)]="review.anime_id"
       (animeSelected)="onAnimeSelected($event)"
       #anime="ngModel"
+      class="block"
     ></app-anime-select>
 
-    <p
+    <div
       *ngIf="selectedAnime"
-      class="mt-2 text-sm opacity-70 text-text-light dark:text-text"
+      class="mt-4 flex items-center gap-2 text-sm px-4 py-3 rounded-xl bg-surface0-light/30 dark:bg-surface0/30 border border-lavender-light/30 dark:border-lavender/30 text-text-light dark:text-text animate-fade-in"
     >
-      Selected: <strong>{{ selectedAnime.title }}</strong>
-    </p>
+      <span class="opacity-60">Selected:</span>
+      <span class="font-bold text-lavender-light dark:text-lavender">{{
+        selectedAnime.title
+      }}</span>
+    </div>
 
     <p
       *ngIf="(anime.touched || submitAttempted) && anime.invalid"
-      class="mt-2 text-sm text-red-500"
+      class="mt-2 text-sm text-red-500 flex items-center gap-1 animate-fade-in"
     >
+      <i class="bi bi-exclamation-circle"></i>
       Anime selection is required.
     </p>
   </section>
 
   <section
     #formSection
-    class="rounded-lg border bg-base-light dark:bg-base border-surface1-light dark:border-surface1 p-4 sm:p-5"
+    class="rounded-xl border bg-base-light dark:bg-base border-surface1-light dark:border-surface1 p-6"
   >
     <h2
-      class="text-sm font-semibold mb-3 opacity-80 text-text-light dark:text-text"
+      class="text-lg font-bold mb-4 bg-gradient-to-r from-peach-light to-red-500 dark:from-peach dark:to-red-400 bg-clip-text text-transparent"
     >
-      Title
+      Review Title
     </h2>
 
     <input
@@ -65,29 +73,50 @@
       maxlength="30"
       #title="ngModel"
       [disabled]="isSubmitting"
-      class="w-full rounded-md px-4 py-3 text-sm text-text-light dark:text-text bg-mantle-light dark:bg-mantle border border-surface1-light dark:border-surface1 focus:outline-none focus:ring-2 focus:ring-blue-light dark:focus:ring-blue disabled:opacity-50"
+      placeholder="Give your review a catchy headline..."
+      class="w-full rounded-xl px-4 py-3 text-base text-text-light dark:text-text bg-mantle-light dark:bg-mantle border border-surface1-light dark:border-surface1 focus:outline-none focus:ring-2 focus:ring-peach-light/50 dark:focus:ring-peach/50 focus:border-peach-light dark:focus:border-peach disabled:opacity-50 transition-all placeholder:text-text-light/30 dark:placeholder:text-text/30"
     />
 
     <div
       *ngIf="(title.touched || submitAttempted) && title.invalid"
-      class="mt-2 space-y-1"
+      class="mt-2 space-y-1 animate-fade-in"
     >
-      <p *ngIf="title.errors?.['required']" class="text-sm text-red-500">
-        Title is required.
+      <p
+        *ngIf="title.errors?.['required']"
+        class="text-sm text-red-500 flex items-center gap-1"
+      >
+        <i class="bi bi-exclamation-circle"></i> Title is required.
       </p>
-      <p *ngIf="title.errors?.['minlength']" class="text-sm text-red-500">
-        Minimum 10 characters required.
+      <p
+        *ngIf="title.errors?.['minlength']"
+        class="text-sm text-red-500 flex items-center gap-1"
+      >
+        <i class="bi bi-exclamation-circle"></i> Minimum 10 characters required.
       </p>
-      <p *ngIf="title.errors?.['maxlength']" class="text-sm text-red-500">
-        Maximum 30 characters allowed.
+      <p
+        *ngIf="title.errors?.['maxlength']"
+        class="text-sm text-red-500 flex items-center gap-1"
+      >
+        <i class="bi bi-exclamation-circle"></i> Maximum 30 characters allowed.
       </p>
     </div>
   </section>
 
   <section
     #formSection
-    class="rounded-lg border bg-base-light dark:bg-base border-surface1-light dark:border-surface1"
+    class="rounded-xl border bg-base-light dark:bg-base border-surface1-light dark:border-surface1 overflow-hidden"
   >
+    <div class="p-6 border-b border-surface1-light/30 dark:border-surface1/30">
+      <h2
+        class="text-lg font-bold bg-gradient-to-r from-green-light to-blue-light dark:from-green dark:to-blue bg-clip-text text-transparent"
+      >
+        Content
+      </h2>
+      <p class="text-sm text-text-light/60 dark:text-text/60 mt-1">
+        Share your thoughts in detail. Markdown is supported.
+      </p>
+    </div>
+
     <app-markdown-editor
       name="content"
       required
@@ -96,64 +125,117 @@
       [disabled]="isSubmitting"
       [(ngModel)]="review.content"
       #content="ngModel"
+      class="block border-none"
     ></app-markdown-editor>
 
     <div
       *ngIf="(content.touched || submitAttempted) && content.invalid"
-      class="px-4 mt-2 pb-4 space-y-1"
+      class="px-6 sm:px-8 pb-6 pt-2 space-y-1 animate-fade-in bg-red-500/5 border-t border-red-500/10"
     >
-      <p *ngIf="content.errors?.['required']" class="text-sm text-red-500">
-        Content is required.
+      <p
+        *ngIf="content.errors?.['required']"
+        class="text-sm text-red-500 flex items-center gap-1"
+      >
+        <i class="bi bi-exclamation-circle"></i> Content is required.
       </p>
-      <p *ngIf="content.errors?.['minlength']" class="text-sm text-red-500">
-        At least 100 characters required.
+      <p
+        *ngIf="content.errors?.['minlength']"
+        class="text-sm text-red-500 flex items-center gap-1"
+      >
+        <i class="bi bi-exclamation-circle"></i> At least 100 characters
+        required.
       </p>
     </div>
   </section>
 
   <section
     #formSection
-    class="rounded-lg border bg-base-light dark:bg-base border-surface1-light dark:border-surface1 p-4 sm:p-5"
+    class="rounded-xl border bg-base-light dark:bg-base border-surface1-light dark:border-surface1 p-6 sm:p-8"
   >
-    <h2
-      class="text-sm font-semibold mb-2 opacity-80 text-text-light dark:text-text"
-    >
-      Score
-    </h2>
+    <div class="flex flex-col gap-8 max-w-2xl mx-auto w-full">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2
+            class="text-lg font-bold mb-1 bg-gradient-to-r from-peach-light to-lavender-light dark:from-peach dark:to-lavender bg-clip-text text-transparent"
+          >
+            Score
+          </h2>
+          <p class="text-sm text-text-light/60 dark:text-text/60">
+            Rate from 1.0 to 10.0
+          </p>
+        </div>
+        <div
+          class="text-4xl font-bold text-peach-light dark:text-peach tabular-nums tracking-tight"
+        >
+          {{ review.score || 1 | number : "1.1-1" }}
+        </div>
+      </div>
 
-    <input
-      type="number"
-      name="score"
-      [(ngModel)]="review.score"
-      required
-      min="1"
-      max="10"
-      #score="ngModel"
-      [disabled]="isSubmitting"
-      class="w-24 rounded-md px-3 py-2 text-sm text-text-light dark:text-text bg-mantle-light dark:bg-mantle border border-surface1-light dark:border-surface1 focus:outline-none focus:ring-2 focus:ring-blue-light dark:focus:ring-blue disabled:opacity-50"
-    />
+      <div
+        class="relative w-full h-12 flex items-center touch-none select-none"
+      >
+        <!-- Track Background -->
+        <div
+          class="absolute w-full h-3 rounded-full bg-surface0-light dark:bg-surface0 overflow-hidden"
+        >
+          <!-- Filled Track -->
+          <div
+            class="absolute top-0 left-0 h-full bg-gradient-to-r from-peach-light to-lavender-light dark:from-peach dark:to-lavender transition-all duration-75"
+            [style.width.%]="((review.score || 1) - 1) * (100 / 9)"
+          ></div>
+        </div>
+
+        <!-- Range Input (Invisible Overlay) -->
+        <input
+          type="range"
+          name="score"
+          [(ngModel)]="review.score"
+          required
+          min="1"
+          max="10"
+          step="0.1"
+          #score="ngModel"
+          [disabled]="isSubmitting"
+          class="absolute w-full h-full opacity-0 cursor-pointer z-20 top-0 left-0"
+        />
+
+        <!-- Thumb (Pill Shape) -->
+        <div
+          class="absolute h-6 w-6 rounded-full bg-white border-2 border-peach-light dark:border-peach shadow-[0_0_10px_rgba(0,0,0,0.2)] transition-transform duration-75 pointer-events-none z-10"
+          [style.left.%]="((review.score || 1) - 1) * (100 / 9)"
+          [style.transform]="
+            'translateX(-50%) scale(' + (score.value ? 1.2 : 1) + ')'
+          "
+        ></div>
+      </div>
+
+      <div
+        class="flex justify-between text-xs font-medium text-text-light/40 dark:text-text/40 px-1 select-none"
+      >
+        <span>1.0</span>
+        <span>5.5</span>
+        <span>10.0</span>
+      </div>
+    </div>
 
     <div
       *ngIf="(score.touched || submitAttempted) && score.invalid"
-      class="mt-2 space-y-1"
+      class="mt-6 text-center animate-fade-in"
     >
-      <p *ngIf="score.errors?.['required']" class="text-sm text-red-500">
-        Score is required.
-      </p>
-      <p *ngIf="score.errors?.['min']" class="text-sm text-red-500">
-        Minimum score is 1.
-      </p>
-      <p *ngIf="score.errors?.['max']" class="text-sm text-red-500">
-        Maximum score is 10.
+      <p
+        *ngIf="score.errors?.['required']"
+        class="text-sm text-red-500 inline-flex items-center gap-1"
+      >
+        <i class="bi bi-exclamation-circle"></i> Score is required.
       </p>
     </div>
   </section>
 
-  <div class="flex justify-end">
+  <div class="flex justify-end pt-4">
     <button
       type="submit"
-      [disabled]="isSubmitting"
-      class="inline-flex items-center justify-center px-6 py-3 rounded-md font-medium bg-blue-light text-white hover:bg-blue-light/90 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-blue dark:hover:bg-blue/90"
+      [disabled]="isSubmitting || form.invalid"
+      class="px-8 py-3 rounded-md font-bold text-white bg-blue-light dark:bg-blue hover:bg-blue-light/90 dark:hover:bg-blue/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
     >
       <span *ngIf="!isSubmitting">Publish Review</span>
       <span *ngIf="isSubmitting" class="flex items-center gap-2">
