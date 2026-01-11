@@ -1,0 +1,20 @@
+<div class="relative">
+  <input
+    type="text"
+    [(ngModel)]="query"
+    (input)="onInput()"
+    placeholder="Search anime..."
+    class="w-full"
+  />
+
+  <ul *ngIf="isVisible && suggestions.length" class="dropdown">
+    <li
+      *ngFor="let anime of suggestions"
+      (click)="selectAnime(anime)"
+      class="cursor-pointer"
+    >
+      {{ anime.title }}
+      <span *ngIf="anime.english_title"> ({{ anime.english_title }}) </span>
+    </li>
+  </ul>
+</div>

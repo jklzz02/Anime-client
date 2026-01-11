@@ -10,12 +10,18 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ErrorComponent implements OnInit {
   statusCode: Number = 0;
+  message: string | null = null;
 
   constructor(private route: ActivatedRoute, private title: Title) {}
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((params) => {
       const code: Number = new Number(params.get('status'));
+      if (Number.isNaN(code) || code.valueOf() === 0) {
+        this.statusCode = 0;
+      }
+
+      this.message = params.get('message');
       this.statusCode = code;
     });
 

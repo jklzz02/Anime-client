@@ -1,1 +1,44 @@
-<p>review-create works!</p>
+<form (ngSubmit)="onSubmit()">
+  <app-anime-select
+    (animeSelected)="onAnimeSelected($event)"
+  ></app-anime-select>
+
+  <p *ngIf="selectedAnime">
+    Selected: <strong>{{ selectedAnime.title }}</strong>
+  </p>
+
+  <input
+    type="text"
+    [(ngModel)]="review.title"
+    name="title"
+    minlength="10"
+    maxlength="30"
+    required
+    (ngModelChange)="updateValidity()"
+  />
+
+  <app-markdown-editor
+    [(ngModel)]="review.content"
+    name="content"
+    (ngModelChange)="updateValidity()"
+  ></app-markdown-editor>
+
+  <label for="score">score</label>
+  <input
+    type="number"
+    [(ngModel)]="review.score"
+    name="score"
+    min="0"
+    max="10"
+    required
+    (ngModelChange)="updateValidity()"
+  />
+
+  <button type="submit" [disabled]="!isValid">Publish Review</button>
+</form>
+
+<ul>
+  <li *ngFor="let error of errors | keyvalue" class="text-red-600">
+    {{ error.key }}: {{ error.value }}
+  </li>
+</ul>

@@ -1,7 +1,6 @@
-import { NgModule } from '@angular/core';
+import { forwardRef, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MarkdownModule } from 'ngx-markdown';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AnimeComponent } from './anime/anime.component';
@@ -9,7 +8,11 @@ import { provideHttpClient } from '@angular/common/http';
 import { AnimeDetailComponent } from './anime-detail/anime-detail.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { VideoEmbedComponent } from './video-embed/video-embed.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormsModule,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { AnimeSearchComponent } from './anime-search/anime-search.component';
@@ -37,6 +40,7 @@ import { DiscordButtonComponent } from './auth/discord-button/discord-button.com
 import { UserReviewComponent } from './reviews/user-review/user-review.component';
 import { ReviewDetailComponent } from './reviews/review-detail/review-detail.component';
 import { ReviewCreateComponent } from './reviews/review-create/review-create.component';
+import { AnimeSelectComponent } from './reviews/review-create/anime-select/anime-select.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +75,7 @@ import { ReviewCreateComponent } from './reviews/review-create/review-create.com
     UserReviewComponent,
     ReviewDetailComponent,
     ReviewCreateComponent,
+    AnimeSelectComponent,
   ],
   imports: [
     BrowserModule,
@@ -80,7 +85,14 @@ import { ReviewCreateComponent } from './reviews/review-create/review-create.com
     ReactiveFormsModule,
     MarkdownModule.forRoot(),
   ],
-  providers: [provideHttpClient()],
+  providers: [
+    provideHttpClient(),
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => MarkdownEditorComponent),
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
