@@ -1,10 +1,4 @@
-<div class="container mx-auto px-4 py-8 max-w-5xl">
-  <div *ngIf="loading" class="flex justify-center items-center py-20">
-    <div
-      class="animate-spin rounded-full h-12 w-12 border-b-2 border-lavender-light dark:border-lavender"
-    ></div>
-  </div>
-
+<div class="container mx-auto px-4 py-8">
   <div *ngIf="!loading && review" class="animate-fade-in">
     <div
       class="bg-base-light dark:bg-base rounded-2xl shadow-xl border border-surface0-light dark:border-surface0 overflow-hidden mb-8"
@@ -12,7 +6,7 @@
       <div class="relative h-64 md:h-80 w-full overflow-hidden">
         <img
           [src]="review.anime.image_url"
-          class="absolute inset-0 w-full h-full object-cover blur-md opacity-50 scale-105"
+          class="absolute inset-0 w-full h-full object-cover sm:blur-md opacity-50 scale-105"
         />
         <div
           class="absolute inset-0 bg-gradient-to-t from-base-light dark:from-base to-transparent"
@@ -25,7 +19,7 @@
             [routerLink]="['/detail', review.anime_id]"
             [src]="review.anime.image_url"
             [alt]="review.anime.title"
-            class="w-24 md:w-48 rounded-lg shadow-2xl shrink-0 transition-transform hover:scale-105 duration-300 cursor-pointer hidden sm:block"
+            class="w-24 md:w-48 rounded-lg shadow-2xl shrink-0 cursor-pointer hidden sm:block"
           />
 
           <div class="flex-grow pb-1 md:pb-2 min-w-0">
