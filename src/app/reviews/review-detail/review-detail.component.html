@@ -59,7 +59,7 @@
                 >
                   <a
                     [routerLink]="['/reviews/user', review.user.id]"
-                    class="hover:text-lavender-light dark:hover:text-lavender transition-colors"this.loggedIn = 
+                    class="hover:text-lavender-light dark:hover:text-lavender transition-colors"
                   >
                     {{ review.user.username }}
                   </a>
@@ -98,25 +98,31 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       <div class="lg:col-span-2">
         <div
-          class="bg-base-light relative dark:bg-base rounded-2xl shadow-lg border border-surface0-light dark:border-surface0 p-6 md:p-8"
+          class="bg-base-light dark:bg-base rounded-2xl shadow-lg border border-surface0-light dark:border-surface0 p-4 md:p-8"
         >
-        <div *ngIf="isOwner" class="flex p-1 gap-2 align-middle absolute top-4 right-4">
-          <button
-            (click)="deleteReview()"
-            class="rounded-md px-3 py-1.5  text-lg dark:bg-red-400 bg-red-600 text-white cursor-pointer"
+          <div
+            *ngIf="isOwner"
+            class="flex gap-2 mb-4 pb-4 border-b border-surface0-light dark:border-surface0"
           >
-            <i class="bi bi-trash"></i>
-          </button>
+            <button
+              (click)="deleteReview()"
+              class="rounded-md px-3 py-1.5 text-sm dark:bg-peach bg-peach-light text-white cursor-pointer hover:opacity-90 transition-opacity"
+            >
+              <i class="bi bi-trash"></i>
+              <span class="ml-1 hidden sm:inline">Delete</span>
+            </button>
 
-          <button
-            [routerLink]="['/review/edit/', review.id]"
-            class="rounded-md px-3 py-1.5 text-lg dark:bg-green bg-green-light text-white cursor-pointer"
-          >
-            <i class="bi bi-pencil-square"></i>          
-          </button>
-        </div>
+            <button
+              [routerLink]="['/review/edit/', review.id]"
+              class="rounded-md px-3 py-1.5 text-sm dark:bg-green bg-green-light text-white cursor-pointer hover:opacity-90 transition-opacity"
+            >
+              <i class="bi bi-pencil-square"></i>
+              <span class="ml-1 hidden sm:inline">Edit</span>
+            </button>
+          </div>
+
           <article
-            class="prose dark:prose-invert md:prose-lg max-w-none text-text-light dark:text-text"
+            class="prose dark:prose-invert md:prose-lg max-w-none text-text-light dark:text-text break-words"
           >
             <markdown [data]="review.content"></markdown>
           </article>
@@ -124,72 +130,74 @@
       </div>
 
       <div class="lg:col-span-1 space-y-6">
-        <div
-          class="bg-base-light dark:bg-base rounded-xl shadow-lg border border-surface0-light dark:border-surface0 p-6"
-        >
-          <h3
-            class="text-lg font-bold text-lavender-light dark:text-lavender mb-4 border-b border-surface0-light dark:border-surface0 pb-2"
+        <div class="lg:sticky lg:top-4 space-y-6">
+          <div
+            class="bg-base-light dark:bg-base rounded-xl shadow-lg border border-surface0-light dark:border-surface0 p-6"
           >
-            About the Anime
-          </h3>
+            <h3
+              class="text-lg font-bold text-lavender-light dark:text-lavender mb-4 border-b border-surface0-light dark:border-surface0 pb-2"
+            >
+              About the Anime
+            </h3>
 
-          <div class="space-y-3">
-            <div class="flex justify-between">
-              <span class="text-sm text-text-light dark:text-text opacity-70"
-                >Rating</span
-              >
-              <span
-                class="text-sm font-semibold text-text-light dark:text-text"
-                >{{ review.anime.rating }}</span
-              >
+            <div class="space-y-3">
+              <div class="flex justify-between">
+                <span class="text-sm text-text-light dark:text-text opacity-70"
+                  >Rating</span
+                >
+                <span
+                  class="text-sm font-semibold text-text-light dark:text-text"
+                  >{{ review.anime.rating }}</span
+                >
+              </div>
+              <div class="flex justify-between">
+                <span class="text-sm text-text-light dark:text-text opacity-70"
+                  >Release Year</span
+                >
+                <span
+                  class="text-sm font-semibold text-text-light dark:text-text"
+                  >{{ review.anime.release_year }}</span
+                >
+              </div>
+              <div class="flex justify-between">
+                <span class="text-sm text-text-light dark:text-text opacity-70"
+                  >Global Score</span
+                >
+                <span
+                  class="text-sm font-semibold text-green-light dark:text-green"
+                  >{{ review.anime.score }}</span
+                >
+              </div>
             </div>
-            <div class="flex justify-between">
-              <span class="text-sm text-text-light dark:text-text opacity-70"
-                >Release Year</span
-              >
-              <span
-                class="text-sm font-semibold text-text-light dark:text-text"
-                >{{ review.anime.release_year }}</span
-              >
-            </div>
-            <div class="flex justify-between">
-              <span class="text-sm text-text-light dark:text-text opacity-70"
-                >Global Score</span
-              >
-              <span
-                class="text-sm font-semibold text-green-light dark:text-green"
-                >{{ review.anime.score }}</span
-              >
-            </div>
+
+            <a
+              [routerLink]="['/detail', review.anime_id]"
+              class="block w-full mt-6 py-2 px-4 bg-surface0-light dark:bg-surface0 hover:bg-surface1-light dark:hover:bg-surface1 text-text-light dark:text-text font-semibold text-center rounded-lg transition-colors"
+            >
+              View Anime Details
+            </a>
           </div>
 
-          <a
-            [routerLink]="['/detail', review.anime_id]"
-            class="block w-full mt-6 py-2 px-4 bg-surface0-light dark:bg-surface0 hover:bg-surface1-light dark:hover:bg-surface1 text-text-light dark:text-text font-semibold text-center rounded-lg transition-colors"
+          <div
+            class="bg-base-light dark:bg-base rounded-xl shadow-lg border border-surface0-light dark:border-surface0 p-6 flex flex-col items-center text-center"
           >
-            View Anime Details
-          </a>
-        </div>
-
-        <div
-          class="bg-base-light dark:bg-base rounded-xl shadow-lg border border-surface0-light dark:border-surface0 p-6 flex flex-col items-center text-center"
-        >
-          <img
-            [src]="review.user.picture_url"
-            class="w-20 h-20 rounded-full mb-3 border-2 border-lavender-light dark:border-lavender object-cover shadow-md"
-          />
-          <h4 class="text-lg font-bold text-text-light dark:text-text">
-            {{ review.user.username }}
-          </h4>
-          <p class="text-sm text-text-light dark:text-text opacity-60 mb-4">
-            Review Author
-          </p>
-          <a
-            [routerLink]="['/reviews/user', review.user.id]"
-            class="text-sm text-blue-light dark:text-blue hover:underline font-medium"
-          >
-            See all reviews by {{ review.user.username }}
-          </a>
+            <img
+              [src]="review.user.picture_url"
+              class="w-20 h-20 rounded-full mb-3 border-2 border-lavender-light dark:border-lavender object-cover shadow-md"
+            />
+            <h4 class="text-lg font-bold text-text-light dark:text-text">
+              {{ review.user.username }}
+            </h4>
+            <p class="text-sm text-text-light dark:text-text opacity-60 mb-4">
+              Review Author
+            </p>
+            <a
+              [routerLink]="['/reviews/user', review.user.id]"
+              class="text-sm text-blue-light dark:text-blue hover:underline font-medium"
+            >
+              See all reviews by {{ review.user.username }}
+            </a>
+          </div>
         </div>
       </div>
     </div>
