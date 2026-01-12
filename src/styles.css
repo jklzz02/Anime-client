@@ -35,6 +35,10 @@ body {
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
+.image-title {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
 /* Markdown Prose Styles */
 .prose h1 {
   @apply text-2xl text-peach-light dark:text-peach font-bold mb-4 mt-8;

@@ -15,6 +15,7 @@ export class ReviewComponent implements OnInit {
   page: number = 1;
   count: number = 10;
   counter: number[] = Array(this.count);
+  loading: boolean = true;
 
   constructor(
     private reviewsService: ReviewService,
@@ -32,7 +33,10 @@ export class ReviewComponent implements OnInit {
 
   private loadReviews() {
     this.reviewsService.getAll(this.page, this.count).subscribe({
-      next: (data) => (this.reviews = data),
+      next: (data) => {
+        this.reviews = data;
+        this.loading = false;
+      },
       error: (err) => {
         if (err.status >= 500 || err.status == 0) {
           this.router.navigate(['/error'], {
