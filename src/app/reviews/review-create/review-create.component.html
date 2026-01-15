@@ -1,12 +1,6 @@
-<form
-  #form="ngForm"
-  (ngSubmit)="onSubmit(form)"
-  class="max-w-4xl mx-auto p-4 sm:p-8 space-y-8"
->
-  <div
-    *ngIf="submitAttempted && form.invalid"
-    class="rounded-xl border border-red-500/30 bg-red-500/10 backdrop-blur-sm p-4 text-sm text-red-500 animate-fade-in"
-  >
+<form #form="ngForm" (ngSubmit)="onSubmit(form)" class="max-w-4xl mx-auto p-4 sm:p-8 space-y-6 animate-fade-in">
+  <div *ngIf="submitAttempted && form.invalid"
+    class="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-500">
     <div class="flex items-center gap-2 mb-2">
       <i class="bi bi-exclamation-circle-fill"></i>
       <p class="font-semibold">Please fix the following issues:</p>
@@ -17,131 +11,72 @@
   </div>
 
   <section
-    #formSection
-    class="rounded-xl border bg-base-light dark:bg-base border-surface1-light dark:border-surface1 p-6"
-  >
-    <h2
-      class="text-lg font-bold mb-4 bg-gradient-to-r from-blue-light to-lavender-light dark:from-blue dark:to-lavender bg-clip-text text-transparent"
-    >
+    class="rounded-xl border bg-mantle-light dark:bg-surface0 border-surface0-light dark:border-surface1 p-6 shadow-md">
+    <h2 class="text-lg font-bold mb-4 text-blue-light dark:text-blue">
       Select Anime
     </h2>
 
-    <app-anime-select
-      name="anime_id"
-      required
-      [(ngModel)]="review.anime_id"
-      (animeSelected)="onAnimeSelected($event)"
-      #anime="ngModel"
-      class="block"
-    ></app-anime-select>
+    <app-anime-select name="anime_id" required [(ngModel)]="review.anime_id" (animeSelected)="onAnimeSelected($event)"
+      #anime="ngModel" class="block"></app-anime-select>
 
-    <div
-      *ngIf="selectedAnime"
-      class="mt-4 flex items-center gap-2 text-sm px-4 py-3 rounded-xl bg-surface0-light/30 dark:bg-surface0/30 border border-lavender-light/30 dark:border-lavender/30 text-text-light dark:text-text animate-fade-in"
-    >
+    <div *ngIf="selectedAnime"
+      class="mt-4 flex items-center gap-2 text-sm px-4 py-2 rounded-lg bg-surface0-light/50 dark:bg-surface0/50 border border-lavender-light/30 dark:border-lavender/30 text-text-light dark:text-text">
       <span class="opacity-60">Selected:</span>
       <span class="font-bold text-lavender-light dark:text-lavender">{{
         selectedAnime.title
-      }}</span>
+        }}</span>
     </div>
 
-    <p
-      *ngIf="(anime.touched || submitAttempted) && anime.invalid"
-      class="mt-2 text-sm text-red-500 flex items-center gap-1 animate-fade-in"
-    >
+    <p *ngIf="(anime.touched || submitAttempted) && anime.invalid"
+      class="mt-2 text-sm text-red-500 flex items-center gap-1">
       <i class="bi bi-exclamation-circle"></i>
       Anime selection is required.
     </p>
   </section>
 
   <section
-    #formSection
-    class="rounded-xl border bg-base-light dark:bg-base border-surface1-light dark:border-surface1 p-6"
-  >
-    <h2
-      class="text-lg font-bold mb-4 bg-gradient-to-r from-peach-light to-red-500 dark:from-peach dark:to-red-400 bg-clip-text text-transparent"
-    >
+    class="rounded-xl border bg-mantle-light dark:bg-surface0 border-surface0-light dark:border-surface1 p-6 shadow-md">
+    <h2 class="text-lg font-bold mb-4 text-peach-light dark:text-peach">
       Review Title
     </h2>
 
-    <input
-      type="text"
-      name="title"
-      [(ngModel)]="review.title"
-      required
-      minlength="10"
-      maxlength="30"
-      #title="ngModel"
-      [disabled]="isSubmitting"
-      placeholder="Give your review a catchy headline..."
-      class="w-full rounded-xl px-4 py-3 dark:text-text bg-mantle-light dark:bg-mantle border border-surface1-light dark:border-surface1 focus:outline-none focus:ring-2 focus:ring-peach-light/50 dark:focus:ring-peach/50 focus:border-peach-light dark:focus:border-peach disabled:opacity-50 transition-all placeholder:text-text-light/30 dark:placeholder:text-text/30"
-    />
+    <input type="text" name="title" [(ngModel)]="review.title" required minlength="10" maxlength="30" #title="ngModel"
+      [disabled]="isSubmitting" placeholder="Give your review a catchy headline..."
+      class="w-full rounded-lg px-4 py-3 text-text-light dark:text-text bg-base-light dark:bg-base border border-surface1-light dark:border-surface1 focus:outline-none focus:ring-2 focus:ring-peach-light/50 dark:focus:ring-peach/50 focus:border-peach-light dark:focus:border-peach disabled:opacity-50 transition-all placeholder:text-text-light/30 dark:placeholder:text-text/30" />
 
-    <div
-      *ngIf="(title.touched || submitAttempted) && title.invalid"
-      class="mt-2 space-y-1 animate-fade-in"
-    >
-      <p
-        *ngIf="title.errors?.['required']"
-        class="text-sm text-red-500 flex items-center gap-1"
-      >
+    <div *ngIf="(title.touched || submitAttempted) && title.invalid" class="mt-2 space-y-1">
+      <p *ngIf="title.errors?.['required']" class="text-sm text-red-500 flex items-center gap-1">
         <i class="bi bi-exclamation-circle"></i> Title is required.
       </p>
-      <p
-        *ngIf="title.errors?.['minlength']"
-        class="text-sm text-red-500 flex items-center gap-1"
-      >
+      <p *ngIf="title.errors?.['minlength']" class="text-sm text-red-500 flex items-center gap-1">
         <i class="bi bi-exclamation-circle"></i> Minimum 10 characters required.
       </p>
-      <p
-        *ngIf="title.errors?.['maxlength']"
-        class="text-sm text-red-500 flex items-center gap-1"
-      >
+      <p *ngIf="title.errors?.['maxlength']" class="text-sm text-red-500 flex items-center gap-1">
         <i class="bi bi-exclamation-circle"></i> Maximum 30 characters allowed.
       </p>
     </div>
   </section>
 
   <section
-    #formSection
-    class="rounded-xl border bg-base-light dark:bg-base border-surface1-light dark:border-surface1 overflow-hidden"
-  >
-    <div class="p-6 border-b border-surface1-light/30 dark:border-surface1/30">
-      <h2
-        class="text-lg font-bold bg-gradient-to-r from-green-light to-blue-light dark:from-green dark:to-blue bg-clip-text text-transparent"
-      >
+    class="rounded-xl border bg-mantle-light dark:bg-surface0 border-surface0-light dark:border-surface1 overflow-hidden shadow-md">
+    <div class="p-6 border-b border-surface1-light dark:border-surface1">
+      <h2 class="text-lg font-bold text-green-light dark:text-green">
         Content
       </h2>
-      <p class="text-sm text-text-light/60 dark:text-text/60 mt-1">
+      <p class="text-sm text-text-light dark:text-text opacity-60 mt-1">
         Share your thoughts in detail. Markdown is supported.
       </p>
     </div>
 
-    <app-markdown-editor
-      name="content"
-      required
-      minlength="100"
-      [maxLength]="5000"
-      [disabled]="isSubmitting"
-      [(ngModel)]="review.content"
-      #content="ngModel"
-      class="block border-none"
-    ></app-markdown-editor>
+    <app-markdown-editor name="content" required minlength="100" [maxLength]="5000" [disabled]="isSubmitting"
+      [(ngModel)]="review.content" #content="ngModel" class="block border-none"></app-markdown-editor>
 
-    <div
-      *ngIf="(content.touched || submitAttempted) && content.invalid"
-      class="px-6 sm:px-8 pb-6 pt-2 space-y-1 animate-fade-in bg-red-500/5 border-t border-red-500/10"
-    >
-      <p
-        *ngIf="content.errors?.['required']"
-        class="text-sm text-red-500 flex items-center gap-1"
-      >
+    <div *ngIf="(content.touched || submitAttempted) && content.invalid"
+      class="px-6 pb-6 pt-2 space-y-1 bg-red-500/5 border-t border-red-500/10">
+      <p *ngIf="content.errors?.['required']" class="text-sm text-red-500 flex items-center gap-1">
         <i class="bi bi-exclamation-circle"></i> Content is required.
       </p>
-      <p
-        *ngIf="content.errors?.['minlength']"
-        class="text-sm text-red-500 flex items-center gap-1"
-      >
+      <p *ngIf="content.errors?.['minlength']" class="text-sm text-red-500 flex items-center gap-1">
         <i class="bi bi-exclamation-circle"></i> At least 100 characters
         required.
       </p>
@@ -149,94 +84,61 @@
   </section>
 
   <section
-    #formSection
-    class="rounded-xl border bg-base-light dark:bg-base border-surface1-light dark:border-surface1 p-6 sm:p-8"
-  >
-    <div class="flex flex-col gap-8 max-w-2xl mx-auto w-full">
+    class="rounded-xl border bg-mantle-light dark:bg-surface0 border-surface0-light dark:border-surface1 p-6 sm:p-8 shadow-md">
+    <div class="flex flex-col gap-6 max-w-2xl mx-auto w-full">
       <div class="flex items-center justify-between">
         <div>
-          <h2
-            class="text-lg font-bold mb-1 bg-gradient-to-r from-peach-light to-lavender-light dark:from-peach dark:to-lavender bg-clip-text text-transparent"
-          >
+          <h2 class="text-lg font-bold mb-1 text-lavender-light dark:text-lavender">
             Score
           </h2>
-          <p class="text-sm text-text-light/60 dark:text-text/60">
+          <p class="text-sm text-text-light dark:text-text opacity-60">
             Rate from 1.0 to 10.0
           </p>
         </div>
-        <div
-          class="text-4xl font-bold text-peach-light dark:text-peach tabular-nums tracking-tight"
-        >
+        <div class="text-4xl font-bold text-peach-light dark:text-peach tabular-nums">
           {{ review.score || 1 | number : "1.1-1" }}
         </div>
       </div>
 
-      <div
-        class="relative w-full h-12 flex items-center touch-none select-none"
-      >
+      <div class="relative w-full h-12 flex items-center touch-none select-none">
         <!-- Track Background -->
-        <div
-          class="absolute w-full h-3 rounded-full bg-surface0-light dark:bg-surface0 overflow-hidden"
-        >
+        <div class="absolute w-full h-3 rounded-full bg-surface0-light dark:bg-surface0 overflow-hidden">
           <!-- Filled Track -->
           <div
             class="absolute top-0 left-0 h-full bg-gradient-to-r from-peach-light to-lavender-light dark:from-peach dark:to-lavender transition-all duration-75"
-            [style.width.%]="((review.score || 1) - 1) * (100 / 9)"
-          ></div>
+            [style.width.%]="((review.score || 1) - 1) * (100 / 9)"></div>
         </div>
 
         <!-- Range Input (Invisible Overlay) -->
-        <input
-          type="range"
-          name="score"
-          [(ngModel)]="review.score"
-          required
-          min="1"
-          max="10"
-          step="0.1"
-          #score="ngModel"
-          [disabled]="isSubmitting"
-          class="absolute w-full h-full opacity-0 cursor-pointer z-20 top-0 left-0"
-        />
+        <input type="range" name="score" [(ngModel)]="review.score" required min="1" max="10" step="0.1"
+          #score="ngModel" [disabled]="isSubmitting"
+          class="absolute w-full h-full opacity-0 cursor-pointer z-20 top-0 left-0" />
 
-        <!-- Thumb (Pill Shape) -->
+        <!-- Thumb -->
         <div
-          class="absolute h-6 w-6 rounded-full bg-white border-2 border-peach-light dark:border-peach shadow-[0_0_10px_rgba(0,0,0,0.2)] transition-transform duration-75 pointer-events-none z-10"
-          [style.left.%]="((review.score || 1) - 1) * (100 / 9)"
-          [style.transform]="
+          class="absolute h-6 w-6 rounded-full bg-white border-2 border-peach-light dark:border-peach shadow-lg transition-transform duration-75 pointer-events-none z-10"
+          [style.left.%]="((review.score || 1) - 1) * (100 / 9)" [style.transform]="
             'translateX(-50%) scale(' + (score.value ? 1.2 : 1) + ')'
-          "
-        ></div>
+          "></div>
       </div>
 
-      <div
-        class="flex justify-between text-xs font-medium text-text-light/40 dark:text-text/40 px-1 select-none"
-      >
+      <div class="flex justify-between text-xs font-medium text-text-light dark:text-text opacity-40 px-1 select-none">
         <span>1.0</span>
         <span>5.5</span>
         <span>10.0</span>
       </div>
     </div>
 
-    <div
-      *ngIf="(score.touched || submitAttempted) && score.invalid"
-      class="mt-6 text-center animate-fade-in"
-    >
-      <p
-        *ngIf="score.errors?.['required']"
-        class="text-sm text-red-500 inline-flex items-center gap-1"
-      >
+    <div *ngIf="(score.touched || submitAttempted) && score.invalid" class="mt-6 text-center">
+      <p *ngIf="score.errors?.['required']" class="text-sm text-red-500 inline-flex items-center gap-1">
         <i class="bi bi-exclamation-circle"></i> Score is required.
       </p>
     </div>
   </section>
 
   <div class="flex justify-end pt-4">
-    <button
-      type="submit"
-      [disabled]="isSubmitting || form.invalid"
-      class="px-8 py-3 rounded-md font-bold text-white bg-blue-light dark:bg-blue hover:bg-blue-light/90 dark:hover:bg-blue/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-    >
+    <button type="submit" [disabled]="isSubmitting || form.invalid"
+      class="px-8 py-3 rounded-lg font-semibold text-white bg-blue-light dark:bg-blue hover:bg-lavender-light dark:hover:bg-lavender disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg">
       <span *ngIf="!isSubmitting">Publish Review</span>
       <span *ngIf="isSubmitting" class="flex items-center gap-2">
         <i class="bi bi-arrow-repeat animate-spin"></i>

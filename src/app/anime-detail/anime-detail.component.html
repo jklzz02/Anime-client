@@ -146,7 +146,7 @@
                   [routerLink]="['/search']"
                   [queryParams]="{ genre_id: genre.id }"
                   *ngFor="let genre of anime.genres"
-                  class="px-2.5 py-1 bg-surface1-light dark:bg-surface1 hover:bg-surface2-light dark:hover:bg-surface2 text-text-light dark:text-text text-xs rounded-lg transition-colors"
+                  class="px-2.5 py-1 bg-blue-light dark:bg-blue hover:opacity-80 text-white text-xs rounded-lg transition-opacity"
                 >
                   {{ genre.name }}
                 </a>
@@ -161,7 +161,7 @@
               <a
                 [routerLink]="['/search']"
                 [queryParams]="{ studio: anime.studio }"
-                class="inline-block px-2.5 py-1 bg-lavender-light dark:bg-lavender text-w text-white text-xs rounded-lg hover:opacity-90 font-medium"
+                class="inline-block px-2.5 py-1 bg-green-light dark:bg-green text-w text-white text-xs rounded-lg hover:opacity-90 font-medium"
               >
                 {{ anime.studio }}
               </a>
