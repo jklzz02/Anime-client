@@ -1,36 +1,21 @@
-<a
-  class="flex flex-col h-75 items-center rounded-xl bg-mantle-light dark:bg-mantle shadow-md hover:scale-105 hover:shadow-lg transition p-4 text-center"
-  [routerLink]="['/detail', summary.id]"
->
-  <img
-    [src]="summary.image_url"
-    [alt]="summary.title"
-    (error)="summary.image_url = 'assets/placeholder.png'"
-    class="w-34 max-h-1/2 object-cover rounded-md mb-3"
-  />
-  <span
-    class="text-md max-w-4/5 max-h-1/5 text-text-light dark:text-text overflow-hidden whitespace-nowrap text-ellipsis"
-  >
+<a class="flex flex-col items-center rounded-xl bg-mantle-light dark:bg-surface0 shadow-md hover:shadow-xl hover:scale-[1.03] transition-all duration-300 p-4 text-center border border-surface0-light dark:border-surface1"
+  [routerLink]="['/detail', summary.id]">
+  <img [src]="summary.image_url" [alt]="summary.title" (error)="summary.image_url = 'assets/placeholder.png'"
+    class="w-full h-40 object-cover rounded-lg mb-3 shadow-sm" />
+  <h3 class="text-sm font-bold text-text-light dark:text-text mb-2 line-clamp-2 min-h-[2.5rem]">
     {{ summary.title }}
-  </span>
-  <span
-    *ngIf="summary.score >= 8"
-    class="text-lg text-green-light dark:text-green"
-  >
-    {{ summary.score }}
-  </span>
-  <span
-    *ngIf="summary.score < 8 && summary.score >= 6"
-    class="text-lg text-peach-light dark:text-peach"
-  >
-    {{ summary.score }}
-  </span>
-  <span
-    *ngIf="summary.score < 6"
-    class="text-lg text-red-500 dark:text-red-400"
-  >
-    {{ summary.score }}
-  </span>
-  <p>{{ summary.release_year }}</p>
-  <p class="text-sm">{{ summary.rating }}</p>
+  </h3>
+  <div class="flex items-center gap-2 mb-2">
+    <span *ngIf="summary.score >= 8" class="text-lg font-bold text-green-light dark:text-green">
+      {{ summary.score }}
+    </span>
+    <span *ngIf="summary.score < 8 && summary.score >= 6" class="text-lg font-bold text-peach-light dark:text-peach">
+      {{ summary.score }}
+    </span>
+    <span *ngIf="summary.score < 6" class="text-lg font-bold text-red-500 dark:text-red-400">
+      {{ summary.score }}
+    </span>
+    <span class="text-xs text-text-light dark:text-text opacity-60">{{ summary.release_year }}</span>
+  </div>
+  <p class="text-xs text-text-light dark:text-text opacity-70">{{ summary.rating }}</p>
 </a>

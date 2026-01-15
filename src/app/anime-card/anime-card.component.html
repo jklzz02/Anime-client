@@ -1,10 +1,10 @@
 <div
-  class="rounded-xl shadow hover:shadow-lg bg-mantle-light dark:bg-surface0 lg:h-210 overflow-hidden animate-fade-in"
+  class="rounded-xl shadow-md hover:shadow-xl bg-mantle-light dark:bg-surface0 overflow-hidden animate-fade-in transition-all duration-300 border border-surface0-light dark:border-surface1"
 >
   <a [routerLink]="'/detail/' + anime.id">
     <div class="relative w-full rounded-t-lg overflow-hidden">
       <img
-        class="w-full h-48 sm:h-auto object-cover transition hover:scale-105"
+        class="w-full h-48 sm:h-auto object-cover transition-transform duration-300 hover:scale-105"
         [src]="anime.image_url"
         [alt]="anime.title"
         [title]="anime.title"
@@ -17,10 +17,16 @@
           {{ anime.title }}
         </h2>
         <p class="text-sm">
-          <span *ngIf="anime.score > 0" class="text-green font-bold">
+          <span
+            *ngIf="anime.score > 0"
+            class="text-green-light dark:text-green font-bold"
+          >
             Score: {{ anime.score }}
           </span>
-          <span *ngIf="anime.score == 0" class="text-peach">
+          <span
+            *ngIf="anime.score == 0"
+            class="text-peach-light dark:text-peach"
+          >
             Not scored yet
           </span>
         </p>
@@ -29,13 +35,13 @@
   </a>
 
   <div class="p-3 sm:p-4">
-    <figcaption class="text-xs text-lavender mb-2">
+    <figcaption class="text-xs text-lavender-light dark:text-lavender mb-2">
       {{ anime.other_title }}
     </figcaption>
 
     <div
       *ngIf="anime.type.name.toLowerCase() !== 'unknown'"
-      class="mb-2 text-xs text-subtext1"
+      class="mb-2 text-xs text-text-light dark:text-text opacity-60"
     >
       {{ anime.type.name }}
     </div>
@@ -51,7 +57,7 @@
         [routerLink]="['/search']"
         [queryParams]="{ min_score: 8 }"
         *ngIf="fanFavourite"
-        class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-green-light dark:bg-green dark:text-crust hover:opacity-85"
+        class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-green-light dark:bg-green dark:text-crust hover:opacity-80 transition-opacity"
       >
         fan favourite
       </a>
@@ -59,7 +65,7 @@
         [routerLink]="['/search']"
         [queryParams]="{ min_episodes: '2', max_episodes: '12' }"
         *ngIf="short"
-        class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-green-light dark:bg-green dark:text-crust hover:opacity-85"
+        class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-green-light dark:bg-green dark:text-crust hover:opacity-80 transition-opacity"
       >
         short
       </a>
@@ -70,11 +76,14 @@
         [routerLink]="['/search']"
         [queryParams]="{ genres: [genre.name] }"
         *ngFor="let genre of anime.genres | slice : 0 : 3"
-        class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-blue-light dark:bg-blue dark:text-crust hover:opacity-85"
+        class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-blue-light dark:bg-blue dark:text-crust hover:opacity-80 transition-opacity"
       >
         {{ genre.name }}
       </a>
-      <span *ngIf="anime.genres.length > 3" class="text-xs text-subtext1 px-1">
+      <span
+        *ngIf="anime.genres.length > 3"
+        class="text-xs text-text-light dark:text-text opacity-50 px-1"
+      >
         +{{ anime.genres.length - 3 }}
       </span>
     </div>
@@ -84,13 +93,13 @@
         [routerLink]="['/search']"
         [queryParams]="{ producers: [producer.name] }"
         *ngFor="let producer of anime.producers | slice : 0 : 3"
-        class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-lavender-light dark:bg-lavender dark:text-crust hover:opacity-85"
+        class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-lavender-light dark:bg-lavender dark:text-crust hover:opacity-80 transition-opacity"
       >
         {{ producer.name }}
       </a>
       <span
         *ngIf="anime.producers.length > 3"
-        class="text-xs text-subtext1 px-1"
+        class="text-xs text-text-light dark:text-text opacity-50 px-1"
       >
         +{{ anime.producers.length - 3 }}
       </span>
@@ -101,13 +110,13 @@
         [routerLink]="['/search']"
         [queryParams]="{ licensors: [licensor.name] }"
         *ngFor="let licensor of anime.licensors | slice : 0 : 3"
-        class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-peach-light dark:bg-peach dark:text-crust hover:opacity-85"
+        class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-peach-light dark:bg-peach dark:text-crust hover:opacity-80 transition-opacity"
       >
         {{ licensor.name }}
       </a>
       <span
         *ngIf="anime.licensors.length > 3"
-        class="text-xs text-subtext1 px-1"
+        class="text-xs text-text-light dark:text-text opacity-50 px-1"
       >
         +{{ anime.licensors.length - 3 }}
       </span>
