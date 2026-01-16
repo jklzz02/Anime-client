@@ -58,7 +58,7 @@ export class RecommenderService {
   }
 
   getByTextQuery(query: string, count: number): Observable<ScoredResponse[]> {
-    const params = new HttpParams().set('q', query).set('limi', count);
+    const params = new HttpParams().set('query', query).set('limi', count);
 
     return this.http.get<ScoredResponse[]>(`${this.BASE}/recommend/text`, {
       params: params,

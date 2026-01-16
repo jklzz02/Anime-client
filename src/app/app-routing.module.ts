@@ -18,6 +18,7 @@ import { UserReviewComponent } from './reviews/user-review/user-review.component
 import { ReviewDetailComponent } from './reviews/review-detail/review-detail.component';
 import { ReviewCreateComponent } from './reviews/review-create/review-create.component';
 import { ReviewUpdateComponent } from './reviews/review-update/review-update.component';
+import { RecommendComponent } from './user/recommend/recommend.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -69,6 +70,12 @@ const routes: Routes = [
     component: ProfileComponent,
     canActivate: [AuthGuard],
     title: 'AnimeHub | Profile',
+  },
+  {
+    path: 'recommend',
+    component: RecommendComponent,
+    canActivate: [AuthGuard],
+    title: 'AnimeHub | Recommend',
   },
   {
     path: 'watchlist',
