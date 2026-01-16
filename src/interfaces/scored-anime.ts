@@ -1,6 +1,6 @@
 import { Anime } from './anime';
 
 export interface ScoredAnime {
-  anime: Anime;
+  anime: Partial<Anime>;
   score: number;
 }
