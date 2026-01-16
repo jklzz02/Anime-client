@@ -6,7 +6,7 @@ import { UserService } from '../../../services/user/user.service';
 import { AuthService } from '../../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { UserFavourite } from '../../../interfaces/user-favourite';
-import { ScoredAnime } from '../../../interfaces/scored-anime';
+import { ScoredSummary } from '../../../interfaces/scored-anime';
 
 @Component({
   selector: 'app-recommend',
@@ -15,7 +15,7 @@ import { ScoredAnime } from '../../../interfaces/scored-anime';
   styleUrl: './recommend.component.css',
 })
 export class RecommendComponent implements OnInit {
-  summaries: ScoredAnime[] = [];
+  summaries: ScoredSummary[] = [];
   favourites: UserFavourite[] = [];
   query: string = '';
 
@@ -60,7 +60,7 @@ export class RecommendComponent implements OnInit {
             .pipe(
               map((scores) =>
                 summaries.map((summary) => ({
-                  anime: summary,
+                  summary: summary,
                   score:
                     scores.find((score) => score.target_anime_id === summary.id)
                       ?.compatibility_score ?? 0,

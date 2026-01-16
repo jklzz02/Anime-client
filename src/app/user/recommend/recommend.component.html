@@ -4,7 +4,7 @@
 
 <div class="grid grid-cols-3 gap-2 max-w3/4" *ngIf="summaries">
   <app-anime-summary-card
-    [summary]="summary"
+    [summary]="summary.summary"
     *ngFor="let summary of summaries"
   ></app-anime-summary-card>
 </div>
