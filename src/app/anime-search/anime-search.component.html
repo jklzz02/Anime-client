@@ -50,16 +50,17 @@
             (error)="suggestion.image_url = 'assets/placeholder.png'"
           />
         </div>
-        <span class="text-peach-light dark:text-peach text-sm truncate">
-          {{ suggestion.title }}
+        <span class="text-text-light dark:text-text text-sm truncate">
+          <p>{{ suggestion.title }}</p>
           <ng-container
             *ngIf="
               suggestion.english_title &&
               suggestion.title != suggestion.english_title
             "
           >
-            <br />
-            {{ suggestion.english_title ?? "" }}
+            <p class="text-surface2-light dark:text-surface2">
+              ({{ suggestion.english_title ?? "" }})
+            </p>
           </ng-container>
         </span>
       </a>
