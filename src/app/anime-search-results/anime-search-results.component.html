@@ -27,19 +27,6 @@
     No results found for "{{ params.query }}"
   </h1>
 
-  <ng-container *ngIf="suggestions.length">
-    <h2
-      class="text-2xl text-center font-semibold text-text-light dark:text-text mb-4"
-    >
-      Maybe you meant
-    </h2>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-      <ng-container *ngFor="let suggestion of suggestions">
-        <app-anime-summary-card [summary]="suggestion"></app-anime-summary-card>
-      </ng-container>
-    </div>
-  </ng-container>
   <div class="mx-auto text-center">
     <a
       routerLink="/explore"

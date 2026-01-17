@@ -42,7 +42,6 @@ import { ReviewDetailComponent } from './reviews/review-detail/review-detail.com
 import { ReviewCreateComponent } from './reviews/review-create/review-create.component';
 import { AnimeSelectComponent } from './reviews/review-create/anime-select/anime-select.component';
 import { ReviewUpdateComponent } from './reviews/review-update/review-update.component';
-import { RecommendComponent } from './user/recommend/recommend.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +78,6 @@ import { RecommendComponent } from './user/recommend/recommend.component';
     ReviewCreateComponent,
     AnimeSelectComponent,
     ReviewUpdateComponent,
-    RecommendComponent,
   ],
   imports: [
     BrowserModule,

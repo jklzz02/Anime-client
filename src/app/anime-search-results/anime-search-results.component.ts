@@ -3,7 +3,6 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PaginatedResult } from '../../interfaces/paginated-result';
 import { AnimeService } from '../../services/http/anime.service';
 import { AnimeSummary } from '../../interfaces/anime-summary';
-import levenshtein from 'js-levenshtein';
 import { AnimeSearchParameters } from '../../interfaces/anime-search-parameters';
 import { Anime } from '../../interfaces/anime';
 
@@ -34,7 +33,7 @@ export class AnimeSearchResultsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private animeService: AnimeService
+    private animeService: AnimeService,
   ) {}
 
   ngOnInit(): void {
@@ -55,7 +54,7 @@ export class AnimeSearchResultsComponent implements OnInit {
   loadAnime(
     parameters: AnimeSearchParameters,
     page: number,
-    count: number
+    count: number,
   ): void {
     this.notFound = false;
 
@@ -67,7 +66,6 @@ export class AnimeSearchResultsComponent implements OnInit {
       },
       error: (err) => {
         if (err.status === 404 && parameters.query) {
-          this.filterSuggestions(parameters.query);
           this.notFound = true;
         } else {
           this.router.navigate(['error'], {
@@ -144,19 +142,5 @@ export class AnimeSearchResultsComponent implements OnInit {
 
       include_adult_content: asBoolean(params['include_adult_content']),
     };
-  }
-
-  private filterSuggestions(query: string): void {
-    this.animeService.getSummaries(2000).subscribe((data) => {
-      this.suggestions = data
-        .map((a) => ({
-          suggestion: a,
-          distance: levenshtein(a.title.toLowerCase(), query.toLowerCase()),
-        }))
-        .filter((r) => r.distance <= 3)
-        .sort((a, b) => a.distance - b.distance)
-        .slice(0, 5)
-        .map((r) => r.suggestion);
-    });
   }
 }
