@@ -21,7 +21,7 @@ export class AnimeComponent implements OnInit {
     private title: Title,
     private animeService: AnimeService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -39,7 +39,7 @@ export class AnimeComponent implements OnInit {
       error: (err) => {
         if (err.status >= 500 || err.status == 0) {
           this.router.navigate(['/error'], {
-            queryParams: { status: err.status },
+            state: { status: err.status },
           });
         }
       },

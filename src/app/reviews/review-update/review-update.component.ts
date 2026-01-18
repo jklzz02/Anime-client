@@ -40,7 +40,7 @@ export class ReviewUpdateComponent implements OnInit {
     private authService: AuthService,
     private userService: UserService,
     private reviewService: ReviewService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -68,7 +68,7 @@ export class ReviewUpdateComponent implements OnInit {
 
           if (this.review.user_id !== this.user.id) {
             this.router.navigate(['/error'], {
-              queryParams: { status: 401, message: 'Unauthorized' },
+              state: { status: 401, message: 'Unauthorized' },
             });
             return;
           }
@@ -76,7 +76,7 @@ export class ReviewUpdateComponent implements OnInit {
         error: (err) => {
           if (err.status >= 500) {
             this.router.navigate(['/error'], {
-              queryParams: { status: err.status, message: err.message },
+              state: { status: err.status, message: err.message },
             });
           }
         },
@@ -109,14 +109,14 @@ export class ReviewUpdateComponent implements OnInit {
 
         if (err.status === 403) {
           this.router.navigate(['/error'], {
-            queryParams: { status: 403, message: 'Forbidden' },
+            state: { status: 403, message: 'Forbidden' },
           });
           return;
         }
 
         if (err.status >= 500) {
           this.router.navigate(['/error'], {
-            queryParams: { status: err.status, message: err.message },
+            state: { status: err.status, message: err.message },
           });
         }
       },
@@ -126,7 +126,7 @@ export class ReviewUpdateComponent implements OnInit {
 
   private scrollToFirstError(form: NgForm): void {
     const firstInvalidField = this.fieldOrder.find(
-      (fieldName) => form.controls[fieldName]?.invalid
+      (fieldName) => form.controls[fieldName]?.invalid,
     );
 
     if (!firstInvalidField) return;

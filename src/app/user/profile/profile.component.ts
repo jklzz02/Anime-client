@@ -28,7 +28,7 @@ export class ProfileComponent implements OnInit {
     private animeService: AnimeService,
     private userService: UserService,
     private recommenderService: RecommenderService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -63,40 +63,43 @@ export class ProfileComponent implements OnInit {
         switchMap((favouriteIds) =>
           this.recommenderService
             .getRecommendedForUser(favouriteIds, this.compatibleCount)
-            .pipe(map((response) => ({ favouriteIds, response })))
+            .pipe(map((response) => ({ favouriteIds, response }))),
         ),
         switchMap(({ favouriteIds, response }) =>
           this.animeService
             .getAnimeById(response)
-            .pipe(map((animes) => ({ favouriteIds, animes })))
+            .pipe(map((animes) => ({ favouriteIds, animes }))),
         ),
         switchMap(({ favouriteIds, animes }) =>
           this.recommenderService
             .getCompatibilityScores(
               animes.map((a) => a.id),
-              favouriteIds
+              favouriteIds,
             )
             .pipe(
               map((scores: CompatibilityResponse[]) => {
-                const scoreMap = scores.reduce((acc, score) => {
-                  acc[score.target_anime_id] = score.compatibility_score;
-                  return acc;
-                }, {} as Record<number, number>);
+                const scoreMap = scores.reduce(
+                  (acc, score) => {
+                    acc[score.target_anime_id] = score.compatibility_score;
+                    return acc;
+                  },
+                  {} as Record<number, number>,
+                );
 
                 return animes
                   .map(
                     (anime): ScoredAnime => ({
                       anime: anime,
                       score: scoreMap[anime.id] || 0,
-                    })
+                    }),
                   )
                   .sort((a, b) => b.score - a.score);
-              })
-            )
+              }),
+            ),
         ),
         finalize(() => {
           this.loadingCompatibles = false;
-        })
+        }),
       )
       .subscribe({
         next: (result: ScoredAnime[]) => {
@@ -105,7 +108,7 @@ export class ProfileComponent implements OnInit {
         error: (err) => {
           if (err.status >= 500 || err.status == 0) {
             this.router.navigate(['/error'], {
-              queryParams: { status: err.status },
+              state: { status: err.status },
             });
           }
           this.compatibles = [];

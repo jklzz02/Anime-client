@@ -10,7 +10,10 @@ import { Router } from '@angular/router';
   styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
-  constructor(private animeService: AnimeService, private router: Router) {}
+  constructor(
+    private animeService: AnimeService,
+    private router: Router,
+  ) {}
 
   recentAnime: Anime[] = [];
   loadCount: number = 33;
@@ -36,7 +39,7 @@ export class HomeComponent implements OnInit {
       error: (err) => {
         if (err.status >= 500 || err.status == 0) {
           this.router.navigate(['/error'], {
-            queryParams: { status: err.status },
+            state: { status: err.status },
           });
         }
       },

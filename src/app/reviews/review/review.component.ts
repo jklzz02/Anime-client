@@ -20,7 +20,7 @@ export class ReviewComponent implements OnInit {
   constructor(
     private reviewsService: ReviewService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
   ) {}
   ngOnInit(): void {
     this.route.paramMap.subscribe((param) => {
@@ -40,7 +40,7 @@ export class ReviewComponent implements OnInit {
       error: (err) => {
         if (err.status >= 500 || err.status == 0) {
           this.router.navigate(['/error'], {
-            queryParams: { status: err.status },
+            state: { status: err.status },
           });
         }
       },

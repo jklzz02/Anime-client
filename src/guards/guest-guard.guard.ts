@@ -1,27 +1,22 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, Router, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
-import { filter, map, switchMap, take } from 'rxjs/operators';
+import { inject } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
+import { filter, map, take, switchMap } from 'rxjs/operators';
 import { AuthService } from '../services/auth/auth.service';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class GuestGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) {}
+export const guestGuard: CanActivateFn = (route, state) => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
 
-  canActivate(): Observable<boolean | UrlTree> {
-    return this.authService.authCheckComplete$.pipe(
-      filter((complete) => complete),
-      take(1),
-      switchMap(() => this.authService.isAuthenticated$),
-      take(1),
-      map((isAuthenticated) => {
-        if (!isAuthenticated) {
-          return true;
-        }
-        return this.router.createUrlTree(['/']);
-      })
-    );
-  }
-}
+  return authService.authCheckComplete$.pipe(
+    filter((complete) => complete),
+    take(1),
+    switchMap(() => authService.isAuthenticated$),
+    take(1),
+    map((isAuthenticated) => {
+      if (!isAuthenticated) {
+        return true;
+      }
+      return router.createUrlTree(['/home']);
+    }),
+  );
+};

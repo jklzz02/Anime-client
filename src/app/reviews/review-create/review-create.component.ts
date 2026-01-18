@@ -33,7 +33,7 @@ export class ReviewCreateComponent implements OnInit {
   constructor(
     private reviewService: ReviewService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -92,13 +92,13 @@ export class ReviewCreateComponent implements OnInit {
     }
 
     this.router.navigate(['/error'], {
-      queryParams: { status: err.status, message: err.message },
+      state: { status: err.status, message: err.message },
     });
   }
 
   private scrollToFirstError(form: NgForm): void {
     const firstInvalidField = this.fieldOrder.find(
-      (fieldName) => form.controls[fieldName]?.invalid
+      (fieldName) => form.controls[fieldName]?.invalid,
     );
 
     if (!firstInvalidField) return;

@@ -8,16 +8,17 @@ import { AboutComponent } from './about/about.component';
 import { AnimeSearchResultsComponent } from './anime-search-results/anime-search-results.component';
 import { ErrorComponent } from './error/error.component';
 import { SigninComponent } from './auth/signin/signin.component';
-import { AuthGuard } from '../guards/auth.guard';
 import { ProfileComponent } from './user/profile/profile.component';
 import { WatchlistComponent } from './user/watchlist/watchlist.component';
-import { GuestGuard } from '../guards/guest-guard.guard';
 import { ReviewComponent } from './reviews/review/review.component';
 import { OauthCallbackComponent } from './auth/oauth-callback/oauth-callback.component';
 import { UserReviewComponent } from './reviews/user-review/user-review.component';
 import { ReviewDetailComponent } from './reviews/review-detail/review-detail.component';
 import { ReviewCreateComponent } from './reviews/review-create/review-create.component';
 import { ReviewUpdateComponent } from './reviews/review-update/review-update.component';
+import { authGuard } from '../guards/auth.guard';
+import { guestGuard } from '../guards/guest-guard.guard';
+import { adminGuard } from '../guards/admin.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -29,7 +30,7 @@ const routes: Routes = [
     title: 'AnimeHub | Explore',
   },
   { path: 'detail/:id', component: AnimeDetailComponent },
-  { path: 'signin', component: SigninComponent, canActivate: [GuestGuard] },
+  { path: 'signin', component: SigninComponent, canActivate: [guestGuard] },
 
   { path: 'reviews', redirectTo: 'reviews/1', pathMatch: 'full' },
   {
@@ -45,13 +46,13 @@ const routes: Routes = [
   {
     path: 'review/create',
     component: ReviewCreateComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
     title: 'AnimeHub | Review',
   },
   {
     path: 'review/edit/:id',
     component: ReviewUpdateComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
     title: 'AnimeHub | Review',
   },
   {
@@ -67,20 +68,26 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
     title: 'AnimeHub | Profile',
   },
   {
     path: 'watchlist',
     component: WatchlistComponent,
     title: 'AnimeHub | Watchlist',
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   { path: 'home', component: HomeComponent, title: 'AnimeHub' },
   {
     path: 'auth/:provider/callback',
     component: OauthCallbackComponent,
     title: 'AnimeHub | Callback..',
+  },
+  {
+    path: 'admin',
+    loadChildren: () =>
+      import('./admin/admin.module').then((m) => m.AdminModule),
+    canActivate: [authGuard, adminGuard],
   },
   { path: 'error', component: ErrorComponent },
   { path: '**', component: NotFoundComponent, title: 'AnimeHub | Not found' },

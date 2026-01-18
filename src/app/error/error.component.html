@@ -11,8 +11,10 @@
   </p>
 
   <p class="max-w-lg mb-8 text-surface1-light dark:text-text">
-    It looks like we're running into some issues.
-    <br />
+    <ng-container *ngIf="!message">
+      It looks like we're running into some issues.
+      <br />
+    </ng-container>
     <ng-container *ngIf="statusCode != 0">
       status code:
       <strong class="text-lavender-light inline dark:text-lavender">

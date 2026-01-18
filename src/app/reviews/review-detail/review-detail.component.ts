@@ -23,7 +23,7 @@ export class ReviewDetailComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private userService: UserService,
-    private reviewService: ReviewService
+    private reviewService: ReviewService,
   ) {}
 
   ngOnInit(): void {
@@ -59,7 +59,7 @@ export class ReviewDetailComponent implements OnInit {
             this.error = true;
             if (err.status >= 500 || err.status == 0) {
               this.router.navigate(['/error'], {
-                queryParams: { status: err.status },
+                state: { status: err.status },
               });
             }
           }

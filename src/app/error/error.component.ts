@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-error',
@@ -9,23 +9,27 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './error.component.css',
 })
 export class ErrorComponent implements OnInit {
-  statusCode: Number = 0;
+  statusCode: number = 0;
   message: string | null = null;
 
-  constructor(private route: ActivatedRoute, private title: Title) {}
+  constructor(
+    private router: Router,
+    private title: Title,
+  ) {
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation?.extras?.state;
+
+    if (state) {
+      const code = Number(state['status']);
+      if (!Number.isNaN(code) && code !== 0) {
+        this.statusCode = code;
+      }
+      this.message = state['message'] || null;
+    }
+  }
 
   ngOnInit(): void {
-    this.route.queryParamMap.subscribe((params) => {
-      const code: Number = new Number(params.get('status'));
-      if (Number.isNaN(code) || code.valueOf() === 0) {
-        this.statusCode = 0;
-      }
-
-      this.message = params.get('message');
-      this.statusCode = code;
-    });
-
-    if (this.statusCode == 0) {
+    if (this.statusCode === 0) {
       this.title.setTitle('Error Unknown');
     } else {
       this.title.setTitle('Error ' + this.statusCode);
