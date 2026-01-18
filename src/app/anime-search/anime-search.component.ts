@@ -28,10 +28,7 @@ export class AnimeSearchComponent implements OnInit, OnDestroy {
   suggestions: AnimeListItem[] | any = [];
 
   isVisible: boolean = false;
-  params: Partial<AnimeSearchParameters> = {
-    order_by: 'score',
-    sort_order: 'desc',
-  };
+  params: Partial<AnimeSearchParameters> = {};
 
   private searchSubject = new Subject<string>();
 
@@ -42,6 +39,13 @@ export class AnimeSearchComponent implements OnInit, OnDestroy {
 
     this.route.queryParams.subscribe((params) => {
       this.params = { ...params };
+      if (!this.params.order_by) {
+        this.params.order_by = 'score';
+      }
+
+      if (!this.params.sort_order) {
+        this.params.sort_order = 'desc';
+      }
     });
 
     this.router.events

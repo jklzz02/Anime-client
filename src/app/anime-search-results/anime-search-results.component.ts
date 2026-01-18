@@ -61,7 +61,6 @@ export class AnimeSearchResultsComponent implements OnInit {
     this.animeService.searchAnime(parameters, page, count).subscribe({
       next: (data) => {
         this.anime = data;
-        this.page = data.page;
         this.lastPage = data.total_pages;
       },
       error: (err) => {
@@ -82,7 +81,7 @@ export class AnimeSearchResultsComponent implements OnInit {
 
     this.router.navigate([], {
       relativeTo: this.route,
-      queryParams: { page: nextPageNumber },
+      queryParams: { page: nextPageNumber, count: this.count },
       queryParamsHandling: 'merge',
     });
   }
@@ -93,7 +92,7 @@ export class AnimeSearchResultsComponent implements OnInit {
 
     this.router.navigate([], {
       relativeTo: this.route,
-      queryParams: { page: prevPageNumber },
+      queryParams: { page: prevPageNumber, count: this.count },
       queryParamsHandling: 'merge',
     });
   }
