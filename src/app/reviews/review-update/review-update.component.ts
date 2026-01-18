@@ -6,7 +6,7 @@ import {
   ElementRef,
 } from '@angular/core';
 import { UserService } from '../../../services/user/user.service';
-import { ReviewService } from '../../../services/http/review.service';
+import { ReviewService } from '../../../services/http/review/review.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Review } from '../../../interfaces/review';
 import { AuthService } from '../../../services/auth/auth.service';

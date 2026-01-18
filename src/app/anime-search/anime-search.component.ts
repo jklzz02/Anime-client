@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AnimeService } from '../../services/http/anime.service';
+import { AnimeService } from '../../services/http/anime/anime.service';
 import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import {
   filter,
@@ -21,7 +21,7 @@ export class AnimeSearchComponent implements OnInit, OnDestroy {
   constructor(
     private animeService: AnimeService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
   ) {}
 
   warmAnimeList: AnimeListItem[] = [];
@@ -68,13 +68,13 @@ export class AnimeSearchComponent implements OnInit, OnDestroy {
               this.warmAnimeList.filter(
                 (a) =>
                   a.title.toLowerCase().includes(q.toLowerCase()) ||
-                  a.english_title?.toLowerCase().includes(q.toLowerCase())
-              )
+                  a.english_title?.toLowerCase().includes(q.toLowerCase()),
+              ),
             );
           }
 
           return this.animeService.getList(300, q);
-        })
+        }),
       )
       .subscribe((results) => {
         this.suggestions = results.map((a) => ({

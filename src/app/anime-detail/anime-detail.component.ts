@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AnimeService } from '../../services/http/anime.service';
+import { AnimeService } from '../../services/http/anime/anime.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Anime } from '../../interfaces/anime';
@@ -30,7 +30,7 @@ export class AnimeDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
-    private auth: AuthService
+    private auth: AuthService,
   ) {}
   ngOnInit(): void {
     this.auth.isAuthenticated$.subscribe((isAuth) => {
@@ -109,7 +109,7 @@ export class AnimeDetailComponent implements OnInit {
   private updateFavouriteStatus(): void {
     if (this.anime && this.favourites.length >= 0) {
       this.isFavourite = this.favourites.some(
-        (fav) => fav.anime_id === this.anime.id
+        (fav) => fav.anime_id === this.anime.id,
       );
     }
   }

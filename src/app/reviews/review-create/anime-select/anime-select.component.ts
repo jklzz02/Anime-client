@@ -10,7 +10,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Subject, of } from 'rxjs';
 import { AnimeListItem } from '../../../../interfaces/anime-list-item';
-import { AnimeService } from '../../../../services/http/anime.service';
+import { AnimeService } from '../../../../services/http/anime/anime.service';
 
 @Component({
   selector: 'app-anime-select',
@@ -50,7 +50,7 @@ export class AnimeSelectComponent implements OnInit, ControlValueAccessor {
       .pipe(
         debounceTime(300),
         distinctUntilChanged(),
-        switchMap((query) => this.performSearch(query))
+        switchMap((query) => this.performSearch(query)),
       )
       .subscribe((results) => {
         this.suggestions = results;
@@ -97,7 +97,7 @@ export class AnimeSelectComponent implements OnInit, ControlValueAccessor {
 
     if (query.length < 3) {
       const filtered = this.warmCache.filter((anime) =>
-        this.matchesQuery(anime, query)
+        this.matchesQuery(anime, query),
       );
       return of(filtered.slice(0, 10));
     }

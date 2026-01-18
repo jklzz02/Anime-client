@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReviewDetailed } from '../../../interfaces/review-detailed';
-import { ReviewService } from '../../../services/http/review.service';
+import { ReviewService } from '../../../services/http/review/review.service';
 import { AuthService } from '../../../services/auth/auth.service';
 import { User } from '../../../interfaces/user';
 import { UserService } from '../../../services/user/user.service';

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PaginatedResult } from '../../interfaces/paginated-result';
-import { AnimeService } from '../../services/http/anime.service';
+import { AnimeService } from '../../services/http/anime/anime.service';
 import { AnimeSummary } from '../../interfaces/anime-summary';
 import { AnimeSearchParameters } from '../../interfaces/anime-search-parameters';
 import { Anime } from '../../interfaces/anime';

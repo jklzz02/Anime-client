@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user/user.service';
-import { AnimeService } from '../../../services/http/anime.service';
+import { AnimeService } from '../../../services/http/anime/anime.service';
 import { Title } from '@angular/platform-browser';
 import { AnimeSummary } from '../../../interfaces/anime-summary';
 
@@ -18,7 +18,7 @@ export class WatchlistComponent implements OnInit {
   constructor(
     private animeService: AnimeService,
     private title: Title,
-    private userService: UserService
+    private userService: UserService,
   ) {}
   ngOnInit(): void {
     this.title.setTitle('AnimeHub | Watchlist');

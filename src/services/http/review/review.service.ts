@@ -1,10 +1,10 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
-import { PaginatedResult } from '../../interfaces/paginated-result';
-import { ReviewDetailed } from '../../interfaces/review-detailed';
-import { Review } from '../../interfaces/review';
+import { PaginatedResult } from '../../../interfaces/paginated-result';
+import { ReviewDetailed } from '../../../interfaces/review-detailed';
+import { Review } from '../../../interfaces/review';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,7 @@ export class ReviewService {
 
   getAll(
     page: number,
-    count: number
+    count: number,
   ): Observable<PaginatedResult<ReviewDetailed>> {
     const params = new HttpParams().set('page', page).set('size', count);
     return this.http.get<PaginatedResult<ReviewDetailed>>(
@@ -27,7 +27,7 @@ export class ReviewService {
       {
         headers: this.headers,
         params,
-      }
+      },
     );
   }
 
@@ -48,7 +48,7 @@ export class ReviewService {
       `${this.BASE}/user/${userId}/detailed`,
       {
         headers: this.headers,
-      }
+      },
     );
   }
 

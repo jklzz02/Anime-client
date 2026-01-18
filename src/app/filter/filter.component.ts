@@ -1,8 +1,8 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { GenreService } from '../../services/http/genre.service';
-import { ProducerService } from '../../services/http/producer.service';
-import { TypeService } from '../../services/http/type.service';
-import { SourceService } from '../../services/http/source.service';
+import { GenreService } from '../../services/http/genre/genre.service';
+import { ProducerService } from '../../services/http/producer/producer.service';
+import { TypeService } from '../../services/http/type/type.service';
+import { SourceService } from '../../services/http/source/source.service';
 import {
   Genre,
   Licensor,
@@ -10,7 +10,7 @@ import {
   Source,
   Type,
 } from '../../interfaces/anime';
-import { LicensorService } from '../../services/http/licensor.service';
+import { LicensorService } from '../../services/http/licensor/licensor.service';
 import { AnimeSearchParameters } from '../../interfaces/anime-search-parameters';
 import { NavigationEnd, Params, Router } from '@angular/router';
 import { filter } from 'rxjs';
@@ -87,7 +87,7 @@ export class FilterComponent implements OnInit, OnDestroy {
     private licensorService: LicensorService,
     private typeService: TypeService,
     private sourceService: SourceService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {

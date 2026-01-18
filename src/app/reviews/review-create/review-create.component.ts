@@ -5,7 +5,7 @@ import {
   QueryList,
   ElementRef,
 } from '@angular/core';
-import { ReviewService } from '../../../services/http/review.service';
+import { ReviewService } from '../../../services/http/review/review.service';
 import { UserService } from '../../../services/user/user.service';
 import { Router } from '@angular/router';
 import { Review } from '../../../interfaces/review';

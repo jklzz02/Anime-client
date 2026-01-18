@@ -1,13 +1,13 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Anime } from '../../interfaces/anime';
-import { PaginatedResult } from '../../interfaces/paginated-result';
-import { AnimeSummary } from '../../interfaces/anime-summary';
-import { AnimeSearchParameters } from '../../interfaces/anime-search-parameters';
-import { environment } from '../../environments/environment';
-import { AnimeTargetParameters } from '../../interfaces/anime-target-parameters';
-import { AnimeListItem } from '../../interfaces/anime-list-item';
+import { Anime } from '../../../interfaces/anime';
+import { PaginatedResult } from '../../../interfaces/paginated-result';
+import { AnimeSummary } from '../../../interfaces/anime-summary';
+import { AnimeSearchParameters } from '../../../interfaces/anime-search-parameters';
+import { environment } from '../../../environments/environment';
+import { AnimeTargetParameters } from '../../../interfaces/anime-target-parameters';
+import { AnimeListItem } from '../../../interfaces/anime-list-item';
 
 @Injectable({
   providedIn: 'root',
@@ -42,7 +42,7 @@ export class AnimeService {
   getAnimeByTitle(
     title: string,
     page: number,
-    count: number
+    count: number,
   ): Observable<PaginatedResult<Anime>> {
     const params: HttpParams = new HttpParams()
       .set('title', title)
@@ -57,7 +57,7 @@ export class AnimeService {
 
   getPaginatedAnime(
     page: number,
-    count: number
+    count: number,
   ): Observable<PaginatedResult<Anime>> {
     const params: HttpParams = new HttpParams()
       .set('page', page.toString())
@@ -85,7 +85,7 @@ export class AnimeService {
       },
       {
         headers: this.headers,
-      }
+      },
     );
   }
 
@@ -94,13 +94,13 @@ export class AnimeService {
       `${this.BASE}/summaries/count/${count}`,
       {
         headers: this.headers,
-      }
+      },
     );
   }
 
   getList(
     count: number,
-    query: string | null = ''
+    query: string | null = '',
   ): Observable<AnimeListItem[]> {
     let params: HttpParams = new HttpParams().set('count', count.toString());
 
@@ -117,7 +117,7 @@ export class AnimeService {
   searchAnime(
     parameters: AnimeSearchParameters,
     page: number,
-    count: number
+    count: number,
   ): Observable<PaginatedResult<Anime>> {
     let params = new HttpParams();
 

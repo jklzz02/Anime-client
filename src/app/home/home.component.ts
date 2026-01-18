@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AnimeService } from '../../services/http/anime.service';
+import { AnimeService } from '../../services/http/anime/anime.service';
 import { Anime } from '../../interfaces/anime';
 import { Router } from '@angular/router';
 

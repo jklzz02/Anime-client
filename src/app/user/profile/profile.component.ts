@@ -4,7 +4,7 @@ import { finalize, map, Observable, switchMap } from 'rxjs';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { RecommenderService } from '../../../services/recommender/recommender.service';
-import { AnimeService } from '../../../services/http/anime.service';
+import { AnimeService } from '../../../services/http/anime/anime.service';
 import { CompatibilityResponse } from '../../../interfaces/recommender/compatibility-response';
 import { ScoredAnime } from '../../../interfaces/scored-anime';
 import { User } from '../../../interfaces/user';

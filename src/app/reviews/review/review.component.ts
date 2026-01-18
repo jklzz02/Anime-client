@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ReviewService } from '../../../services/http/review.service';
+import { ReviewService } from '../../../services/http/review/review.service';
 import { PaginatedResult } from '../../../interfaces/paginated-result';
 import { ReviewDetailed } from '../../../interfaces/review-detailed';
 import { ActivatedRoute, Router } from '@angular/router';

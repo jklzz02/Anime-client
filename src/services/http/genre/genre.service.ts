@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Genre } from '../../interfaces/anime';
+import { Genre } from '../../../interfaces/anime';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',

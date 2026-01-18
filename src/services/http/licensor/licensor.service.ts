@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Licensor } from '../../interfaces/anime';
-import { environment } from '../../environments/environment';
+import { Licensor } from '../../../interfaces/anime';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
