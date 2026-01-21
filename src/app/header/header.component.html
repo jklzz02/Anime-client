@@ -27,29 +27,14 @@
         <i *ngIf="isMenuOpen" class="absolute bi bi-x text-2xl end-2"></i>
       </button>
       <div class="hidden lg:flex gap-1.5 items-center">
-        <a
-          routerLink="home"
-          routerLinkActive="bg-blue-light text-white dark:bg-blue dark:text-white"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="py-1.5 px-3 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
-        >
-          Home
-        </a>
-        <a
-          routerLink="explore"
-          routerLinkActive="bg-blue-light text-white dark:bg-blue dark:text-white"
-          class="py-1.5 px-3 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
-        >
+        <app-nav-button route="home"> Home </app-nav-button>
+        <app-nav-button route="about"> About </app-nav-button>
+        <app-nav-button route="explore" [exact]="false">
           Explore
-        </a>
-        <a
-          routerLink="reviews/1"
-          routerLinkActive="bg-blue-light text-white dark:bg-blue dark:text-white"
-          [routerLinkActiveOptions]="{ exact: false }"
-          class="py-1.5 px-3 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
-        >
+        </app-nav-button>
+        <app-nav-button route="reviews/1" [exact]="false">
           Reviews
-        </a>
+        </app-nav-button>
       </div>
       <div class="hidden lg:flex items-center justify-end w-full gap-3">
         <button
@@ -120,32 +105,36 @@
     <div *ngIf="isMenuOpen" class="mt-4 flex flex-col space-y-2 lg:hidden">
       <app-anime-search class="w-full mb-2"></app-anime-search>
 
-      <a
-        routerLink="home"
-        routerLinkActive="bg-blue-light text-white dark:bg-blue dark:text-white"
-        [routerLinkActiveOptions]="{ exact: true }"
-        class="block px-2 py-1 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
-        (click)="isMenuOpen = false"
+      <app-nav-button
+        route="home"
+        [mobile]="true"
+        (onClick)="isMenuOpen = false"
       >
         Home
-      </a>
-      <a
-        routerLink="explore"
-        routerLinkActive="bg-blue-light text-white dark:bg-blue dark:text-white"
-        class="block px-2 py-1 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
-        (click)="isMenuOpen = false"
+      </app-nav-button>
+      <app-nav-button
+        route="about"
+        [mobile]="true"
+        (onClick)="isMenuOpen = false"
+      >
+        About
+      </app-nav-button>
+      <app-nav-button
+        route="explore"
+        [exact]="false"
+        [mobile]="true"
+        (onClick)="isMenuOpen = false"
       >
         Explore
-      </a>
-      <a
-        routerLink="reviews/1"
-        routerLinkActive="bg-blue-light text-white dark:bg-blue dark:text-white"
-        [routerLinkActiveOptions]="{ exact: false }"
-        class="block px-2 py-1 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
-        (click)="isMenuOpen = false"
+      </app-nav-button>
+      <app-nav-button
+        route="reviews/1"
+        [exact]="false"
+        [mobile]="true"
+        (onClick)="isMenuOpen = false"
       >
         Reviews
-      </a>
+      </app-nav-button>
 
       <div class="pt-2">
         <div *ngIf="!isLoggedIn" class="space-y-1">
@@ -154,26 +143,27 @@
             routerLinkActive="bg-blue-light text-white dark:bg-blue dark:text-white"
             [routerLinkActiveOptions]="{ exact: true }"
             class="py-1.5 px-3 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition border border-blue-light/20 dark:border-blue/20 block text-center"
+            (click)="isMenuOpen = false"
           >
             Sign In
           </a>
         </div>
 
         <div *ngIf="isLoggedIn" class="space-y-1">
-          <a
-            routerLink="profile"
-            class="block px-2 py-1 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
-            (click)="isMenuOpen = false"
+          <app-nav-button
+            route="profile"
+            [mobile]="true"
+            (onClick)="isMenuOpen = false"
           >
             Profile
-          </a>
-          <a
-            routerLink="/watchlist"
-            class="block px-2 py-1 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
-            (click)="isMenuOpen = false"
+          </app-nav-button>
+          <app-nav-button
+            route="/watchlist"
+            [mobile]="true"
+            (onClick)="isMenuOpen = false"
           >
             Watchlist
-          </a>
+          </app-nav-button>
           <button
             (click)="signOut(); isMenuOpen = false"
             class="block w-full text-left px-2 py-1 rounded hover:bg-red-500 hover:text-white transition"

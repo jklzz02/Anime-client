@@ -15,6 +15,7 @@ import {
 } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
+import { NavButtonComponent } from './header/nav-button/nav-button.component';
 import { AnimeSearchComponent } from './anime-search/anime-search.component';
 import { AboutComponent } from './about/about.component';
 import { FooterComponent } from './footer/footer.component';
@@ -52,6 +53,7 @@ import { ReviewUpdateComponent } from './reviews/review-update/review-update.com
     VideoEmbedComponent,
     HomeComponent,
     HeaderComponent,
+    NavButtonComponent,
     AnimeSearchComponent,
     AboutComponent,
     FooterComponent,

@@ -1,0 +1,15 @@
+<a
+  [routerLink]="route"
+  [fragment]="fragment"
+  routerLinkActive="border-blue-light dark:border-blue text-blue-light dark:text-blue"
+  [routerLinkActiveOptions]="{ exact: exact }"
+  (click)="handleClick()"
+  class="transition-all"
+  [ngClass]="{
+    'py-1.5 px-1 border-b-2 border-transparent hover:border-blue-light dark:hover:border-blue hover:text-blue-light dark:hover:text-blue':
+      !mobile,
+    'block px-2 py-1': mobile,
+  }"
+>
+  <ng-content></ng-content>
+</a>
