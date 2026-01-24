@@ -1,14 +1,37 @@
 <div
   class="min-h-screen flex flex-col justify-center items-center text-center px-6 bg-base-light text-text-light dark:bg-base dark:text-text"
 >
-  <i
-    class="bi bi-database-fill-x text-9xl font-extrabold mb-6 select-none text-peach-light dark:text-peach"
-  >
-  </i>
+  <img
+    *ngIf="imageUrl"
+    [src]="imageUrl"
+    alt="Error illustration"
+    class="w-120 h-auto mb-6 rounded-xl shadow-lg"
+  />
 
-  <p class="text-2xl font-semibold mb-4 text-lavender-light dark:text-lavender">
-    Oops! Something Went Wrong.
-  </p>
+  <h1
+    class="text-9xl font-extrabold mb-6 select-none text-peach-light dark:text-peach"
+  >
+    {{ statusCode }}
+  </h1>
+
+  <div
+    [ngSwitch]="statusCode"
+    class="text-2xl font-semibold mb-4 text-lavender-light dark:text-lavender"
+  >
+    <p *ngSwitchCase="401">Unauthorized. Who are you??</p>
+
+    <p *ngSwitchCase="403">
+      Forbidden. You lack the power level for this area.
+    </p>
+
+    <p *ngSwitchCase="404">
+      404. This page went to get milk and never came back.
+    </p>
+
+    <p *ngSwitchDefault>
+      Something broke. Not saying it was you… but it *was* you.
+    </p>
+  </div>
 
   <p class="max-w-lg mb-8 text-surface1-light dark:text-text">
     <ng-container *ngIf="!message">
@@ -16,10 +39,6 @@
       <br />
     </ng-container>
     <ng-container *ngIf="statusCode != 0">
-      status code:
-      <strong class="text-lavender-light inline dark:text-lavender">
-        {{ statusCode }}
-      </strong>
       <p class="text-light dark:text-text" *ngIf="message">
         {{ message }}
       </p>
