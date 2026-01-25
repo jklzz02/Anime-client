@@ -30,7 +30,7 @@ export class AnimeService {
         sort_order: 'desc',
         include_adult_content: false,
       };
-      return this.http.post<Anime[]>(`${this.BASE}/target`, params, {
+      return this.http.post<Anime[]>(`${this.BASE}/by-ids`, params, {
         headers: this.headers,
       });
     }
@@ -70,14 +70,14 @@ export class AnimeService {
   }
 
   getRecent(count: number): Observable<Anime[]> {
-    return this.http.get<Anime[]>(`${this.BASE}/recent?count=${count}`, {
+    return this.http.get<Anime[]>(`${this.BASE}/recent/${count}`, {
       headers: this.headers,
     });
   }
 
   getSummariesByIds(animeIds: number[]): Observable<AnimeSummary[]> {
     return this.http.post<AnimeSummary[]>(
-      `${this.BASE}/summaries/target`,
+      `${this.BASE}/summaries/by-ids`,
       {
         target_anime_ids: animeIds,
         order_by: 'score',
@@ -91,7 +91,7 @@ export class AnimeService {
 
   getSummaries(count: number): Observable<AnimeSummary[]> {
     return this.http.get<AnimeSummary[]>(
-      `${this.BASE}/summaries/count/${count}`,
+      `${this.BASE}/summaries/top/${count}`,
       {
         headers: this.headers,
       },
@@ -108,7 +108,7 @@ export class AnimeService {
       params = params.set('q', query);
     }
 
-    return this.http.get<AnimeListItem[]>(`${this.BASE}/list`, {
+    return this.http.get<AnimeListItem[]>(`${this.BASE}/list-items/by-query`, {
       headers: this.headers,
       params,
     });
