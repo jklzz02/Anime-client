@@ -62,12 +62,9 @@ export class ReviewService {
   update(review: Partial<Review>): Observable<Review> {
     const patchDoc = [];
 
-    console.log('Updating review:', review);
     patchDoc.push({ op: 'replace', path: '/score', value: review.score });
     patchDoc.push({ op: 'replace', path: '/title', value: review.title });
     patchDoc.push({ op: 'replace', path: '/content', value: review.content });
-
-    console.log('Patch document:', patchDoc);
 
     return this.http.patch<Review>(`${this.BASE}/${review.id}`, patchDoc, {
       headers: this.headers,
