@@ -27,7 +27,6 @@ export class ReviewComponent implements OnInit {
       const paramPage = Number(param.get('page'));
       this.page = !Number.isNaN(paramPage) && paramPage > 0 ? paramPage : 1;
       this.loadReviews();
-      console.log(this.reviews);
     });
   }
 

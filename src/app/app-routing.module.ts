@@ -48,6 +48,9 @@ const routes: Routes = [
     component: ReviewCreateComponent,
     canActivate: [authGuard],
     title: 'AnimeHub | Review',
+    data: {
+      authMessage: 'To write a review you must sign in first.',
+    },
   },
   {
     path: 'review/edit/:id',
@@ -70,12 +73,18 @@ const routes: Routes = [
     component: ProfileComponent,
     canActivate: [authGuard],
     title: 'AnimeHub | Profile',
+    data: {
+      authMessage: 'To access your Profile you must sign in first.',
+    },
   },
   {
     path: 'watchlist',
     component: WatchlistComponent,
     title: 'AnimeHub | Watchlist',
     canActivate: [authGuard],
+    data: {
+      authMessage: 'To access the Watchlist you must sign in first.',
+    },
   },
   { path: 'home', component: HomeComponent, title: 'AnimeHub' },
   {
@@ -88,6 +97,9 @@ const routes: Routes = [
     loadChildren: () =>
       import('./admin/admin.module').then((m) => m.AdminModule),
     canActivate: [authGuard, adminGuard],
+    data: {
+      authMessage: 'Sign in to prove that you have admin privilages.',
+    },
   },
   { path: 'error', component: ErrorComponent },
   { path: '**', component: NotFoundComponent, title: 'AnimeHub | Not found' },
