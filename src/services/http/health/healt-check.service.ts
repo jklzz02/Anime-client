@@ -13,8 +13,6 @@ export class HealtCheckService {
   constructor(private http: HttpClient) {}
 
   getCacheHealthStatus(): Observable<CacheHealthResponse> {
-    return this.http.get<CacheHealthResponse>(`${this.BASE}/cache`, {
-      withCredentials: true,
-    });
+    return this.http.get<CacheHealthResponse>(`${this.BASE}/cache`);
   }
 }

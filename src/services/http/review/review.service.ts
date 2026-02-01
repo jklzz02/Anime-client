@@ -13,9 +13,6 @@ export class ReviewService {
   constructor(private http: HttpClient) {}
 
   private BASE: string = environment.anime_api_domain + '/api/Review';
-  private headers: HttpHeaders = new HttpHeaders({
-    'X-Client-Key': environment.x_client_key,
-  });
 
   getAll(
     page: number,
@@ -24,39 +21,26 @@ export class ReviewService {
     const params = new HttpParams().set('page', page).set('size', count);
     return this.http.get<PaginatedResult<ReviewDetailed>>(
       `${this.BASE}/detailed`,
-      {
-        headers: this.headers,
-        params,
-      },
+      { params },
     );
   }
 
   getById(id: number): Observable<Review> {
-    return this.http.get<Review>(`${this.BASE}/${id}`, {
-      headers: this.headers,
-    });
+    return this.http.get<Review>(`${this.BASE}/${id}`);
   }
 
   getDetailedById(id: number): Observable<ReviewDetailed> {
-    return this.http.get<ReviewDetailed>(`${this.BASE}/detailed/${id}`, {
-      headers: this.headers,
-    });
+    return this.http.get<ReviewDetailed>(`${this.BASE}/detailed/${id}`);
   }
 
   getByUser(userId: number): Observable<ReviewDetailed[]> {
     return this.http.get<ReviewDetailed[]>(
       `${this.BASE}/user/${userId}/detailed`,
-      {
-        headers: this.headers,
-      },
     );
   }
 
   create(review: Partial<Review>): Observable<Review> {
-    return this.http.post<Review>(this.BASE, review, {
-      headers: this.headers,
-      withCredentials: true,
-    });
+    return this.http.post<Review>(this.BASE, review);
   }
 
   update(review: Partial<Review>): Observable<Review> {
@@ -66,16 +50,10 @@ export class ReviewService {
     patchDoc.push({ op: 'replace', path: '/title', value: review.title });
     patchDoc.push({ op: 'replace', path: '/content', value: review.content });
 
-    return this.http.patch<Review>(`${this.BASE}/${review.id}`, patchDoc, {
-      headers: this.headers,
-      withCredentials: true,
-    });
+    return this.http.patch<Review>(`${this.BASE}/${review.id}`, patchDoc);
   }
 
   delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.BASE}/${id}`, {
-      headers: this.headers,
-      withCredentials: true,
-    });
+    return this.http.delete<void>(`${this.BASE}/${id}`);
   }
 }

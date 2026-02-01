@@ -8,23 +8,25 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, filter, take, switchMap } from 'rxjs/operators';
-import { AuthService } from '../services/auth/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   private isRefreshing = false;
   private isLoggingOut = false;
   private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(
-    null
+    null,
   );
 
   constructor(private authService: AuthService) {}
 
   intercept(
     request: HttpRequest<unknown>,
-    next: HttpHandler
+    next: HttpHandler,
   ): Observable<HttpEvent<unknown>> {
-    request = this.addCredentials(request);
+    if (!request.withCredentials) {
+      request = this.addCredentials(request);
+    }
 
     if (request.url.includes('/auth/cookie/logout')) {
       this.isLoggingOut = true;
@@ -40,7 +42,7 @@ export class AuthInterceptor implements HttpInterceptor {
           return this.handle401Error(request, next);
         }
         return throwError(() => error);
-      })
+      }),
     );
   }
 
@@ -52,7 +54,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   private handle401Error(
     request: HttpRequest<any>,
-    next: HttpHandler
+    next: HttpHandler,
   ): Observable<HttpEvent<any>> {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
@@ -72,13 +74,13 @@ export class AuthInterceptor implements HttpInterceptor {
           this.isRefreshing = false;
           this.performLogout();
           return throwError(() => err);
-        })
+        }),
       );
     } else {
       return this.refreshTokenSubject.pipe(
         filter((result) => result !== null),
         take(1),
-        switchMap(() => next.handle(this.addCredentials(request)))
+        switchMap(() => next.handle(this.addCredentials(request))),
       );
     }
   }

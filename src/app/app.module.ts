@@ -4,7 +4,11 @@ import { MarkdownModule } from 'ngx-markdown';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AnimeComponent } from './anime/anime.component';
-import { provideHttpClient } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptors,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { AnimeDetailComponent } from './anime-detail/anime-detail.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { VideoEmbedComponent } from './video-embed/video-embed.component';
@@ -43,6 +47,9 @@ import { ReviewDetailComponent } from './reviews/review-detail/review-detail.com
 import { ReviewCreateComponent } from './reviews/review-create/review-create.component';
 import { AnimeSelectComponent } from './reviews/review-create/anime-select/anime-select.component';
 import { ReviewUpdateComponent } from './reviews/review-update/review-update.component';
+import { AuthInterceptor } from '../interceptors/auth/auth.interceptor';
+import { headerInterceptor } from '../interceptors/header/header.interceptor';
+import { credentialsInterceptor } from '../interceptors/credentials/credentials.interceptor';
 
 @NgModule({
   declarations: [
@@ -90,7 +97,10 @@ import { ReviewUpdateComponent } from './reviews/review-update/review-update.com
     MarkdownModule.forRoot(),
   ],
   providers: [
-    provideHttpClient(),
+    provideHttpClient(
+      withInterceptors([credentialsInterceptor, headerInterceptor]),
+      withInterceptorsFromDi(),
+    ),
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => MarkdownEditorComponent),

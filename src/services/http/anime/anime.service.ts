@@ -15,9 +15,6 @@ import { AnimeListItem } from '../../../interfaces/anime-list-item';
 export class AnimeService {
   constructor(private http: HttpClient) {}
   private BASE: string = environment.anime_api_domain + '/api/Anime';
-  private headers: HttpHeaders = new HttpHeaders({
-    'X-Client-Key': environment.x_client_key,
-  });
 
   getAnimeById(animeId: number): Observable<Anime>;
   getAnimeById(animeIds: number[]): Observable<Anime[]>;
@@ -30,13 +27,9 @@ export class AnimeService {
         sort_order: 'desc',
         include_adult_content: false,
       };
-      return this.http.post<Anime[]>(`${this.BASE}/by-ids`, params, {
-        headers: this.headers,
-      });
+      return this.http.post<Anime[]>(`${this.BASE}/by-ids`, params);
     }
-    return this.http.get<Anime>(`${this.BASE}/${input}`, {
-      headers: this.headers,
-    });
+    return this.http.get<Anime>(`${this.BASE}/${input}`);
   }
 
   getAnimeByTitle(
@@ -50,7 +43,6 @@ export class AnimeService {
       .set('size', count.toString());
 
     return this.http.get<PaginatedResult<Anime>>(`${this.BASE}/search`, {
-      headers: this.headers,
       params,
     });
   }
@@ -64,38 +56,24 @@ export class AnimeService {
       .set('size', count.toString());
 
     return this.http.get<PaginatedResult<Anime>>(this.BASE, {
-      headers: this.headers,
       params,
     });
   }
 
   getRecent(count: number): Observable<Anime[]> {
-    return this.http.get<Anime[]>(`${this.BASE}/recent/${count}`, {
-      headers: this.headers,
-    });
+    return this.http.get<Anime[]>(`${this.BASE}/recent/${count}`);
   }
 
   getSummariesByIds(animeIds: number[]): Observable<AnimeSummary[]> {
-    return this.http.post<AnimeSummary[]>(
-      `${this.BASE}/summaries/by-ids`,
-      {
-        target_anime_ids: animeIds,
-        order_by: 'score',
-        sort_order: 'desc',
-      },
-      {
-        headers: this.headers,
-      },
-    );
+    return this.http.post<AnimeSummary[]>(`${this.BASE}/summaries/by-ids`, {
+      target_anime_ids: animeIds,
+      order_by: 'score',
+      sort_order: 'desc',
+    });
   }
 
   getSummaries(count: number): Observable<AnimeSummary[]> {
-    return this.http.get<AnimeSummary[]>(
-      `${this.BASE}/summaries/top/${count}`,
-      {
-        headers: this.headers,
-      },
-    );
+    return this.http.get<AnimeSummary[]>(`${this.BASE}/summaries/top/${count}`);
   }
 
   getList(
@@ -109,7 +87,6 @@ export class AnimeService {
     }
 
     return this.http.get<AnimeListItem[]>(`${this.BASE}/list-items/by-query`, {
-      headers: this.headers,
       params,
     });
   }

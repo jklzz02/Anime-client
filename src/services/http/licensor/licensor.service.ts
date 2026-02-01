@@ -10,11 +10,8 @@ import { environment } from '../../../environments/environment';
 export class LicensorService {
   constructor(private http: HttpClient) {}
   private BASE: string = environment.anime_api_domain + '/api/Licensor';
-  private headers: HttpHeaders = new HttpHeaders({
-    'X-Client-Key': environment.x_client_key,
-  });
 
   public getLicensors(): Observable<Licensor[]> {
-    return this.http.get<Licensor[]>(this.BASE, { headers: this.headers });
+    return this.http.get<Licensor[]>(this.BASE);
   }
 }

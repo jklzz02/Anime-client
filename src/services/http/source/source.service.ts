@@ -10,11 +10,8 @@ import { environment } from '../../../environments/environment';
 export class SourceService {
   constructor(private http: HttpClient) {}
   private BASE: string = environment.anime_api_domain + '/api/Source';
-  private headers: HttpHeaders = new HttpHeaders({
-    'X-Client-Key': environment.x_client_key,
-  });
 
   public getSources(): Observable<Source[]> {
-    return this.http.get<Source[]>(this.BASE, { headers: this.headers });
+    return this.http.get<Source[]>(this.BASE);
   }
 }
