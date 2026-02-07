@@ -2,13 +2,24 @@
   class="rounded-xl shadow-md hover:shadow-xl bg-mantle-light dark:bg-surface0 overflow-hidden animate-fade-in transition-all duration-300 border border-surface0-light dark:border-surface1"
 >
   <a [routerLink]="'/detail/' + anime.id">
-    <div class="relative w-full rounded-t-lg overflow-hidden">
+    <div
+      class="relative w-full rounded-t-lg overflow-hidden aspect-[2/3] bg-surface0-light dark:bg-surface1"
+    >
+      <div
+        *ngIf="!isImageLoaded"
+        class="absolute inset-0 animate-pulse bg-surface1-light dark:bg-surface0 z-10"
+      ></div>
       <img
-        class="w-full h-48 sm:h-auto object-cover transition-transform duration-300 hover:scale-105"
+        class="w-full h-full object-cover transition-all duration-300 hover:scale-105"
+        [class.opacity-0]="!isImageLoaded"
+        [class.opacity-100]="isImageLoaded"
         [src]="anime.image_url"
         [alt]="anime.title"
         [title]="anime.title"
-        (error)="anime.image_url = 'assets/placeholder.png'"
+        (load)="isImageLoaded = true"
+        (error)="
+          anime.image_url = 'assets/placeholder.png'; isImageLoaded = true
+        "
       />
       <div
         class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3 sm:p-4 text-white"
@@ -75,7 +86,7 @@
       <a
         [routerLink]="['/search']"
         [queryParams]="{ genres: [genre.name] }"
-        *ngFor="let genre of anime.genres | slice : 0 : 3"
+        *ngFor="let genre of anime.genres | slice: 0 : 3"
         class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-blue-light dark:bg-blue dark:text-crust hover:opacity-80 transition-opacity"
       >
         {{ genre.name }}
@@ -92,7 +103,7 @@
       <a
         [routerLink]="['/search']"
         [queryParams]="{ producers: [producer.name] }"
-        *ngFor="let producer of anime.producers | slice : 0 : 3"
+        *ngFor="let producer of anime.producers | slice: 0 : 3"
         class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-lavender-light dark:bg-lavender dark:text-crust hover:opacity-80 transition-opacity"
       >
         {{ producer.name }}
@@ -109,7 +120,7 @@
       <a
         [routerLink]="['/search']"
         [queryParams]="{ licensors: [licensor.name] }"
-        *ngFor="let licensor of anime.licensors | slice : 0 : 3"
+        *ngFor="let licensor of anime.licensors | slice: 0 : 3"
         class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-peach-light dark:bg-peach dark:text-crust hover:opacity-80 transition-opacity"
       >
         {{ licensor.name }}

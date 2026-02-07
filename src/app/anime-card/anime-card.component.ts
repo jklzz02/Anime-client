@@ -12,6 +12,7 @@ export class AnimeCardComponent implements OnInit {
   fanFavourite: boolean = false;
   isNew: boolean = false;
   short: boolean = false;
+  isImageLoaded: boolean = false;
 
   ngOnInit(): void {
     const now = new Date();

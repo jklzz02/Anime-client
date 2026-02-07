@@ -21,9 +21,18 @@ export class HomeComponent implements OnInit {
   counter: number[] = Array(this.loadCount);
   stepCounter: number[] = Array(this.stepCount);
   loading: boolean = false;
+  loadedImages: Set<number> = new Set();
 
   ngOnInit(): void {
     this.loadRecentAnime(this.loadCount);
+  }
+
+  public onImageLoad(id: number) {
+    this.loadedImages.add(id);
+  }
+
+  public isImageLoaded(id: number): boolean {
+    return this.loadedImages.has(id);
   }
 
   public loadMore() {
