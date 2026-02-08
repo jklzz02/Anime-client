@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReviewDetailed } from '../../../interfaces/review-detailed';
 import { ReviewService } from '../../../services/http/review/review.service';
 import { AuthService } from '../../../services/auth/auth.service';
 import { User } from '../../../interfaces/user';
 import { UserService } from '../../../services/user/user.service';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-review-detail',
@@ -12,13 +13,16 @@ import { UserService } from '../../../services/user/user.service';
   templateUrl: './review-detail.component.html',
   styleUrl: './review-detail.component.css',
 })
-export class ReviewDetailComponent implements OnInit {
+export class ReviewDetailComponent implements OnInit, OnDestroy {
   review: ReviewDetailed | null = null;
   loading: boolean = true;
   error: boolean = false;
   isOwner: boolean = false;
+  isDeleteModalOpen: boolean = false;
 
   constructor(
+    @Inject(DOCUMENT)
+    private document: Document,
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
@@ -66,6 +70,16 @@ export class ReviewDetailComponent implements OnInit {
         },
       });
     });
+  }
+
+  ngOnDestroy(): void {
+    this.isDeleteModalOpen = false;
+    this.document.body.classList.remove('overflow-y-hidden');
+  }
+
+  onDelete(): void {
+    this.isDeleteModalOpen = true;
+    this.document.body.classList.add('overflow-y-hidden');
   }
 
   deleteReview(): void {

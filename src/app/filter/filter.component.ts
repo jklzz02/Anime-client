@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { GenreService } from '../../services/http/genre/genre.service';
 import { ProducerService } from '../../services/http/producer/producer.service';
 import { TypeService } from '../../services/http/type/type.service';
@@ -14,6 +14,7 @@ import { LicensorService } from '../../services/http/licensor/licensor.service';
 import { AnimeSearchParameters } from '../../interfaces/anime-search-parameters';
 import { NavigationEnd, Params, Router } from '@angular/router';
 import { filter } from 'rxjs';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-filter',
@@ -59,9 +60,6 @@ export class FilterComponent implements OnInit, OnDestroy {
   sortOrderValueFn = (order: any) => order.value;
   sortOrderLabelFn = (order: any) => order.key;
 
-  private header = document.querySelector('header');
-  private body = document.querySelector('body');
-
   @Input() filter: Partial<AnimeSearchParameters> = {
     producer_id: null,
     licensor_id: null,
@@ -81,7 +79,12 @@ export class FilterComponent implements OnInit, OnDestroy {
     sort_order: 'desc',
   };
 
+  private body: HTMLElement | null = null;
+  private header: HTMLElement | null = null;
+
   constructor(
+    @Inject(DOCUMENT)
+    private document: Document,
     private genreService: GenreService,
     private producerService: ProducerService,
     private licensorService: LicensorService,
@@ -91,11 +94,14 @@ export class FilterComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.body = this.document.body;
+    this.header = this.document.querySelector('header')!;
+
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         this.isOpen = false;
-        const header = document.querySelector('header');
+        const header = this.document.querySelector('header');
 
         if (header?.classList.contains('hidden')) {
           header.classList.remove('hidden');
@@ -125,16 +131,16 @@ export class FilterComponent implements OnInit, OnDestroy {
   toggleMenu(): void {
     this.isOpen = !this.isOpen;
 
-    if (this.body?.classList.contains('overflow-y-clip')) {
-      this.body.classList.remove('overflow-y-clip');
+    if (this.body!.classList.contains('overflow-y-clip')) {
+      this.body!.classList.remove('overflow-y-clip');
     } else {
-      this.body?.classList.add('overflow-y-clip');
+      this.body!.classList.add('overflow-y-clip');
     }
 
-    if (this.header?.classList.contains('z-40')) {
-      this.header.classList.remove('z-40');
+    if (this.header!.classList.contains('z-40')) {
+      this.header!.classList.remove('z-40');
     } else {
-      this.header?.classList.add('z-40');
+      this.header!.classList.add('z-40');
     }
   }
 
@@ -151,7 +157,8 @@ export class FilterComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.isOpen = false;
-    this.body?.classList.remove('overflow-y-clip');
-    this.header?.classList.add('z-40');
+
+    this.body!.classList.remove('overflow-y-clip');
+    this.header!.classList.add('z-40');
   }
 }
