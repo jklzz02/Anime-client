@@ -8,7 +8,12 @@ import { AnimeDashboardComponent } from './dash-board/anime-dashboard/anime-dash
 import { DashboardTableComponent } from './shared/dashboard-table/dashboard-table.component';
 
 @NgModule({
-  declarations: [DashBoardComponent, UserDashboardComponent, AnimeDashboardComponent, DashboardTableComponent],
+  declarations: [
+    DashBoardComponent,
+    UserDashboardComponent,
+    AnimeDashboardComponent,
+    DashboardTableComponent,
+  ],
   imports: [CommonModule, RouterModule, AdminRoutingModule],
 })
 export class AdminModule {}

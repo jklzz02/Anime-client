@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  HostListener,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-single-dropdown',
@@ -44,20 +38,12 @@ export class SingleDropdownComponent<T> {
       return this.placeholder;
     }
     const selectedItem = this.items.find(
-      (item) => this.valueFn(item) === this.selected
+      (item) => this.valueFn(item) === this.selected,
     );
     return selectedItem ? this.labelFn(selectedItem) : this.placeholder;
   }
 
   isSelected(item: T): boolean {
     return this.valueFn(item) === this.selected;
-  }
-
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
-    const target = event.target as HTMLElement;
-    if (!target.closest('.dropdown-container')) {
-      this.isOpen = false;
-    }
   }
 }
