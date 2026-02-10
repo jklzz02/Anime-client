@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SecurityContext } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
@@ -27,6 +27,11 @@ export class VideoEmbedComponent {
   }
 
   sanitizeUrl(url: string): SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    const sanitized = this.sanitizer.sanitize(
+      SecurityContext.RESOURCE_URL,
+      url,
+    );
+
+    return this.sanitizer.bypassSecurityTrustResourceUrl(sanitized || '');
   }
 }

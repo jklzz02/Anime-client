@@ -11,7 +11,7 @@ import {
 } from '@angular/common/http';
 import { AnimeDetailComponent } from './anime-detail/anime-detail.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { VideoEmbedComponent } from './video-embed/video-embed.component';
+import { VideoEmbedComponent } from './shared/video-embed/video-embed.component';
 import {
   FormsModule,
   NG_VALUE_ACCESSOR,
