@@ -27,11 +27,6 @@ export class VideoEmbedComponent {
   }
 
   sanitizeUrl(url: string): SafeResourceUrl {
-    const sanitized = this.sanitizer.sanitize(
-      SecurityContext.RESOURCE_URL,
-      url,
-    );
-
-    return this.sanitizer.bypassSecurityTrustResourceUrl(sanitized || '');
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 }
