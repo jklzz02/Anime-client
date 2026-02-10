@@ -1,1 +1,28 @@
-<p class="text-light dark:text-text">Admin dashboard - access granted</p>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 min-h-[80vh]">
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-text-light dark:text-text mb-6">
+      Admin Dashboard
+    </h1>
+
+    <div
+      class="border-b border-surface0-light dark:border-surface0 flex space-x-6"
+    >
+      <a
+        routerLink="users"
+        routerLinkActive="border-blue-light dark:border-blue text-blue-light dark:text-blue"
+        class="pb-3 border-b-2 border-transparent text-text-light dark:text-text hover:text-blue-light dark:hover:text-blue font-medium transition-colors duration-200"
+      >
+        Users
+      </a>
+      <span
+        class="pb-3 border-b-2 border-transparent text-text-light dark:text-text opacity-50"
+      >
+        Anime
+      </span>
+    </div>
+  </div>
+
+  <div class="animate-fade-in">
+    <router-outlet></router-outlet>
+  </div>
+</div>

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment.development';
 import { PaginatedResult } from '../../../../interfaces/paginated-result';
-import { PublicUser } from '../../../../interfaces/public-user';
+import { User } from '../../../../interfaces/user';
 
 @Injectable({
   providedIn: 'root',
@@ -16,8 +16,8 @@ export class AdminUserService {
   getUserList(
     page: number,
     pageSize: number,
-  ): Observable<PaginatedResult<PublicUser>> {
-    return this.http.get<PaginatedResult<PublicUser>>(`${this.BASE}/user`, {
+  ): Observable<PaginatedResult<User>> {
+    return this.http.get<PaginatedResult<User>>(`${this.BASE}/user/list`, {
       params: {
         page: page.toString(),
         pageSize: pageSize.toString(),

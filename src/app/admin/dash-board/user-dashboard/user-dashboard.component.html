@@ -1,0 +1,132 @@
+<div class="space-y-6">
+  <div class="flex justify-between items-center">
+    <h1 class="text-3xl font-bold text-text-light dark:text-text">
+      User Management
+    </h1>
+  </div>
+
+  <div
+    *ngIf="!users"
+    class="bg-surface0-light dark:bg-surface0 rounded-xl shadow-lg p-6 border border-surface0-light dark:border-surface1 animate-pulse"
+  >
+    <div
+      class="h-8 bg-surface1-light dark:bg-surface1 rounded w-1/4 mb-6"
+    ></div>
+    <div class="space-y-4">
+      <div
+        class="h-12 bg-surface1-light dark:bg-surface1 rounded w-full"
+        *ngFor="let i of [1, 2, 3, 4, 5]"
+      ></div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="users"
+    class="bg-surface0-light dark:bg-surface0 rounded-xl shadow-lg border border-surface0-light dark:border-surface1 overflow-hidden"
+  >
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr
+            class="bg-mantle-light dark:bg-mantle text-text-light dark:text-text border-b border-surface0-light dark:border-surface1"
+          >
+            <th class="p-4 font-semibold text-sm uppercase tracking-wider">
+              ID
+            </th>
+            <th class="p-4 font-semibold text-sm uppercase tracking-wider">
+              Username
+            </th>
+            <th class="p-4 font-semibold text-sm uppercase tracking-wider">
+              Email
+            </th>
+            <th class="p-4 font-semibold text-sm uppercase tracking-wider">
+              Role
+            </th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-surface0-light dark:divide-surface1">
+          <tr
+            *ngFor="let user of users.data"
+            class="hover:bg-surface1-light dark:hover:bg-surface1 transition-colors duration-150"
+          >
+            <td class="p-4 text-text-light dark:text-text opacity-70">
+              #{{ user.id }}
+            </td>
+            <td class="p-4 font-medium text-text-light dark:text-text">
+              <div class="flex items-center space-x-3">
+                <div
+                  class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-light to-lavender-light dark:from-blue dark:to-lavender flex items-center justify-center text-white text-xs font-bold"
+                >
+                  {{ user.username.charAt(0).toUpperCase() }}
+                </div>
+                <span>{{ user.username }}</span>
+              </div>
+            </td>
+            <td class="p-4 text-text-light dark:text-text">
+              {{ user.email }}
+            </td>
+            <td class="p-4">
+              <span
+                class="px-2 py-1 rounded text-xs font-semibold"
+                [ngClass]="{
+                  'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300':
+                    user.admin,
+                  'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300':
+                    !user.admin,
+                }"
+              >
+                {{ user.admin ? "Admin" : "User" }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div
+      *ngIf="users.data.length === 0"
+      class="p-8 text-center text-text-light dark:text-text opacity-60"
+    >
+      No users found.
+    </div>
+
+    <div
+      class="bg-mantle-light dark:bg-mantle p-4 border-t border-surface0-light dark:border-surface1 flex items-center justify-between"
+    >
+      <div class="text-sm text-text-light dark:text-text opacity-70">
+        Page <span class="font-bold">{{ currentPage }}</span> of
+        <span class="font-bold">{{ maxPage }}</span>
+      </div>
+
+      <div class="flex space-x-2">
+        <button
+          (click)="previousPage()"
+          [disabled]="currentPage === 1"
+          class="px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+          [ngClass]="{
+            'bg-surface1-light dark:bg-surface1 text-text-light dark:text-text hover:bg-surface2-light dark:hover:bg-surface2 cursor-pointer':
+              currentPage !== 1,
+            'bg-base-light dark:bg-base text-surface2-light dark:text-surface2 cursor-not-allowed opacity-50':
+              currentPage === 1,
+          }"
+        >
+          Previous
+        </button>
+
+        <button
+          (click)="nextPage()"
+          [disabled]="!hasNextPage"
+          class="px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+          [ngClass]="{
+            'bg-blue-light dark:bg-blue text-white hover:bg-opacity-90 cursor-pointer':
+              hasNextPage,
+            'bg-base-light dark:bg-base text-surface2-light dark:text-surface2 cursor-not-allowed opacity-50':
+              !hasNextPage,
+          }"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

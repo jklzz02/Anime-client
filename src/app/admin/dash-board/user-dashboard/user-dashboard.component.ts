@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AdminUserService } from '../../services/user/admin-user.service';
 import { AdminStateService } from '../../services/state/admin-state.service';
 import { PaginatedResult } from '../../../../interfaces/paginated-result';
-import { PublicUser } from '../../../../interfaces/public-user';
+import { User } from '../../../../interfaces/user';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -12,7 +12,7 @@ import { PublicUser } from '../../../../interfaces/public-user';
   styleUrl: './user-dashboard.component.css',
 })
 export class UserDashboardComponent implements OnInit {
-  users: PaginatedResult<PublicUser> | null = null;
+  users: PaginatedResult<User> | null = null;
 
   currentPage: number = 1;
   pageSize: number = 30;
