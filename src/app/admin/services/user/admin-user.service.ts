@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from '../../../../interfaces/user';
 import { environment } from '../../../../environments/environment.development';
+import { PaginatedResult } from '../../../../interfaces/paginated-result';
+import { PublicUser } from '../../../../interfaces/public-user';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +13,11 @@ export class AdminUserService {
 
   constructor(private http: HttpClient) {}
 
-  getUserList(page: number, pageSize: number): Observable<User[]> {
-    return this.http.get<User[]>(`${this.BASE}/users`, {
+  getUserList(
+    page: number,
+    pageSize: number,
+  ): Observable<PaginatedResult<PublicUser>> {
+    return this.http.get<PaginatedResult<PublicUser>>(`${this.BASE}/user`, {
       params: {
         page: page.toString(),
         pageSize: pageSize.toString(),
