@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Anime } from '../../../interfaces/anime';
@@ -13,7 +13,7 @@ import { AnimeListItem } from '../../../interfaces/anime-list-item';
   providedIn: 'root',
 })
 export class AnimeService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   private BASE: string = environment.anime_api_domain + '/api/Anime';
 
   getAnimeById(animeId: number): Observable<Anime>;
@@ -43,7 +43,7 @@ export class AnimeService {
       .set('size', count.toString());
 
     return this.http.get<PaginatedResult<Anime>>(`${this.BASE}/search`, {
-      params,
+      params
     });
   }
 
