@@ -20,6 +20,8 @@ export interface Anime {
   trailer_url: string;
   trailer_embed_url: string;
   trailer_image_url: string;
+  favorite_count: number;
+  reviews_count: number;
   genres: Genre[];
   licensors: Licensor[];
   producers: Producer[];
