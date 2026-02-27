@@ -107,7 +107,7 @@ export class AnimeSearchResultsComponent implements OnInit {
     const asBoolean = (value?: string) => value === 'true';
 
     return {
-      query: params['query'] ?? undefined,
+      q: params['query'] ?? undefined,
 
       genres: asArray(params['genres']),
       producers: asArray(params['producers']),

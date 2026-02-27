@@ -1,5 +1,5 @@
 export interface AnimeSearchParameters {
-  query?: string | null;
+  q?: string | null;
   title?: string | null;
   producer_id?: number | null;
   producer?: string | null;

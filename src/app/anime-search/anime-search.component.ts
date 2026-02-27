@@ -52,7 +52,7 @@ export class AnimeSearchComponent implements OnInit, OnDestroy {
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         this.isVisible = false;
-        this.params.query = '';
+        this.params.q = '';
         this.suggestions = [];
       });
 
@@ -90,7 +90,7 @@ export class AnimeSearchComponent implements OnInit, OnDestroy {
 
   onSearch(): void {
     this.isVisible = true;
-    const query = this.params.query?.trim() || '';
+    const query = this.params.q?.trim() || '';
 
     if (!query) {
       this.suggestions = [];
@@ -109,13 +109,13 @@ export class AnimeSearchComponent implements OnInit, OnDestroy {
       this.isVisible = false;
       return;
     }
-    this.params.query = '';
+    this.params.q = '';
     this.isVisible = false;
     this.suggestions = [];
   }
 
   searchSubmit(): void {
-    if (!this.params.query?.trim()) {
+    if (!this.params.q?.trim()) {
       return;
     }
     this.router.navigate(['/search'], {
