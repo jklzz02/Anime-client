@@ -1,6 +1,5 @@
 export const environment = {
   anime_api_domain: 'https://localhost:7145',
-  recommender_api_domain: 'https://localhost:8000',
   x_client_key: 'AnimeHubSpaClient',
   providers: {
     allowed: ['google', 'facebook', 'discord'],

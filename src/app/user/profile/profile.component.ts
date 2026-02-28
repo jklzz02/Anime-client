@@ -56,26 +56,15 @@ export class ProfileComponent implements OnInit {
   private loadCompatibles(): void {
     this.loadingCompatibles = true;
 
-    this.userService
-      .getFavourites()
+    this.recommenderService
+      .getRecommendedForUser(this.compatibleCount)
       .pipe(
-        map((favs) => favs.map((f) => f.anime_id)),
-        switchMap((favouriteIds) =>
-          this.recommenderService
-            .getRecommendedForUser(favouriteIds, this.compatibleCount)
-            .pipe(map((response) => ({ favouriteIds, response }))),
+        switchMap((recommendedId) =>
+          this.animeService.getAnimeById(recommendedId),
         ),
-        switchMap(({ favouriteIds, response }) =>
-          this.animeService
-            .getAnimeById(response)
-            .pipe(map((animes) => ({ favouriteIds, animes }))),
-        ),
-        switchMap(({ favouriteIds, animes }) =>
+        switchMap((anime) =>
           this.recommenderService
-            .getCompatibilityScores(
-              animes.map((a) => a.id),
-              favouriteIds,
-            )
+            .getCompatibilityScores(anime.map((a) => a.id))
             .pipe(
               map((scores: CompatibilityResponse[]) => {
                 const scoreMap = scores.reduce(
@@ -86,7 +75,7 @@ export class ProfileComponent implements OnInit {
                   {} as Record<number, number>,
                 );
 
-                return animes
+                return anime
                   .map(
                     (anime): ScoredAnime => ({
                       anime: anime,
@@ -97,9 +86,7 @@ export class ProfileComponent implements OnInit {
               }),
             ),
         ),
-        finalize(() => {
-          this.loadingCompatibles = false;
-        }),
+        finalize(() => (this.loadingCompatibles = false)),
       )
       .subscribe({
         next: (result: ScoredAnime[]) => {

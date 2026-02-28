@@ -60,9 +60,7 @@ export class AnimeDetailComponent implements OnInit {
       });
 
       this.recommenderService.getRelated(id, 10).subscribe((data) => {
-        this.animeService.getAnimeById(data).subscribe((anime) => {
-          this.relatedSummaries = anime as AnimeSummary[];
-        });
+        this.relatedSummaries = data;
       });
     });
   }
@@ -97,9 +95,8 @@ export class AnimeDetailComponent implements OnInit {
 
   private updateCompatibilityScore(): void {
     if (this.anime && this.favourites.length > 0) {
-      const favouriteIds = this.favourites.map((fav) => fav.anime_id);
       this.recommenderService
-        .getCompatibility(this.anime.id, favouriteIds)
+        .getCompatibility(this.anime.id)
         .subscribe((data) => {
           this.compatibilityScore = data.compatibility_score;
         });

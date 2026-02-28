@@ -52,8 +52,6 @@ export class AnimeSearchComponent implements OnInit, OnDestroy {
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         this.isVisible = false;
-        this.params.q = '';
-        this.suggestions = [];
       });
 
     this.searchSubject

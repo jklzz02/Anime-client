@@ -1,11 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { AnimeRecommendation } from '../../interfaces/recommender/anime-recommendation';
-import { forkJoin, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { CompatibilityResponse } from '../../interfaces/recommender/compatibility-response';
 import { CompatibleAnimeResponse } from '../../interfaces/recommender/compatible-anime-response';
-import { ScoredResponse } from '../../interfaces/recommender/ScoredResponse';
+import { AnimeSummary } from '../../interfaces/anime-summary';
 
 @Injectable({
   providedIn: 'root',
@@ -13,77 +12,40 @@ import { ScoredResponse } from '../../interfaces/recommender/ScoredResponse';
 export class RecommenderService {
   constructor(private http: HttpClient) {}
 
-  private BASE: string = environment.recommender_api_domain + '/v1';
+  private BASE: string = `${environment.anime_api_domain}/api/recommender`;
 
-  getCompatible(
-    userFavourites: number[],
-    count: number,
-  ): Observable<CompatibleAnimeResponse> {
-    return this.http.post<CompatibleAnimeResponse>(`${this.BASE}/compatible`, {
-      user_favourite_ids: userFavourites,
-      limit: count,
-    });
-  }
+  getCompatibility(targetAnime: number): Observable<CompatibilityResponse> {
+    let params = new HttpParams().set('target_anime_id', targetAnime);
 
-  getCompatibility(
-    targetAnime: number,
-    userFavourites: number[],
-  ): Observable<CompatibilityResponse> {
-    return this.http.post<CompatibilityResponse>(
+    return this.http.get<CompatibilityResponse>(
       `${this.BASE}/compatibility/score`,
-      {
-        target_anime_id: targetAnime,
-        user_favourite_ids: userFavourites,
-      },
+      { params },
     );
   }
 
   getCompatibilityScores(
     targetAnimes: number[],
-    userFavourites: number[],
   ): Observable<CompatibilityResponse[]> {
-    return forkJoin(
-      targetAnimes.map((animeId) =>
-        this.getCompatibility(animeId, userFavourites),
-      ),
+    return this.http.post<CompatibilityResponse[]>(
+      `${this.BASE}/compatibility/scores`,
+      { target_anime_ids: targetAnimes },
     );
   }
 
-  getRelated(id: number, count: number): Observable<number[]> {
-    const params = new HttpParams().set('anime_id', id).set('limit', count);
+  getRelated(id: number, count: number): Observable<AnimeSummary[]> {
+    const params = new HttpParams()
+      .set('anime_id', id)
+      .set('count', count)
+      .set('type', 1);
 
-    return this.http.get<number[]>(`${this.BASE}/recommend`, {
+    return this.http.get<AnimeSummary[]>(`${this.BASE}/related`, {
       params: params,
     });
   }
 
-  getByTextQuery(query: string, count: number): Observable<ScoredResponse[]> {
-    const params = new HttpParams().set('query', query).set('limi', count);
-
-    return this.http.get<ScoredResponse[]>(`${this.BASE}/recommend/text`, {
-      params: params,
+  getRecommendedForUser(count: number): Observable<number[]> {
+    return this.http.get<number[]>(`${this.BASE}/cf/user-recommendations`, {
+      params: { count: count },
     });
-  }
-
-  getRecommendedForUser(
-    userFavourites: number[],
-    count: number,
-  ): Observable<number[]> {
-    return this.http.post<number[]>(`${this.BASE}/cf/recommend/user`, {
-      user_favourite_ids: userFavourites,
-      limit: count,
-    });
-  }
-
-  getRelatedDetailed(
-    id: number,
-    count: number,
-  ): Observable<AnimeRecommendation[]> {
-    const params = new HttpParams().set('anime_id', id).set('limit', count);
-
-    return this.http.get<AnimeRecommendation[]>(
-      `${this.BASE}/recommend/detailed`,
-      { params: params },
-    );
   }
 }
