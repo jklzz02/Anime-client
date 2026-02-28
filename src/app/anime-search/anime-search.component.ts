@@ -109,7 +109,6 @@ export class AnimeSearchComponent implements OnInit, OnDestroy {
       this.isVisible = false;
       return;
     }
-    this.params.q = '';
     this.isVisible = false;
     this.suggestions = [];
   }
