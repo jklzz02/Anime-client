@@ -42,7 +42,7 @@
               [ngClass]="{
                 'bg-peach-light dark:bg-peach text-white': isFavourite,
                 'bg-surface0-light dark:bg-surface0 text-text-light dark:text-text hover:bg-surface1-light dark:hover:bg-surface1':
-                  !isFavourite
+                  !isFavourite,
               }"
             >
               <i
@@ -61,7 +61,7 @@
               <span
                 class="text-sm font-bold text-lavender-light dark:text-lavender"
               >
-                {{ compatibilityScore | number : "1.0-0" }}% Match
+                {{ compatibilityScore | number: "1.0-0" }}% Match
               </span>
             </div>
           </div>
@@ -144,7 +144,7 @@
               <div class="flex flex-wrap gap-2">
                 <a
                   [routerLink]="['/search']"
-                  [queryParams]="{ genre_id: genre.id }"
+                  [queryParams]="{ genres: genre.name }"
                   *ngFor="let genre of anime.genres"
                   class="px-2.5 py-1 bg-blue-light dark:bg-blue hover:opacity-80 text-white text-xs rounded-lg transition-opacity"
                 >
@@ -175,7 +175,7 @@
               <div class="flex flex-wrap gap-2">
                 <a
                   [routerLink]="['/search']"
-                  [queryParams]="{ producer_id: producer.id }"
+                  [queryParams]="{ producers: producer.name }"
                   *ngFor="let producer of anime.producers"
                   class="text-sm text-blue-light dark:text-blue hover:underline"
                 >
@@ -192,7 +192,7 @@
               <div class="flex flex-wrap gap-2">
                 <a
                   [routerLink]="['/search']"
-                  [queryParams]="{ licensor_id: licensor.id }"
+                  [queryParams]="{ licensors: licensor.name }"
                   *ngFor="let licensor of anime.licensors"
                   class="text-sm text-peach-light dark:text-peach hover:underline"
                 >
