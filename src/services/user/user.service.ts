@@ -22,6 +22,10 @@ export class UserService {
       .pipe(tap((user) => this.currentUserSubject.next(user)));
   }
 
+  destroyCurrentUser(): Observable<void> {
+    return this.http.delete<void>(`${this.BASE}/user`);
+  }
+
   getFavourites(): Observable<UserFavourite[]> {
     return this.http.get<UserFavourite[]>(`${this.BASE}/user/favourite`);
   }

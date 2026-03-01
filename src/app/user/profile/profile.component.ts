@@ -8,6 +8,7 @@ import { AnimeService } from '../../../services/http/anime/anime.service';
 import { CompatibilityResponse } from '../../../interfaces/recommender/compatibility-response';
 import { ScoredAnime } from '../../../interfaces/scored-anime';
 import { User } from '../../../interfaces/user';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -22,9 +23,11 @@ export class ProfileComponent implements OnInit {
   loadingCompatibles = false;
   hasSearched = false;
   compatibleCount = 6;
+  deleteModalOpened: boolean = false;
 
   constructor(
     private title: Title,
+    private auth: AuthService,
     private animeService: AnimeService,
     private userService: UserService,
     private recommenderService: RecommenderService,
@@ -51,6 +54,17 @@ export class ProfileComponent implements OnInit {
     this.compatibleCount = 6;
     this.hasSearched = true;
     this.loadCompatibles();
+  }
+
+  onDelete(): void {
+    this.deleteModalOpened = true;
+  }
+
+  delete(): void {
+    this.userService
+      .destroyCurrentUser()
+      .pipe(() => this.auth.logout())
+      .subscribe(() => this.router.navigate(['/signin']));
   }
 
   private loadCompatibles(): void {

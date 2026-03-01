@@ -5,7 +5,6 @@ import { ReviewService } from '../../../services/http/review/review.service';
 import { AuthService } from '../../../services/auth/auth.service';
 import { User } from '../../../interfaces/user';
 import { UserService } from '../../../services/user/user.service';
-import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-review-detail',
@@ -21,8 +20,6 @@ export class ReviewDetailComponent implements OnInit, OnDestroy {
   isDeleteModalOpen: boolean = false;
 
   constructor(
-    @Inject(DOCUMENT)
-    private document: Document,
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
@@ -74,12 +71,10 @@ export class ReviewDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.isDeleteModalOpen = false;
-    this.document.body.classList.remove('overflow-y-hidden');
   }
 
   onDelete(): void {
     this.isDeleteModalOpen = true;
-    this.document.body.classList.add('overflow-y-hidden');
   }
 
   deleteReview(): void {

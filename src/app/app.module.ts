@@ -50,6 +50,7 @@ import { ReviewUpdateComponent } from './reviews/review-update/review-update.com
 import { AuthInterceptor } from '../interceptors/auth/auth.interceptor';
 import { headerInterceptor } from '../interceptors/header/header.interceptor';
 import { credentialsInterceptor } from '../interceptors/credentials/credentials.interceptor';
+import { ConfimModalComponent } from './shared/confim-modal/confim-modal.component';
 
 @NgModule({
   declarations: [
@@ -87,6 +88,7 @@ import { credentialsInterceptor } from '../interceptors/credentials/credentials.
     ReviewCreateComponent,
     AnimeSelectComponent,
     ReviewUpdateComponent,
+    ConfimModalComponent,
   ],
   imports: [
     BrowserModule,

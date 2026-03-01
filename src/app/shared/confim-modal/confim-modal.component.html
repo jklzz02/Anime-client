@@ -1,0 +1,28 @@
+<div
+  *ngIf="open"
+  class="fixed inset-0 z-50 h-dvh overflow-y-hidden bg-black/70 flex items-center justify-center p-4"
+  (click)="onClose()"
+>
+  <div
+    class="bg-base-light dark:bg-base rounded-lg shadow-lg p-6 w-full max-w-md"
+    (click)="$event.stopPropagation()"
+  >
+    <h2 class="text-xl font-bold text-text-light dark:text-text mb-4">
+      Confirm Deletion
+    </h2>
+    <p class="text-sm text-text-light dark:text-text opacity-80 mb-6">
+      {{ message }}
+    </p>
+    <div class="flex justify-end gap-4">
+      <button
+        (click)="onClose()"
+        class="px-4 py-2 bg-surface0-light dark:bg-surface0 text-text-light dark:text-text rounded-md hover:bg-surface1-light dark:hover:bg-surface1 transition-colors"
+      >
+        Cancel
+      </button>
+      <button (click)="onConfirm()" [ngClass]="buttonClasses">
+        {{ confirmMessage }}
+      </button>
+    </div>
+  </div>
+</div>
