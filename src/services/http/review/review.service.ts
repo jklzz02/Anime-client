@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { PaginatedResult } from '../../../interfaces/paginated-result';
 import { ReviewDetailed } from '../../../interfaces/review-detailed';
 import { Review } from '../../../interfaces/review';
+import { ReviewSearchParameters } from '../../../interfaces/review-search-parameters';
 
 @Injectable({
   providedIn: 'root',
@@ -36,6 +37,32 @@ export class ReviewService {
   getByUser(userId: number): Observable<ReviewDetailed[]> {
     return this.http.get<ReviewDetailed[]>(
       `${this.BASE}/user/${userId}/detailed`,
+    );
+  }
+
+  searchReviews(
+    searchParams: Partial<ReviewSearchParameters>,
+    page: number,
+    count: number,
+  ): Observable<PaginatedResult<ReviewDetailed>> {
+    let params = new HttpParams();
+    Object.entries(searchParams).forEach(([key, value]) => {
+      if (value === null || value === undefined) return;
+
+      if (value) {
+        params = params.append(key, value.toString());
+      }
+    });
+
+    params = params
+      .append('page', page.toString())
+      .append('size', count.toString());
+
+    return this.http.get<PaginatedResult<ReviewDetailed>>(
+      `${this.BASE}/search/detailed`,
+      {
+        params: params,
+      },
     );
   }
 
