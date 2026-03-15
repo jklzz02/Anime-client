@@ -63,7 +63,7 @@ export class ProfileComponent implements OnInit {
   delete(): void {
     this.userService
       .destroyCurrentUser()
-      .pipe(() => this.auth.logout())
+      .pipe(switchMap(() => this.auth.logout()))
       .subscribe(() => this.router.navigate(['/signin']));
   }
 
