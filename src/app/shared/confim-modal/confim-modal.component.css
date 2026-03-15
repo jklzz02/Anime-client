@@ -1,0 +1,49 @@
+.backdrop-in {
+  animation: backdropIn 200ms ease-out;
+}
+.backdrop-out {
+  animation: backdropOut 150ms ease-in;
+}
+.panel-in {
+  animation: panelIn 200ms ease-out;
+}
+.panel-out {
+  animation: panelOut 150ms ease-in;
+}
+
+@keyframes backdropIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes backdropOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes panelIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes panelOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}

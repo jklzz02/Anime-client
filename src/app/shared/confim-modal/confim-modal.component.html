@@ -1,9 +1,13 @@
 <div
   *ngIf="open"
+  animate.enter="backdrop-in"
+  animate.leave="backdrop-out"
   class="fixed inset-0 z-50 h-dvh overflow-y-hidden bg-black/70 flex items-center justify-center p-4"
   (click)="onClose()"
 >
   <div
+    animate.enter="panel-in"
+    animate.leave="panel-out"
     class="bg-base-light dark:bg-base rounded-lg shadow-lg p-6 w-full max-w-md"
     (click)="$event.stopPropagation()"
   >

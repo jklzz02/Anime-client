@@ -47,7 +47,6 @@ import { ReviewDetailComponent } from './reviews/review-detail/review-detail.com
 import { ReviewCreateComponent } from './reviews/review-create/review-create.component';
 import { AnimeSelectComponent } from './reviews/review-create/anime-select/anime-select.component';
 import { ReviewUpdateComponent } from './reviews/review-update/review-update.component';
-import { AuthInterceptor } from '../interceptors/auth/auth.interceptor';
 import { headerInterceptor } from '../interceptors/header/header.interceptor';
 import { credentialsInterceptor } from '../interceptors/credentials/credentials.interceptor';
 import { ConfimModalComponent } from './shared/confim-modal/confim-modal.component';
