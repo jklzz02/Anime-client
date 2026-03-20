@@ -1,0 +1,9 @@
+@if (reviews && reviews.has_items) {
+  <div class="grid grid-cols-1 gap-6">
+    @for (item of reviews.data; track $index) {
+      <app-review-card [review]="item"></app-review-card>
+    }
+  </div>
+}
+
+<app-review-filter></app-review-filter>

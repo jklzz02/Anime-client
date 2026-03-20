@@ -19,6 +19,7 @@ import { ReviewUpdateComponent } from './reviews/review-update/review-update.com
 import { authGuard } from '../guards/auth.guard';
 import { guestGuard } from '../guards/guest-guard.guard';
 import { adminGuard } from '../guards/admin.guard';
+import { ReviewSearchComponent } from './reviews/review-search/review-search.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -56,6 +57,11 @@ const routes: Routes = [
     path: 'review/edit/:id',
     component: ReviewUpdateComponent,
     canActivate: [authGuard],
+    title: 'AnimeHub | Review',
+  },
+  {
+    path: 'review/search',
+    component: ReviewSearchComponent,
     title: 'AnimeHub | Review',
   },
   {

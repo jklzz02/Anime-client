@@ -45,11 +45,14 @@ import { DiscordButtonComponent } from './auth/discord-button/discord-button.com
 import { UserReviewComponent } from './reviews/user-review/user-review.component';
 import { ReviewDetailComponent } from './reviews/review-detail/review-detail.component';
 import { ReviewCreateComponent } from './reviews/review-create/review-create.component';
-import { AnimeSelectComponent } from './reviews/review-create/anime-select/anime-select.component';
+import { AnimeSelectComponent } from './reviews/anime-select/anime-select.component';
 import { ReviewUpdateComponent } from './reviews/review-update/review-update.component';
 import { headerInterceptor } from '../interceptors/header/header.interceptor';
 import { credentialsInterceptor } from '../interceptors/credentials/credentials.interceptor';
 import { ConfimModalComponent } from './shared/confim-modal/confim-modal.component';
+import { ReviewSearchComponent } from './reviews/review-search/review-search.component';
+import { ReviewCardComponent } from './reviews/review-card/review-card.component';
+import { ReviewFilterComponent } from './reviews/review-filter/review-filter.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +91,9 @@ import { ConfimModalComponent } from './shared/confim-modal/confim-modal.compone
     AnimeSelectComponent,
     ReviewUpdateComponent,
     ConfimModalComponent,
+    ReviewSearchComponent,
+    ReviewCardComponent,
+    ReviewFilterComponent,
   ],
   imports: [
     BrowserModule,

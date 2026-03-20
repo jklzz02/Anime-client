@@ -9,8 +9,8 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Subject, of } from 'rxjs';
-import { AnimeListItem } from '../../../../interfaces/anime-list-item';
-import { AnimeService } from '../../../../services/http/anime/anime.service';
+import { AnimeListItem } from '../../../interfaces/anime-list-item';
+import { AnimeService } from '../../../services/http/anime/anime.service';
 
 @Component({
   selector: 'app-anime-select',

@@ -1,0 +1,226 @@
+@if (isOpen) {
+  <div
+    class="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4"
+    (click)="toggleMenu()"
+  >
+    <form
+      (ngSubmit)="applyFilters()"
+      (click)="$event.stopPropagation()"
+      #filterForm="ngForm"
+      class="w-full max-w-3xl bg-mantle-light dark:bg-mantle rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+    >
+      <div
+        class="bg-surface0-light dark:bg-surface0 px-6 py-4 border-b border-surface1-light dark:border-surface1 flex items-center justify-between flex-shrink-0"
+      >
+        <h2
+          class="text-xl font-bold text-text-light dark:text-text flex items-center gap-2"
+        >
+          <i class="bi bi-filter-square"></i>
+          Filter Reviews
+        </h2>
+        <button
+          type="button"
+          (click)="toggleMenu()"
+          class="text-subtext0-light dark:text-subtext0 hover:text-text-light dark:hover:text-text transition-colors cursor-pointer"
+        >
+          <i class="bi bi-x-lg text-xl"></i>
+        </button>
+      </div>
+
+      <div class="flex-1 overflow-y-auto px-6 py-6 bg-base-light dark:bg-base">
+        <div class="mb-6">
+          <div
+            class="flex items-center gap-3 w-full px-4 py-3 rounded-lg bg-surface0-light dark:bg-surface0 border border-surface1-light dark:border-surface1 focus-within:border-blue-light dark:focus-within:border-blue transition-colors duration-200"
+          >
+            <i class="bi bi-search text-blue-light dark:text-blue text-lg"></i>
+            <input
+              [(ngModel)]="filter.title"
+              name="title"
+              type="text"
+              placeholder="Search reviews by title..."
+              class="bg-transparent text-text-light dark:text-text placeholder-subtext0-light dark:placeholder-subtext0 outline-none w-full"
+            />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div class="space-y-6">
+            <h3
+              class="text-lg font-semibold text-text-light dark:text-text border-b border-surface1-light dark:border-surface1 pb-2 flex items-center gap-2"
+            >
+              <i class="bi bi-tags text-blue-light dark:text-blue"></i>
+              Anime/Author
+            </h3>
+
+            <div class="space-y-4">
+              <div>
+                <label
+                  class="block text-sm font-medium text-subtext1-light dark:text-subtext1 mb-2"
+                >
+                  Anime
+                </label>
+                <app-anime-select
+                  placeholder="Search anime..."
+                  (animeSelected)="onAnimeSelected($event)"
+                ></app-anime-select>
+              </div>
+
+              <div>
+                <label
+                  class="block text-sm font-medium text-subtext1-light dark:text-subtext1 mb-2"
+                >
+                  Author
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-6">
+            <h3
+              class="text-lg font-semibold text-text-light dark:text-text border-b border-surface1-light dark:border-surface1 pb-2 flex items-center gap-2"
+            >
+              <i class="bi bi-graph-up text-blue-light dark:text-blue"></i>
+              Metrics &amp; Ratings
+            </h3>
+
+            <div>
+              <label
+                class="block text-sm font-medium text-subtext1-light dark:text-subtext1 mb-2"
+              >
+                Score Range
+              </label>
+              <div class="grid grid-cols-2 gap-3">
+                <input
+                  type="number"
+                  name="min_score"
+                  [(ngModel)]="filter.min_score"
+                  placeholder="Min (0-10)"
+                  step="0.1"
+                  min="0"
+                  max="10"
+                  class="w-full rounded-lg bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-4 py-2.5 border border-surface1-light dark:border-surface1 focus:border-blue-light dark:focus:border-blue transition-colors outline-none"
+                />
+                <input
+                  type="number"
+                  name="max_score"
+                  [(ngModel)]="filter.max_score"
+                  placeholder="Max (0-10)"
+                  step="0.1"
+                  min="0"
+                  max="10"
+                  class="w-full rounded-lg bg-surface0-light dark:bg-surface0 text-text-light dark:text-text px-4 py-2.5 border border-surface1-light dark:border-surface1 focus:border-blue-light dark:focus:border-blue transition-colors outline-none"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="mt-8 p-6 rounded-xl bg-surface0-light dark:bg-surface0 border border-surface1-light dark:border-surface1"
+        >
+          <h4
+            class="text-md font-semibold text-text-light dark:text-text mb-4 flex items-center gap-2"
+          >
+            <i class="bi bi-sliders text-blue-light dark:text-blue"></i>
+            Advanced Filters
+          </h4>
+
+          <div class="space-y-6">
+            <div>
+              <h5
+                class="text-sm font-medium text-subtext1-light dark:text-subtext1 mb-3"
+              >
+                <i class="bi bi-calendar-event"></i> Review Date Range
+              </h5>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label
+                    class="block text-xs font-medium text-subtext0-light dark:text-subtext0 mb-2"
+                  >
+                    From
+                  </label>
+                  <input
+                    type="date"
+                    name="from"
+                    [(ngModel)]="filter.from"
+                    class="w-full rounded-lg bg-surface1-light dark:bg-surface1 px-3 py-2 text-text-light dark:text-text border border-surface1-light dark:border-surface1 focus:border-blue-light dark:focus:border-blue transition-colors outline-none text-sm cursor-pointer"
+                  />
+                </div>
+                <div>
+                  <label
+                    class="block text-xs font-medium text-subtext0-light dark:text-subtext0 mb-2"
+                  >
+                    To
+                  </label>
+                  <input
+                    type="date"
+                    name="to"
+                    [(ngModel)]="filter.to"
+                    class="w-full rounded-lg bg-surface1-light dark:bg-surface1 px-3 py-2 text-text-light dark:text-text border border-surface1-light dark:border-surface1 focus:border-blue-light dark:focus:border-blue transition-colors outline-none text-sm cursor-pointer"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h5
+                class="text-sm font-medium text-subtext1-light dark:text-subtext1 mb-3"
+              >
+                <i class="bi bi-sort-down"></i> Sorting
+              </h5>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <app-single-dropdown
+                  [items]="sortFields"
+                  [valueFn]="sortFieldValueFn"
+                  [labelFn]="sortFieldLabelFn"
+                  placeholder="None"
+                  label="Order By"
+                  [(selected)]="filter.oder_by"
+                ></app-single-dropdown>
+
+                <app-single-dropdown
+                  [items]="sortOrdersArray"
+                  [valueFn]="sortOrderValueFn"
+                  [labelFn]="sortOrderLabelFn"
+                  placeholder="Select Order"
+                  label="Sort Direction"
+                  [(selected)]="filter.sort_order"
+                ></app-single-dropdown>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 flex gap-4">
+          <button
+            type="submit"
+            class="flex-1 bg-blue-light dark:bg-blue text-white font-semibold rounded-full py-3.5 hover:opacity-90 transition shadow-lg cursor-pointer"
+          >
+            Apply Filters
+          </button>
+          <button
+            type="button"
+            (click)="clearFilters()"
+            class="flex-1 bg-peach-light dark:bg-peach text-white font-semibold rounded-full py-3.5 hover:opacity-90 transition shadow-lg cursor-pointer"
+          >
+            Reset
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+}
+
+@if (!isOpen) {
+  <div class="mx-auto text-center">
+    <button
+      class="px-3 py-2 shadow-lg rounded-full bg-blue-light dark:bg-blue text-white hover:opacity-90 transition cursor-pointer"
+      (click)="toggleMenu()"
+    >
+      <div class="flex px-2 py-1 items-center gap-2">
+        <i class="text-2xl bi bi-filter"></i>
+        <p>Filter</p>
+      </div>
+    </button>
+  </div>
+}
