@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { User } from '../../interfaces/user';
 import { UserFavourite } from '../../interfaces/user-favourite';
+import { PublicUser } from '../../interfaces/public-user';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +29,16 @@ export class UserService {
 
   getFavourites(): Observable<UserFavourite[]> {
     return this.http.get<UserFavourite[]>(`${this.BASE}/user/favourite`);
+  }
+
+  getUserList(textQuery: string, count: number): Observable<PublicUser[]> {
+    const params = new HttpParams()
+      .append('q', textQuery)
+      .append('count', count);
+
+    return this.http.get<PublicUser[]>(`${this.BASE}/user/by-query`, {
+      params: params,
+    });
   }
 
   addFavourite(animeId: number): Observable<UserFavourite> {
