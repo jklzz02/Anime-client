@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReviewDetailed } from '../../../interfaces/review-detailed';
 import { ReviewService } from '../../../services/http/review/review.service';

@@ -45,7 +45,7 @@ import { DiscordButtonComponent } from './auth/discord-button/discord-button.com
 import { UserReviewComponent } from './reviews/user-review/user-review.component';
 import { ReviewDetailComponent } from './reviews/review-detail/review-detail.component';
 import { ReviewCreateComponent } from './reviews/review-create/review-create.component';
-import { AnimeSelectComponent } from './reviews/anime-select/anime-select.component';
+import { AnimeSelectComponent } from './shared/anime-select/anime-select.component';
 import { ReviewUpdateComponent } from './reviews/review-update/review-update.component';
 import { headerInterceptor } from '../interceptors/header/header.interceptor';
 import { credentialsInterceptor } from '../interceptors/credentials/credentials.interceptor';
