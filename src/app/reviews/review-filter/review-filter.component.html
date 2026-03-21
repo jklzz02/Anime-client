@@ -71,6 +71,10 @@
                 >
                   Author
                 </label>
+                <app-user-select
+                  placeholder="Search author..."
+                  (userSelected)="onUserSelected($event)"
+                ></app-user-select>
               </div>
             </div>
           </div>

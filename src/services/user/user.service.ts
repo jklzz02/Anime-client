@@ -31,10 +31,15 @@ export class UserService {
     return this.http.get<UserFavourite[]>(`${this.BASE}/user/favourite`);
   }
 
-  getUserList(textQuery: string, count: number): Observable<PublicUser[]> {
-    const params = new HttpParams()
-      .append('q', textQuery)
-      .append('count', count);
+  getUserList(
+    count: number,
+    textQuery: string | null,
+  ): Observable<PublicUser[]> {
+    let params = new HttpParams().append('count', count);
+
+    if (textQuery) {
+      params = params.append('q', textQuery);
+    }
 
     return this.http.get<PublicUser[]>(`${this.BASE}/user/by-query`, {
       params: params,

@@ -7,6 +7,7 @@ import {
   ReviewSortField,
 } from '../../../interfaces/review-search-parameters';
 import { AnimeListItem } from '../../../interfaces/anime-list-item';
+import { PublicUser } from '../../../interfaces/public-user';
 
 @Component({
   selector: 'app-review-filter',
@@ -93,6 +94,11 @@ export class ReviewFilterComponent implements OnInit, OnDestroy {
   onAnimeSelected(anime: AnimeListItem | undefined): void {
     this.filter.anime_id = anime?.id ?? null;
     this.filter.anime_title = anime?.title ?? null;
+  }
+
+  onUserSelected(user: PublicUser | undefined): void {
+    this.filter.user_id = user?.id ?? null;
+    this.filter.user_name = user?.username ?? null;
   }
 
   applyFilters(): void {

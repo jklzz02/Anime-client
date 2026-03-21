@@ -33,6 +33,11 @@ const routes: Routes = [
   { path: 'detail/:id', component: AnimeDetailComponent },
   { path: 'signin', component: SigninComponent, canActivate: [guestGuard] },
 
+  {
+    path: 'reviews/search',
+    component: ReviewSearchComponent,
+    title: 'AnimeHub | Review',
+  },
   { path: 'reviews', redirectTo: 'reviews/1', pathMatch: 'full' },
   {
     path: 'reviews/:page',
@@ -57,11 +62,6 @@ const routes: Routes = [
     path: 'review/edit/:id',
     component: ReviewUpdateComponent,
     canActivate: [authGuard],
-    title: 'AnimeHub | Review',
-  },
-  {
-    path: 'review/search',
-    component: ReviewSearchComponent,
     title: 'AnimeHub | Review',
   },
   {

@@ -53,6 +53,7 @@ import { ConfimModalComponent } from './shared/confim-modal/confim-modal.compone
 import { ReviewSearchComponent } from './reviews/review-search/review-search.component';
 import { ReviewCardComponent } from './reviews/review-card/review-card.component';
 import { ReviewFilterComponent } from './reviews/review-filter/review-filter.component';
+import { UserSelectComponent } from './shared/user-select/user-select.component';
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import { ReviewFilterComponent } from './reviews/review-filter/review-filter.com
     ReviewSearchComponent,
     ReviewCardComponent,
     ReviewFilterComponent,
+    UserSelectComponent,
   ],
   imports: [
     BrowserModule,

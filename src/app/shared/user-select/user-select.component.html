@@ -31,15 +31,12 @@
     <ul
       class="absolute z-20 mt-1 w-full max-h-64 overflow-auto rounded-md border bg-base-light dark:bg-base border-surface1-light dark:border-surface1 shadow-lg"
     >
-      @for (anime of suggestions; track $index) {
+      @for (user of suggestions; track $index) {
         <li
-          (mousedown)="selectAnime(anime)"
+          (mousedown)="selectUser(user)"
           class="px-4 py-2 cursor-pointer text-sm hover:bg-surface1-light dark:hover:bg-surface1 transition-colors"
         >
-          <span class="font-medium">{{ anime.title }}</span>
-          @if (anime.english_title) {
-            <span class="opacity-70 ml-1"> ({{ anime.english_title }}) </span>
-          }
+          <span class="font-medium">{{ user.username }}</span>
         </li>
       }
     </ul>
@@ -51,7 +48,7 @@
     <div
       class="absolute z-20 mt-1 w-full rounded-md border bg-base-light dark:bg-base border-surface1-light dark:border-surface1 shadow-lg p-4 text-sm text-center opacity-70"
     >
-      No anime found matching "{{ query }}"
+      No users found matching "{{ query }}"
     </div>
   }
 </div>
