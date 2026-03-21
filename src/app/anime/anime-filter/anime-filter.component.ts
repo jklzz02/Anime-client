@@ -19,10 +19,10 @@ import { DOCUMENT } from '@angular/common';
 @Component({
   selector: 'app-filter',
   standalone: false,
-  templateUrl: './filter.component.html',
-  styleUrl: './filter.component.css',
+  templateUrl: './anime-filter.component.html',
+  styleUrl: './anime-filter.component.css',
 })
-export class FilterComponent implements OnInit, OnDestroy {
+export class AnimeFilterComponent implements OnInit, OnDestroy {
   genres: Genre[] = [];
   genreNames: string[] = [];
   producers: Producer[] = [];

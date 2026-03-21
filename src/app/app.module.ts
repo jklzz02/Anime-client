@@ -28,7 +28,7 @@ import { AnimeCardComponent } from './anime/anime-card/anime-card.component';
 import { AnimeSearchResultsComponent } from './anime/anime-search-results/anime-search-results.component';
 import { ErrorComponent } from './error/error.component';
 import { AnimeSummaryCardComponent } from './anime/anime-summary-card/anime-summary-card.component';
-import { FilterComponent } from './anime/filter/filter.component';
+import { AnimeFilterComponent } from './anime/anime-filter/anime-filter.component';
 import { GoogleButtonComponent } from './auth/google-button/google-button.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { ProfileComponent } from './user/profile/profile.component';
@@ -73,7 +73,7 @@ import { UserSelectComponent } from './shared/user-select/user-select.component'
     AnimeSearchResultsComponent,
     ErrorComponent,
     AnimeSummaryCardComponent,
-    FilterComponent,
+    AnimeFilterComponent,
     GoogleButtonComponent,
     SigninComponent,
     ProfileComponent,
