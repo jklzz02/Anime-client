@@ -19,7 +19,6 @@ export class ReviewFilterComponent implements OnInit, OnDestroy {
   isOpen: boolean = false;
 
   sortFields: { key: string; value: ReviewSortField }[] = [
-    { key: 'ID', value: 'id' },
     { key: 'Title', value: 'title' },
     { key: 'Score', value: 'score' },
     { key: 'Date', value: 'date' },
