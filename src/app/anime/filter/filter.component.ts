@@ -1,17 +1,17 @@
 import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
-import { GenreService } from '../../services/http/genre/genre.service';
-import { ProducerService } from '../../services/http/producer/producer.service';
-import { TypeService } from '../../services/http/type/type.service';
-import { SourceService } from '../../services/http/source/source.service';
+import { GenreService } from '../../../services/http/genre/genre.service';
+import { ProducerService } from '../../../services/http/producer/producer.service';
+import { TypeService } from '../../../services/http/type/type.service';
+import { SourceService } from '../../../services/http/source/source.service';
 import {
   Genre,
   Licensor,
   Producer,
   Source,
   Type,
-} from '../../interfaces/anime';
-import { LicensorService } from '../../services/http/licensor/licensor.service';
-import { AnimeSearchParameters } from '../../interfaces/anime-search-parameters';
+} from '../../../interfaces/anime';
+import { LicensorService } from '../../../services/http/licensor/licensor.service';
+import { AnimeSearchParameters } from '../../../interfaces/anime-search-parameters';
 import { NavigationEnd, Params, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { DOCUMENT } from '@angular/common';

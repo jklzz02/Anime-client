@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AnimeSummary } from '../../interfaces/anime-summary';
+import { AnimeSummary } from '../../../interfaces/anime-summary';
 
 @Component({
   selector: 'app-anime-summary-card',

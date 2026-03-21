@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AnimeService } from '../../services/http/anime/anime.service';
-import { PaginatedResult } from '../../interfaces/paginated-result';
+import { AnimeService } from '../../../services/http/anime/anime.service';
+import { PaginatedResult } from '../../../interfaces/paginated-result';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { Anime } from '../../interfaces/anime';
+import { Anime } from '../../../interfaces/anime';
 
 @Component({
   selector: 'app-anime',

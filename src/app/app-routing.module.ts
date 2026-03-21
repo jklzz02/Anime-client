@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AnimeComponent } from './anime/anime.component';
-import { AnimeDetailComponent } from './anime-detail/anime-detail.component';
+import { AnimeComponent } from './anime/anime/anime.component';
+import { AnimeDetailComponent } from './anime/anime-detail/anime-detail.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
-import { AnimeSearchResultsComponent } from './anime-search-results/anime-search-results.component';
+import { AnimeSearchResultsComponent } from './anime/anime-search-results/anime-search-results.component';
 import { ErrorComponent } from './error/error.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { ProfileComponent } from './user/profile/profile.component';

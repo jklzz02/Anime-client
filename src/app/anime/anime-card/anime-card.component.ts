@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Anime } from '../../interfaces/anime';
+import { Anime } from '../../../interfaces/anime';
 
 @Component({
   selector: 'app-anime-card',
@@ -25,7 +25,7 @@ export class AnimeCardComponent implements OnInit {
       this.anime.episodes <= 12 &&
       this.anime.episodes !== 0 &&
       !['movie', 'music', 'special', 'unkwown'].includes(
-        this.anime.type.name.toLowerCase().trim()
+        this.anime.type.name.toLowerCase().trim(),
       );
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AnimeService } from '../../services/http/anime/anime.service';
+import { AnimeService } from '../../../services/http/anime/anime.service';
 import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import {
   filter,
@@ -8,8 +8,8 @@ import {
   switchMap,
 } from 'rxjs/operators';
 import { Subject, of } from 'rxjs';
-import { AnimeSearchParameters } from '../../interfaces/anime-search-parameters';
-import { AnimeListItem } from '../../interfaces/anime-list-item';
+import { AnimeSearchParameters } from '../../../interfaces/anime-search-parameters';
+import { AnimeListItem } from '../../../interfaces/anime-list-item';
 
 @Component({
   selector: 'app-anime-search',

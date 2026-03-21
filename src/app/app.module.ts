@@ -3,13 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MarkdownModule } from 'ngx-markdown';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AnimeComponent } from './anime/anime.component';
+import { AnimeComponent } from './anime/anime/anime.component';
 import {
   provideHttpClient,
   withInterceptors,
   withInterceptorsFromDi,
 } from '@angular/common/http';
-import { AnimeDetailComponent } from './anime-detail/anime-detail.component';
+import { AnimeDetailComponent } from './anime/anime-detail/anime-detail.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { VideoEmbedComponent } from './shared/video-embed/video-embed.component';
 import {
@@ -20,15 +20,15 @@ import {
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { NavButtonComponent } from './header/nav-button/nav-button.component';
-import { AnimeSearchComponent } from './anime-search/anime-search.component';
+import { AnimeSearchComponent } from './anime/anime-search/anime-search.component';
 import { AboutComponent } from './about/about.component';
 import { FooterComponent } from './footer/footer.component';
 import { PaginationComponent } from './shared/pagination/pagination.component';
-import { AnimeCardComponent } from './anime-card/anime-card.component';
-import { AnimeSearchResultsComponent } from './anime-search-results/anime-search-results.component';
+import { AnimeCardComponent } from './anime/anime-card/anime-card.component';
+import { AnimeSearchResultsComponent } from './anime/anime-search-results/anime-search-results.component';
 import { ErrorComponent } from './error/error.component';
-import { AnimeSummaryCardComponent } from './anime-summary-card/anime-summary-card.component';
-import { FilterComponent } from './filter/filter.component';
+import { AnimeSummaryCardComponent } from './anime/anime-summary-card/anime-summary-card.component';
+import { FilterComponent } from './anime/filter/filter.component';
 import { GoogleButtonComponent } from './auth/google-button/google-button.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { ProfileComponent } from './user/profile/profile.component';

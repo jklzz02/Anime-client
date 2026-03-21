@@ -1,13 +1,13 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AnimeService } from '../../services/http/anime/anime.service';
+import { AnimeService } from '../../../services/http/anime/anime.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { Anime } from '../../interfaces/anime';
-import { UserService } from '../../services/user/user.service';
-import { AuthService } from '../../services/auth/auth.service';
-import { RecommenderService } from '../../services/recommender/recommender.service';
-import { AnimeSummary } from '../../interfaces/anime-summary';
-import { UserFavourite } from '../../interfaces/user-favourite';
+import { Anime } from '../../../interfaces/anime';
+import { UserService } from '../../../services/user/user.service';
+import { AuthService } from '../../../services/auth/auth.service';
+import { RecommenderService } from '../../../services/recommender/recommender.service';
+import { AnimeSummary } from '../../../interfaces/anime-summary';
+import { UserFavourite } from '../../../interfaces/user-favourite';
 
 @Component({
   selector: 'app-anime-detail',
