@@ -3,6 +3,7 @@ import { UserService } from '../../../services/user/user.service';
 import { AnimeService } from '../../../services/http/anime/anime.service';
 import { Title } from '@angular/platform-browser';
 import { AnimeSummary } from '../../../interfaces/anime-summary';
+import { of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-watchlist',
@@ -34,19 +35,21 @@ export class WatchlistComponent implements OnInit {
   }
 
   private loadFavourites(): void {
-    this.userService.getFavourites().subscribe((favourites) => {
-      const animeIds = favourites.map((fav) => fav.anime_id);
+    this.userService
+      .getFavourites()
+      .pipe(
+        switchMap((fav) => {
+          const animeIds = fav.map((f) => f.anime_id);
+          if (animeIds.length == 0) {
+            return of([]);
+          }
 
-      if (animeIds.length === 0) {
-        this.favourites = [];
-        this.loadingFavourites = false;
-        return;
-      }
-
-      this.animeService.getSummariesByIds(animeIds).subscribe((animeList) => {
+          return this.animeService.getSummariesByIds(animeIds);
+        }),
+      )
+      .subscribe((animeList) => {
         this.favourites = animeList;
         this.loadingFavourites = false;
       });
-    });
   }
 }
