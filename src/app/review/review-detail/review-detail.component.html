@@ -105,7 +105,7 @@
             </button>
 
             <button
-              [routerLink]="['/review/edit/', review.id]"
+              [routerLink]="['/reviews/edit/', review.id]"
               class="rounded-md px-3 py-1.5 text-sm dark:bg-green bg-green-light dark:text-surface0 text-white cursor-pointer hover:opacity-90 transition-opacity"
             >
               <i class="bi bi-pencil-square"></i>
@@ -139,7 +139,7 @@
                 >
                 <span
                   class="text-sm font-semibold text-text-light dark:text-text"
-                  >{{ review.anime.rating }}</span
+                  >{{ review.anime!.rating }}</span
                 >
               </div>
               <div class="flex justify-between">
@@ -148,7 +148,7 @@
                 >
                 <span
                   class="text-sm font-semibold text-text-light dark:text-text"
-                  >{{ review.anime.release_year }}</span
+                  >{{ review.anime!.release_year }}</span
                 >
               </div>
               <div class="flex justify-between">

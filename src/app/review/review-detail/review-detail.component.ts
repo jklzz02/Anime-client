@@ -13,7 +13,7 @@ import { UserService } from '../../../services/user/user.service';
   styleUrl: './review-detail.component.css',
 })
 export class ReviewDetailComponent implements OnInit, OnDestroy {
-  review: ReviewDetailed | null = null;
+  review!: ReviewDetailed;
   loading: boolean = true;
   error: boolean = false;
   isOwner: boolean = false;

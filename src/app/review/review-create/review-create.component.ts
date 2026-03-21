@@ -72,7 +72,7 @@ export class ReviewCreateComponent implements OnInit {
     };
 
     this.reviewService.create(payload).subscribe({
-      next: (created) => this.router.navigate(['/review', created.id]),
+      next: (created) => this.router.navigate(['/reviews/detail', created.id]),
       error: (err) => this.handleSubmitError(err, form),
       complete: () => (this.isSubmitting = false),
     });

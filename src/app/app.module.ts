@@ -1,4 +1,4 @@
-import { forwardRef, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MarkdownModule } from 'ngx-markdown';
 import { AppRoutingModule } from './app-routing.module';
@@ -12,18 +12,13 @@ import {
 import { AnimeDetailComponent } from './anime/anime-detail/anime-detail.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { VideoEmbedComponent } from './shared/video-embed/video-embed.component';
-import {
-  FormsModule,
-  NG_VALUE_ACCESSOR,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { NavButtonComponent } from './header/nav-button/nav-button.component';
 import { AnimeSearchComponent } from './anime/anime-search/anime-search.component';
 import { AboutComponent } from './about/about.component';
 import { FooterComponent } from './footer/footer.component';
-import { PaginationComponent } from './shared/pagination/pagination.component';
 import { AnimeCardComponent } from './anime/anime-card/anime-card.component';
 import { AnimeSearchResultsComponent } from './anime/anime-search-results/anime-search-results.component';
 import { ErrorComponent } from './error/error.component';
@@ -34,26 +29,12 @@ import { SigninComponent } from './auth/signin/signin.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { WatchlistComponent } from './user/watchlist/watchlist.component';
 import { CommonModule } from '@angular/common';
-import { MarkdownEditorComponent } from './shared/markdown-editor/markdown-editor.component';
-import { MultiDropdownComponent } from './shared/multi-dropdown/multi-dropdown.component';
-import { SingleDropdownComponent } from './shared/single-dropdown/single-dropdown.component';
-import { ReviewComponent } from './reviews/review/review.component';
 import { FacebookButtonComponent } from './auth/facebook-button/facebook-button.component';
 import { OauthCallbackComponent } from './auth/oauth-callback/oauth-callback.component';
-import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { DiscordButtonComponent } from './auth/discord-button/discord-button.component';
-import { UserReviewComponent } from './reviews/user-review/user-review.component';
-import { ReviewDetailComponent } from './reviews/review-detail/review-detail.component';
-import { ReviewCreateComponent } from './reviews/review-create/review-create.component';
-import { AnimeSelectComponent } from './shared/anime-select/anime-select.component';
-import { ReviewUpdateComponent } from './reviews/review-update/review-update.component';
 import { headerInterceptor } from '../interceptors/header/header.interceptor';
 import { credentialsInterceptor } from '../interceptors/credentials/credentials.interceptor';
-import { ConfimModalComponent } from './shared/confim-modal/confim-modal.component';
-import { ReviewSearchComponent } from './reviews/review-search/review-search.component';
-import { ReviewCardComponent } from './reviews/review-card/review-card.component';
-import { ReviewFilterComponent } from './reviews/review-filter/review-filter.component';
-import { UserSelectComponent } from './shared/user-select/user-select.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -61,14 +42,12 @@ import { UserSelectComponent } from './shared/user-select/user-select.component'
     AnimeComponent,
     AnimeDetailComponent,
     NotFoundComponent,
-    VideoEmbedComponent,
     HomeComponent,
     HeaderComponent,
     NavButtonComponent,
     AnimeSearchComponent,
     AboutComponent,
     FooterComponent,
-    PaginationComponent,
     AnimeCardComponent,
     AnimeSearchResultsComponent,
     ErrorComponent,
@@ -78,24 +57,9 @@ import { UserSelectComponent } from './shared/user-select/user-select.component'
     SigninComponent,
     ProfileComponent,
     WatchlistComponent,
-    MarkdownEditorComponent,
-    MultiDropdownComponent,
-    SingleDropdownComponent,
-    ReviewComponent,
     FacebookButtonComponent,
     OauthCallbackComponent,
-    SpinnerComponent,
     DiscordButtonComponent,
-    UserReviewComponent,
-    ReviewDetailComponent,
-    ReviewCreateComponent,
-    AnimeSelectComponent,
-    ReviewUpdateComponent,
-    ConfimModalComponent,
-    ReviewSearchComponent,
-    ReviewCardComponent,
-    ReviewFilterComponent,
-    UserSelectComponent,
   ],
   imports: [
     BrowserModule,
@@ -103,6 +67,7 @@ import { UserSelectComponent } from './shared/user-select/user-select.component'
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
     MarkdownModule.forRoot(),
   ],
   providers: [
@@ -110,11 +75,6 @@ import { UserSelectComponent } from './shared/user-select/user-select.component'
       withInterceptors([credentialsInterceptor, headerInterceptor]),
       withInterceptorsFromDi(),
     ),
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => MarkdownEditorComponent),
-      multi: true,
-    },
   ],
   bootstrap: [AppComponent],
 })

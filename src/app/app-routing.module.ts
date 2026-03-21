@@ -10,16 +10,10 @@ import { ErrorComponent } from './error/error.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { WatchlistComponent } from './user/watchlist/watchlist.component';
-import { ReviewComponent } from './reviews/review/review.component';
 import { OauthCallbackComponent } from './auth/oauth-callback/oauth-callback.component';
-import { UserReviewComponent } from './reviews/user-review/user-review.component';
-import { ReviewDetailComponent } from './reviews/review-detail/review-detail.component';
-import { ReviewCreateComponent } from './reviews/review-create/review-create.component';
-import { ReviewUpdateComponent } from './reviews/review-update/review-update.component';
 import { authGuard } from '../guards/auth.guard';
 import { guestGuard } from '../guards/guest-guard.guard';
 import { adminGuard } from '../guards/admin.guard';
-import { ReviewSearchComponent } from './reviews/review-search/review-search.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -32,42 +26,10 @@ const routes: Routes = [
   },
   { path: 'detail/:id', component: AnimeDetailComponent },
   { path: 'signin', component: SigninComponent, canActivate: [guestGuard] },
-
   {
-    path: 'reviews/search',
-    component: ReviewSearchComponent,
-    title: 'AnimeHub | Review',
-  },
-  { path: 'reviews', redirectTo: 'reviews/1', pathMatch: 'full' },
-  {
-    path: 'reviews/:page',
-    component: ReviewComponent,
-    title: 'AnimeHub | Reviews',
-  },
-  {
-    path: 'reviews/user/:userId',
-    component: UserReviewComponent,
-    title: "AnimeHub | User's review",
-  },
-  {
-    path: 'review/create',
-    component: ReviewCreateComponent,
-    canActivate: [authGuard],
-    title: 'AnimeHub | Review',
-    data: {
-      authMessage: 'To write a review you must sign in first.',
-    },
-  },
-  {
-    path: 'review/edit/:id',
-    component: ReviewUpdateComponent,
-    canActivate: [authGuard],
-    title: 'AnimeHub | Review',
-  },
-  {
-    path: 'review/:id',
-    component: ReviewDetailComponent,
-    title: 'AnimeHub | Review',
+    path: 'reviews',
+    loadChildren: () =>
+      import('./review/review.module').then((m) => m.ReviewModule),
   },
   {
     path: 'search',
@@ -79,18 +41,14 @@ const routes: Routes = [
     component: ProfileComponent,
     canActivate: [authGuard],
     title: 'AnimeHub | Profile',
-    data: {
-      authMessage: 'To access your Profile you must sign in first.',
-    },
+    data: { authMessage: 'To access your Profile you must sign in first.' },
   },
   {
     path: 'watchlist',
     component: WatchlistComponent,
     title: 'AnimeHub | Watchlist',
     canActivate: [authGuard],
-    data: {
-      authMessage: 'To access the Watchlist you must sign in first.',
-    },
+    data: { authMessage: 'To access the Watchlist you must sign in first.' },
   },
   { path: 'home', component: HomeComponent, title: 'AnimeHub' },
   {
@@ -103,9 +61,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./admin/admin.module').then((m) => m.AdminModule),
     canActivate: [authGuard, adminGuard],
-    data: {
-      authMessage: 'Sign in to prove that you have admin privilages.',
-    },
+    data: { authMessage: 'Sign in to prove that you have admin privileges.' },
   },
   { path: 'error', component: ErrorComponent },
   { path: '**', component: NotFoundComponent, title: 'AnimeHub | Not found' },

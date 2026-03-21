@@ -97,7 +97,7 @@ export class ReviewUpdateComponent implements OnInit {
 
     this.reviewService.update(this.review).subscribe({
       next: (updatedReview) => {
-        this.router.navigate(['/review', updatedReview.id]);
+        this.router.navigate(['/reviews/detail', updatedReview.id]);
       },
       error: (err) => {
         this.isSubmitting = false;
