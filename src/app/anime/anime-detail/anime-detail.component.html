@@ -1,328 +1,369 @@
-<div *ngIf="anime" class="min-h-screen pb-12 animate-fade-in">
-  <div class="relative w-full mb-8">
-    <div
-      class="relative h-64 md:h-96 w-full overflow-hidden rounded-b-3xl shadow-lg border-b border-surface0-light dark:border-surface0"
-    >
-      <img
-        [src]="anime.image_url"
-        class="absolute inset-0 w-full h-full object-cover sm:blur-md opacity-50 scale-105"
-        alt="Background"
-      />
+@if (anime) {
+  <div class="min-h-screen pb-12 animate-fade-in">
+    <div class="relative w-full mb-8">
       <div
-        class="absolute inset-0 bg-gradient-to-t from-base-light dark:from-base via-base-light/50 dark:via-base/50 to-transparent"
-      ></div>
-
-      <div
-        class="absolute bottom-0 left-0 w-full p-4 md:p-8 flex flex-row items-end gap-6 max-w-7xl mx-auto"
+        class="relative h-64 md:h-96 w-full overflow-hidden rounded-b-3xl shadow-lg border-b border-surface0-light dark:border-surface0"
       >
         <img
           [src]="anime.image_url"
-          [alt]="anime.title"
-          class="w-32 md:w-52 rounded-xl shadow-2xl shrink-0 hidden sm:block"
+          class="absolute inset-0 w-full h-full object-cover sm:blur-md opacity-50 scale-105"
+          alt="Background"
         />
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-base-light dark:from-base via-base-light/50 dark:via-base/50 to-transparent"
+        ></div>
 
-        <div class="flex-grow pb-1 md:pb-2 min-w-0 mb-4 sm:mb-0">
-          <h2
-            *ngIf="anime.english_title || anime.other_title"
-            class="text-sm md:text-lg font-bold text-blue-light dark:text-blue mb-1 uppercase tracking-wide opacity-90 truncate"
-          >
-            {{ anime.english_title || anime.other_title }}
-          </h2>
-          <h1
-            class="text-2xl md:text-5xl font-black text-text-light dark:text-text mb-4 leading-tight drop-shadow-sm line-clamp-2 image-title"
-          >
-            {{ anime.title }}
-          </h1>
+        <div
+          class="absolute bottom-0 left-0 w-full p-4 md:p-8 flex flex-row items-end gap-6 max-w-7xl mx-auto"
+        >
+          <img
+            [src]="anime.image_url"
+            [alt]="anime.title"
+            class="w-32 md:w-52 rounded-xl shadow-2xl shrink-0 hidden sm:block"
+          />
 
-          <div class="flex items-center gap-3 flex-wrap">
-            <button
-              *ngIf="isLoggedIn"
-              (click)="toggleFavourite()"
-              class="flex items-center gap-2 px-4 py-2 rounded-full font-semibold transition-all duration-300 shadow-lg hover:brightness-110 active:scale-95"
-              [ngClass]="{
-                'bg-peach-light dark:bg-peach text-white': isFavourite,
-                'bg-surface0-light dark:bg-surface0 text-text-light dark:text-text hover:bg-surface1-light dark:hover:bg-surface1':
-                  !isFavourite,
-              }"
+          <div class="flex-grow pb-1 md:pb-2 min-w-0 mb-4 sm:mb-0">
+            <h2
+              *ngIf="anime.english_title || anime.other_title"
+              class="text-sm md:text-lg font-bold text-blue-light dark:text-blue mb-1 uppercase tracking-wide opacity-90 truncate"
             >
-              <i
-                class="bi"
-                [ngClass]="isFavourite ? 'bi-suit-heart-fill' : 'bi-suit-heart'"
-              ></i>
-              <span>{{
-                isFavourite ? "In Favorites" : "Add to Favorites"
+              {{ anime.english_title || anime.other_title }}
+            </h2>
+            <h1
+              class="text-2xl md:text-5xl font-black text-text-light dark:text-text mb-4 leading-tight drop-shadow-sm line-clamp-2 image-title"
+            >
+              {{ anime.title }}
+            </h1>
+
+            <div class="flex items-center gap-3 flex-wrap">
+              @if (isLoggedIn) {
+                <button
+                  (click)="toggleFavourite()"
+                  class="flex items-center gap-2 px-4 py-2 rounded-full font-semibold transition-all duration-300 shadow-lg hover:brightness-110 active:scale-95"
+                  [ngClass]="{
+                    'bg-peach-light dark:bg-peach text-white': isFavourite,
+                    'bg-surface0-light dark:bg-surface0 text-text-light dark:text-text hover:bg-surface1-light dark:hover:bg-surface1':
+                      !isFavourite,
+                  }"
+                >
+                  <i
+                    class="bi"
+                    [ngClass]="
+                      isFavourite ? 'bi-suit-heart-fill' : 'bi-suit-heart'
+                    "
+                  ></i>
+                  <span>{{
+                    isFavourite ? "In Favorites" : "Add to Favorites"
+                  }}</span>
+                </button>
+              }
+
+              @if (isLoggedIn && compatibilityScore) {
+                <div
+                  class="flex items-center gap-2 bg-base-light/80 dark:bg-base/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-surface1-light dark:border-surface1 shadow-sm"
+                >
+                  <span
+                    class="text-sm font-bold text-lavender-light dark:text-lavender"
+                  >
+                    {{ compatibilityScore | number: "1.0-0" }}% Match
+                  </span>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-1 space-y-6">
+          <div
+            class="bg-base-light dark:bg-base rounded-2xl shadow-lg border border-surface0-light dark:border-surface0 p-6 text-center"
+          >
+            <h3
+              class="text-lg font-bold text-text-light dark:text-text mb-4 border-b border-surface0-light dark:border-surface0 pb-2"
+            >
+              Score
+            </h3>
+            <div class="mb-2">
+              @switch (anime.score != undefined) {
+                @case (anime.score >= 7.5) {
+                  <div
+                    class="text-5xl font-black text-green-light dark:text-green"
+                  >
+                    {{ anime.score }}
+                  </div>
+                }
+
+                @case (anime.score >= 6 && anime.score < 7.5) {
+                  <div
+                    class="text-5xl font-black text-peach-light dark:text-peach"
+                  >
+                    {{ anime.score }}
+                  </div>
+                }
+
+                @default {
+                  <div class="text-5xl font-black text-red-500">
+                    {{ anime.score }}
+                  </div>
+                }
+              }
+            </div>
+            <div class="text-text-light dark:text-text opacity-60 text-sm mb-4">
+              Global Score ( / 10 )
+            </div>
+
+            <div
+              class="flex justify-between items-center py-2 border-t border-surface0-light dark:border-surface0"
+            >
+              <span
+                class="text-sm font-medium text-text-light dark:text-text opacity-80"
+                >Content Rating</span
+              >
+              <span class="text-sm font-bold text-text-light dark:text-text">{{
+                anime.rating
               }}</span>
-            </button>
-
+            </div>
             <div
-              *ngIf="isLoggedIn && compatibilityScore"
-              class="flex items-center gap-2 bg-base-light/80 dark:bg-base/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-surface1-light dark:border-surface1 shadow-sm"
+              class="flex justify-between items-center py-2 border-t border-surface0-light dark:border-surface0"
             >
               <span
-                class="text-sm font-bold text-lavender-light dark:text-lavender"
+                class="text-sm font-medium text-text-light dark:text-text opacity-80"
+                >Status</span
               >
-                {{ compatibilityScore | number: "1.0-0" }}% Match
-              </span>
+              <span class="text-sm font-bold text-blue-light dark:text-blue">{{
+                anime.status
+              }}</span>
+            </div>
+          </div>
+
+          <div
+            class="bg-base-light dark:bg-base rounded-2xl shadow-lg border border-surface0-light dark:border-surface0 p-6"
+          >
+            <h3
+              class="text-lg font-bold text-text-light dark:text-text mb-4 border-b border-surface0-light dark:border-surface0 pb-2"
+            >
+              Information
+            </h3>
+
+            <div class="space-y-4">
+              <div>
+                <span
+                  class="block text-xs font-bold text-text-light dark:text-text opacity-50 uppercase tracking-wider mb-1"
+                  >Genres</span
+                >
+                <div class="flex flex-wrap gap-2">
+                  @for (genre of anime.genres; track $index) {
+                    <a
+                      [routerLink]="['/search']"
+                      [queryParams]="{ genres: genre.name }"
+                      class="px-2.5 py-1 bg-blue-light dark:bg-blue hover:opacity-80 text-white text-xs rounded-lg transition-opacity"
+                    >
+                      {{ genre.name }}
+                    </a>
+                  }
+                </div>
+              </div>
+
+              @if (anime.studio) {
+                <div>
+                  <span
+                    class="block text-xs font-bold text-text-light dark:text-text opacity-50 uppercase tracking-wider mb-1"
+                    >Studio</span
+                  >
+                  <a
+                    [routerLink]="['/search']"
+                    [queryParams]="{ studio: anime.studio }"
+                    class="inline-block px-2.5 py-1 bg-green-light dark:bg-green text-w text-white text-xs rounded-lg hover:opacity-90 font-medium"
+                  >
+                    {{ anime.studio }}
+                  </a>
+                </div>
+              }
+
+              @if (anime.producers?.length) {
+                <div>
+                  <span
+                    class="block text-xs font-bold text-text-light dark:text-text opacity-50 uppercase tracking-wider mb-1"
+                    >Producers</span
+                  >
+                  <div class="flex flex-wrap gap-2">
+                    @for (producer of anime.producers; track $index) {
+                      <a
+                        [routerLink]="['/search']"
+                        [queryParams]="{ producers: producer.name }"
+                        class="text-sm text-blue-light dark:text-blue hover:underline"
+                      >
+                        {{ producer.name }}
+                      </a>
+                    }
+                  </div>
+                </div>
+              }
+
+              @if (anime.licensor?.length) {
+                <div>
+                  <span
+                    class="block text-xs font-bold text-text-light dark:text-text opacity-50 uppercase tracking-wider mb-1"
+                    >Licensors</span
+                  >
+                  <div class="flex flex-wrap gap-2">
+                    @for (licensor of anime.licensors; track $index) {
+                      <a
+                        [routerLink]="['/search']"
+                        [queryParams]="{ licensors: licensor.name }"
+                        class="text-sm text-peach-light dark:text-peach hover:underline"
+                      >
+                        {{ licensor.name }}
+                      </a>
+                    }
+                  </div>
+                </div>
+              }
+
+              <div class="grid grid-cols-2 gap-4 pt-2">
+                <div>
+                  <span
+                    class="block text-xs font-bold text-text-light dark:text-text opacity-50 uppercase tracking-wider"
+                    >Episodes</span
+                  >
+                  <span class="font-semibold text-text-light dark:text-text">{{
+                    anime.episodes
+                  }}</span>
+                </div>
+                <div>
+                  <span
+                    class="block text-xs font-bold text-text-light dark:text-text opacity-50 uppercase tracking-wider"
+                    >Duration</span
+                  >
+                  <span class="font-semibold text-text-light dark:text-text">{{
+                    anime.duration
+                  }}</span>
+                </div>
+                <div>
+                  <span
+                    class="block text-xs font-bold text-text-light dark:text-text opacity-50 uppercase tracking-wider"
+                    >Year</span
+                  >
+                  <span class="font-semibold text-text-light dark:text-text">{{
+                    anime.release_year
+                  }}</span>
+                </div>
+              </div>
+            </div>
+
+            <a
+              [routerLink]="['/reviews/search']"
+              [queryParams]="{ anime_id: anime.id }"
+              class="block w-full mt-6 py-2 px-4 bg-surface0-light dark:bg-surface0 hover:bg-surface1-light dark:hover:bg-surface1 text-text-light dark:text-text font-semibold text-center rounded-lg transition-colors"
+            >
+              View Anime Reviews
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-2 space-y-8">
+          <div
+            class="bg-base-light dark:bg-base rounded-2xl shadow-lg border border-surface0-light dark:border-surface0 p-6 md:p-8"
+          >
+            <h2
+              class="text-xl font-bold text-lavender-light dark:text-lavender mb-4 flex items-center gap-2"
+            >
+              <i class="bi bi-card-text"></i> Synopsis
+            </h2>
+            <p
+              class="text-text-light dark:text-text leading-relaxed text-lg opacity-90"
+            >
+              {{ anime.synopsis }}
+            </p>
+          </div>
+
+          <div
+            *ngIf="anime.trailer_embed_url"
+            class="bg-base-light dark:bg-base rounded-2xl shadow-lg border border-surface0-light dark:border-surface0 p-6 md:p-8"
+          >
+            <h2
+              class="text-xl font-bold text-text-light dark:text-text mb-4 flex items-center gap-2"
+            >
+              <i class="bi bi-play-circle"></i> Trailer
+            </h2>
+            <div class="rounded-xl overflow-hidden shadow-inner bg-black">
+              <app-video-embed
+                [url]="anime.trailer_embed_url"
+              ></app-video-embed>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      <div class="lg:col-span-1 space-y-6">
-        <div
-          class="bg-base-light dark:bg-base rounded-2xl shadow-lg border border-surface0-light dark:border-surface0 p-6 text-center"
+    @if (relatedSummaries.length) {
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
+        <h3
+          class="text-2xl font-bold text-text-light dark:text-text mb-6 flex items-center gap-2 px-2"
         >
-          <h3
-            class="text-lg font-bold text-text-light dark:text-text mb-4 border-b border-surface0-light dark:border-surface0 pb-2"
-          >
-            Score
-          </h3>
-          <div [ngSwitch]="true" class="mb-2">
-            <div
-              *ngSwitchCase="anime.score >= 7.5"
-              class="text-5xl font-black text-green-light dark:text-green"
-            >
-              {{ anime.score }}
-            </div>
-            <div
-              *ngSwitchCase="anime.score >= 6 && anime.score < 7.5"
-              class="text-5xl font-black text-peach-light dark:text-peach"
-            >
-              {{ anime.score }}
-            </div>
-            <div *ngSwitchDefault class="text-5xl font-black text-red-500">
-              {{ anime.score }}
-            </div>
-          </div>
-          <div class="text-text-light dark:text-text opacity-60 text-sm mb-4">
-            Global Score ( / 10 )
-          </div>
+          You may also like
+        </h3>
 
+        <div class="relative group">
           <div
-            class="flex justify-between items-center py-2 border-t border-surface0-light dark:border-surface0"
+            #carousel
+            class="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory py-4 px-2 carousel no-scrollbar"
           >
-            <span
-              class="text-sm font-medium text-text-light dark:text-text opacity-80"
-              >Content Rating</span
-            >
-            <span class="text-sm font-bold text-text-light dark:text-text">{{
-              anime.rating
-            }}</span>
+            @for (summary of relatedSummaries; track $index) {
+              <app-anime-summary-card
+                [summary]="summary"
+                class="flex-shrink-0 w-48 md:w-60 snap-start transition-transform hover:-translate-y-2 duration-300"
+              ></app-anime-summary-card>
+            }
           </div>
-          <div
-            class="flex justify-between items-center py-2 border-t border-surface0-light dark:border-surface0"
+
+          <button
+            (click)="scrollCarousel(-1)"
+            class="absolute left-0 top-1/2 -translate-y-1/2 -ml-4 w-10 h-10 md:w-12 md:h-12 bg-base-light/80 dark:bg-base/80 backdrop-blur text-text-light dark:text-text rounded-full shadow-lg border border-surface0-light dark:border-surface0 flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-10 opacity-0 group-hover:opacity-100 disabled:opacity-0"
+            aria-label="Scroll left"
           >
-            <span
-              class="text-sm font-medium text-text-light dark:text-text opacity-80"
-              >Status</span
-            >
-            <span class="text-sm font-bold text-blue-light dark:text-blue">{{
-              anime.status
-            }}</span>
-          </div>
-        </div>
-
-        <div
-          class="bg-base-light dark:bg-base rounded-2xl shadow-lg border border-surface0-light dark:border-surface0 p-6"
-        >
-          <h3
-            class="text-lg font-bold text-text-light dark:text-text mb-4 border-b border-surface0-light dark:border-surface0 pb-2"
+            <i class="bi bi-chevron-left text-lg md:text-xl"></i>
+          </button>
+          <button
+            (click)="scrollCarousel(1)"
+            class="absolute right-0 top-1/2 -translate-y-1/2 -mr-4 w-10 h-10 md:w-12 md:h-12 bg-base-light/80 dark:bg-base/80 backdrop-blur text-text-light dark:text-text rounded-full shadow-lg border border-surface0-light dark:border-surface0 flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-10 opacity-0 group-hover:opacity-100"
+            aria-label="Scroll right"
           >
-            Information
-          </h3>
-
-          <div class="space-y-4">
-            <div>
-              <span
-                class="block text-xs font-bold text-text-light dark:text-text opacity-50 uppercase tracking-wider mb-1"
-                >Genres</span
-              >
-              <div class="flex flex-wrap gap-2">
-                <a
-                  [routerLink]="['/search']"
-                  [queryParams]="{ genres: genre.name }"
-                  *ngFor="let genre of anime.genres"
-                  class="px-2.5 py-1 bg-blue-light dark:bg-blue hover:opacity-80 text-white text-xs rounded-lg transition-opacity"
-                >
-                  {{ genre.name }}
-                </a>
-              </div>
-            </div>
-
-            <div *ngIf="anime.studio">
-              <span
-                class="block text-xs font-bold text-text-light dark:text-text opacity-50 uppercase tracking-wider mb-1"
-                >Studio</span
-              >
-              <a
-                [routerLink]="['/search']"
-                [queryParams]="{ studio: anime.studio }"
-                class="inline-block px-2.5 py-1 bg-green-light dark:bg-green text-w text-white text-xs rounded-lg hover:opacity-90 font-medium"
-              >
-                {{ anime.studio }}
-              </a>
-            </div>
-
-            <div *ngIf="anime.producers?.length">
-              <span
-                class="block text-xs font-bold text-text-light dark:text-text opacity-50 uppercase tracking-wider mb-1"
-                >Producers</span
-              >
-              <div class="flex flex-wrap gap-2">
-                <a
-                  [routerLink]="['/search']"
-                  [queryParams]="{ producers: producer.name }"
-                  *ngFor="let producer of anime.producers"
-                  class="text-sm text-blue-light dark:text-blue hover:underline"
-                >
-                  {{ producer.name }}
-                </a>
-              </div>
-            </div>
-
-            <div *ngIf="anime.licensors?.length">
-              <span
-                class="block text-xs font-bold text-text-light dark:text-text opacity-50 uppercase tracking-wider mb-1"
-                >Licensors</span
-              >
-              <div class="flex flex-wrap gap-2">
-                <a
-                  [routerLink]="['/search']"
-                  [queryParams]="{ licensors: licensor.name }"
-                  *ngFor="let licensor of anime.licensors"
-                  class="text-sm text-peach-light dark:text-peach hover:underline"
-                >
-                  {{ licensor.name }}
-                </a>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-4 pt-2">
-              <div>
-                <span
-                  class="block text-xs font-bold text-text-light dark:text-text opacity-50 uppercase tracking-wider"
-                  >Episodes</span
-                >
-                <span class="font-semibold text-text-light dark:text-text">{{
-                  anime.episodes
-                }}</span>
-              </div>
-              <div>
-                <span
-                  class="block text-xs font-bold text-text-light dark:text-text opacity-50 uppercase tracking-wider"
-                  >Duration</span
-                >
-                <span class="font-semibold text-text-light dark:text-text">{{
-                  anime.duration
-                }}</span>
-              </div>
-              <div>
-                <span
-                  class="block text-xs font-bold text-text-light dark:text-text opacity-50 uppercase tracking-wider"
-                  >Year</span
-                >
-                <span class="font-semibold text-text-light dark:text-text">{{
-                  anime.release_year
-                }}</span>
-              </div>
-            </div>
-          </div>
+            <i class="bi bi-chevron-right text-lg md:text-xl"></i>
+          </button>
         </div>
       </div>
-
-      <div class="lg:col-span-2 space-y-8">
-        <div
-          class="bg-base-light dark:bg-base rounded-2xl shadow-lg border border-surface0-light dark:border-surface0 p-6 md:p-8"
-        >
-          <h2
-            class="text-xl font-bold text-lavender-light dark:text-lavender mb-4 flex items-center gap-2"
-          >
-            <i class="bi bi-card-text"></i> Synopsis
-          </h2>
-          <p
-            class="text-text-light dark:text-text leading-relaxed text-lg opacity-90"
-          >
-            {{ anime.synopsis }}
-          </p>
-        </div>
-
-        <div
-          *ngIf="anime.trailer_embed_url"
-          class="bg-base-light dark:bg-base rounded-2xl shadow-lg border border-surface0-light dark:border-surface0 p-6 md:p-8"
-        >
-          <h2
-            class="text-xl font-bold text-text-light dark:text-text mb-4 flex items-center gap-2"
-          >
-            <i class="bi bi-play-circle"></i> Trailer
-          </h2>
-          <div class="rounded-xl overflow-hidden shadow-inner bg-black">
-            <app-video-embed [url]="anime.trailer_embed_url"></app-video-embed>
-          </div>
-        </div>
-      </div>
-    </div>
+    }
   </div>
-
-  <div
-    *ngIf="relatedSummaries.length"
-    class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12"
-  >
-    <h3
-      class="text-2xl font-bold text-text-light dark:text-text mb-6 flex items-center gap-2 px-2"
-    >
-      You may also like
-    </h3>
-
-    <div class="relative group">
+} @else {
+  <div class="min-h-screen pb-12 animate-pulse">
+    <div class="relative w-full mb-8">
       <div
-        #carousel
-        class="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory py-4 px-2 carousel no-scrollbar"
-      >
-        <app-anime-summary-card
-          *ngFor="let summary of relatedSummaries"
-          [summary]="summary"
-          class="flex-shrink-0 w-48 md:w-60 snap-start transition-transform hover:-translate-y-2 duration-300"
-        ></app-anime-summary-card>
-      </div>
-
-      <button
-        (click)="scrollCarousel(-1)"
-        class="absolute left-0 top-1/2 -translate-y-1/2 -ml-4 w-10 h-10 md:w-12 md:h-12 bg-base-light/80 dark:bg-base/80 backdrop-blur text-text-light dark:text-text rounded-full shadow-lg border border-surface0-light dark:border-surface0 flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-10 opacity-0 group-hover:opacity-100 disabled:opacity-0"
-        aria-label="Scroll left"
-      >
-        <i class="bi bi-chevron-left text-lg md:text-xl"></i>
-      </button>
-      <button
-        (click)="scrollCarousel(1)"
-        class="absolute right-0 top-1/2 -translate-y-1/2 -mr-4 w-10 h-10 md:w-12 md:h-12 bg-base-light/80 dark:bg-base/80 backdrop-blur text-text-light dark:text-text rounded-full shadow-lg border border-surface0-light dark:border-surface0 flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-10 opacity-0 group-hover:opacity-100"
-        aria-label="Scroll right"
-      >
-        <i class="bi bi-chevron-right text-lg md:text-xl"></i>
-      </button>
+        class="h-64 md:h-96 w-full bg-surface0-light dark:bg-surface0 rounded-b-3xl"
+      ></div>
     </div>
-  </div>
-</div>
-
-<div *ngIf="!anime" class="min-h-screen pb-12 animate-pulse">
-  <div class="relative w-full mb-8">
-    <div
-      class="h-64 md:h-96 w-full bg-surface0-light dark:bg-surface0 rounded-b-3xl"
-    ></div>
-  </div>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      <div class="lg:col-span-1 space-y-6">
-        <div class="h-64 bg-surface0-light dark:bg-surface0 rounded-2xl"></div>
-        <div class="h-96 bg-surface0-light dark:bg-surface0 rounded-2xl"></div>
-      </div>
-      <div class="lg:col-span-2 space-y-8">
-        <div class="h-48 bg-surface0-light dark:bg-surface0 rounded-2xl"></div>
-        <div class="h-96 bg-surface0-light dark:bg-surface0 rounded-2xl"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-1 space-y-6">
+          <div
+            class="h-64 bg-surface0-light dark:bg-surface0 rounded-2xl"
+          ></div>
+          <div
+            class="h-96 bg-surface0-light dark:bg-surface0 rounded-2xl"
+          ></div>
+        </div>
+        <div class="lg:col-span-2 space-y-8">
+          <div
+            class="h-48 bg-surface0-light dark:bg-surface0 rounded-2xl"
+          ></div>
+          <div
+            class="h-96 bg-surface0-light dark:bg-surface0 rounded-2xl"
+          ></div>
+        </div>
       </div>
     </div>
   </div>
-</div>
+}
