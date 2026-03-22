@@ -26,6 +26,7 @@
     <app-anime-select
       name="anime_id"
       required
+      [defaultAnime]="defaultAnime"
       [(ngModel)]="review.anime_id"
       (animeSelected)="onAnimeSelected($event)"
       #anime="ngModel"

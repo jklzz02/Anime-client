@@ -23,6 +23,7 @@ export class ReviewCreateComponent implements OnInit {
   selectedAnime?: AnimeListItem;
   submitAttempted = false;
   isSubmitting = false;
+  defaultAnime?: AnimeListItem | null;
 
   @ViewChildren('formSection') formSections!: QueryList<
     ElementRef<HTMLElement>
@@ -34,13 +35,22 @@ export class ReviewCreateComponent implements OnInit {
     private reviewService: ReviewService,
     private userService: UserService,
     private router: Router,
-  ) {}
+  ) {
+    const state = this.router.currentNavigation()?.extras?.state;
+    if (state) {
+      this.defaultAnime = state?.['anime'] ?? null;
+    }
+  }
 
   ngOnInit(): void {
     this.userService.getCurrentUser().subscribe({
       next: (user) => (this.review.user_id = user.id),
       error: () => this.router.navigate(['/signin']),
     });
+
+    if (this.defaultAnime) {
+      this.onAnimeSelected(this.defaultAnime);
+    }
   }
 
   onAnimeSelected(anime: AnimeListItem | undefined): void {

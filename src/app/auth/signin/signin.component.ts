@@ -11,8 +11,7 @@ export class SigninComponent {
   message: string = '';
 
   constructor(private router: Router) {
-    const navigation = this.router.getCurrentNavigation();
-    const state = navigation?.extras?.state;
+    const state = this.router.currentNavigation()?.extras?.state;
 
     if (state) {
       this.message = state['message'];

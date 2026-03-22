@@ -8,6 +8,7 @@ import { AuthService } from '../../../services/auth/auth.service';
 import { RecommenderService } from '../../../services/recommender/recommender.service';
 import { AnimeSummary } from '../../../interfaces/anime-summary';
 import { UserFavourite } from '../../../interfaces/user-favourite';
+import { AnimeListItem } from '../../../interfaces/anime-list-item';
 
 @Component({
   selector: 'app-anime-detail',
@@ -66,6 +67,21 @@ export class AnimeDetailComponent implements OnInit {
   }
 
   @ViewChild('carousel') carousel!: ElementRef<HTMLDivElement>;
+
+  toCreateReview(): void {
+    const listItem: AnimeListItem = {
+      id: this.anime.id,
+      title: this.anime.title,
+      english_title: this.anime.english_title,
+      image_url: this.anime.image_url,
+    };
+
+    this.router.navigate(['/reviews/create'], {
+      state: {
+        anime: listItem,
+      },
+    });
+  }
 
   scrollCarousel(direction: number) {
     const container = this.carousel.nativeElement;

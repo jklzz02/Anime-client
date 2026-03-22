@@ -27,6 +27,7 @@ import { AnimeService } from '../../../services/http/anime/anime.service';
 })
 export class AnimeSelectComponent implements OnInit, ControlValueAccessor {
   @Input() placeholder = 'Search anime...';
+  @Input() defaultAnime?: AnimeListItem | null;
   @Output() animeSelected = new EventEmitter<AnimeListItem | undefined>();
 
   query = '';
@@ -36,6 +37,7 @@ export class AnimeSelectComponent implements OnInit, ControlValueAccessor {
   isLoading = false;
   disabled = false;
 
+  private loadedImages: Set<number> = new Set<number>();
   private warmCache: AnimeListItem[] = [];
   private searchSubject = new Subject<string>();
   private onChange = (_: any) => {};
@@ -44,6 +46,10 @@ export class AnimeSelectComponent implements OnInit, ControlValueAccessor {
   constructor(private animeService: AnimeService) {}
 
   ngOnInit(): void {
+    if (this.defaultAnime) {
+      this.selectAnime(this.defaultAnime);
+    }
+
     this.animeService.getList(300).subscribe((data) => (this.warmCache = data));
 
     this.searchSubject
@@ -59,7 +65,7 @@ export class AnimeSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(value: any): void {
-    if (value === null || value === undefined) {
+    if ((value === null || value === undefined) && !this.selectedAnime) {
       this.clear();
     }
   }
@@ -146,5 +152,18 @@ export class AnimeSelectComponent implements OnInit, ControlValueAccessor {
     if (this.query && this.suggestions.length > 0) {
       this.isVisible = true;
     }
+  }
+
+  isImageLoaded(id: number): boolean {
+    return this.loadedImages.has(id);
+  }
+
+  onImageLoad(id: number): void {
+    this.loadedImages.add(id);
+  }
+
+  onImageError(anime: AnimeListItem): void {
+    anime.image_url = 'assets/placeholder.png';
+    this.loadedImages.add(anime.id);
   }
 }

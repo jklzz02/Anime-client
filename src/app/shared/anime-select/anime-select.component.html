@@ -34,11 +34,25 @@
       @for (anime of suggestions; track $index) {
         <li
           (mousedown)="selectAnime(anime)"
-          class="px-4 py-2 cursor-pointer text-sm hover:bg-surface1-light dark:hover:bg-surface1 transition-colors"
+          class="flex items-center gap-2 px-3 py-2 cursor-pointer text-sm hover:bg-surface1-light dark:hover:bg-surface1 transition-colors"
         >
+          <div class="w-8 h-12 shrink-0 overflow-hidden rounded">
+            @if (!isImageLoaded(anime.id)) {
+              <img
+                src="assets/placeholder.png"
+                class="w-full h-full object-cover mx-1"
+              />
+            }
+            <img
+              [src]="anime.image_url"
+              class="w-full h-full object-cover"
+              (load)="onImageLoad(anime.id)"
+              (error)="onImageError(anime)"
+            />
+          </div>
           <span class="font-medium">{{ anime.title }}</span>
           @if (anime.english_title) {
-            <span class="opacity-70 ml-1"> ({{ anime.english_title }}) </span>
+            <span class="opacity-70 ml-1">({{ anime.english_title }})</span>
           }
         </li>
       }
