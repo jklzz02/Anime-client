@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../services/auth/auth.service';
 import { environment } from '../../../environments/environment';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-oauth-callback',
@@ -15,7 +16,7 @@ export class OauthCallbackComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -57,15 +58,19 @@ export class OauthCallbackComponent implements OnInit {
         redirect_uri: `${window.location.origin}/auth/${provider}/callback`,
         code_verifier: codeVerifier,
       })
+      .pipe(
+        finalize(() => {
+          sessionStorage.removeItem(`${provider}_oauth_state`);
+          sessionStorage.removeItem(`${provider}_code_verifier`);
+        }),
+      )
       .subscribe({
         next: () => {
-          sessionStorage.removeItem(`${provider}_oauth_state`);
           sessionStorage.removeItem(`${provider}_code_verifier`);
           this.router.navigate(['/profile']);
         },
         error: () => {
           sessionStorage.removeItem(`${provider}_oauth_state`);
-          sessionStorage.removeItem(`${provider}_code_verifier`);
           this.router.navigate(['/signin']);
         },
       });
