@@ -9,4 +9,13 @@ import { ReviewDetailed } from '../../../interfaces/review-detailed';
 })
 export class ReviewCardComponent {
   @Input() review!: ReviewDetailed;
+
+  get preview(): string {
+    return (
+      this.review.content
+        .replace(/!\[.*?\]\(.*?\)/g, '')
+        .substring(0, 100)
+        .trimEnd() + '...'
+    );
+  }
 }
