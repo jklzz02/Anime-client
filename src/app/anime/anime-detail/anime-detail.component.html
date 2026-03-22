@@ -253,14 +253,6 @@
                 </div>
               </div>
             </div>
-
-            <a
-              [routerLink]="['/reviews/search']"
-              [queryParams]="{ anime_id: anime.id }"
-              class="block w-full mt-6 py-2 px-4 bg-surface0-light dark:bg-surface0 hover:bg-surface1-light dark:hover:bg-surface1 text-text-light dark:text-text font-semibold text-center rounded-lg transition-colors"
-            >
-              View Anime Reviews
-            </a>
           </div>
         </div>
 
@@ -278,23 +270,32 @@
             >
               {{ anime.synopsis }}
             </p>
+
+            <a
+              [routerLink]="['/reviews/search']"
+              [queryParams]="{ anime_id: anime.id }"
+              class="block w-50 mt-6 py-2 px-4 bg-surface0-light dark:bg-surface0 hover:bg-surface1-light dark:hover:bg-surface1 text-text-light dark:text-text font-semibold text-center rounded-lg transition-colors"
+            >
+              View Anime Reviews
+            </a>
           </div>
 
-          <div
-            *ngIf="anime.trailer_embed_url"
-            class="bg-base-light dark:bg-base rounded-2xl shadow-lg border border-surface0-light dark:border-surface0 p-6 md:p-8"
-          >
-            <h2
-              class="text-xl font-bold text-text-light dark:text-text mb-4 flex items-center gap-2"
+          @if (anime.trailer_embed_url) {
+            <div
+              class="bg-base-light dark:bg-base rounded-2xl shadow-lg border border-surface0-light dark:border-surface0 p-6 md:p-8"
             >
-              <i class="bi bi-play-circle"></i> Trailer
-            </h2>
-            <div class="rounded-xl overflow-hidden shadow-inner bg-black">
-              <app-video-embed
-                [url]="anime.trailer_embed_url"
-              ></app-video-embed>
+              <h2
+                class="text-xl font-bold text-text-light dark:text-text mb-4 flex items-center gap-2"
+              >
+                <i class="bi bi-play-circle"></i> Trailer
+              </h2>
+              <div class="rounded-xl overflow-hidden shadow-inner bg-black">
+                <app-video-embed
+                  [url]="anime.trailer_embed_url"
+                ></app-video-embed>
+              </div>
             </div>
-          </div>
+          }
         </div>
       </div>
     </div>
