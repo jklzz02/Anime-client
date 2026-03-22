@@ -37,6 +37,11 @@ export class ReviewComponent implements OnInit {
         this.loading = false;
       },
       error: (err) => {
+        if (err.status == 404) {
+          this.loading = false;
+          this.reviews.has_items = false;
+        }
+
         if (err.status >= 500 || err.status == 0) {
           this.router.navigate(['/error'], {
             state: { status: err.status },

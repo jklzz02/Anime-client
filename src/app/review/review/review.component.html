@@ -1,10 +1,9 @@
 <div class="container mx-auto px-4 py-8">
-  @if (!loading) {
+  @if (!loading && reviews.has_items) {
     <div class="grid grid-cols-1 gap-6 my-4">
-      <app-review-card
-        *ngFor="let review of reviews.data"
-        [review]="review"
-      ></app-review-card>
+      @for (item of reviews.data; track $index) {
+        <app-review-card [review]="item"></app-review-card>
+      }
     </div>
 
     <app-review-filter></app-review-filter>
@@ -18,6 +17,26 @@
       (previous)="previousPage()"
     >
     </app-pagination>
+  } @else if (!reviews.has_items) {
+    <div class="flex flex-col items-center justify-center py-20 px-4">
+      <div class="text-center space-y-4">
+        <div
+          class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-surface2-light dark:bg-surface2 mb-2"
+        >
+          <i class="bi bi-chat-quote text-3xl text-white"></i>
+        </div>
+
+        <h3 class="text-xl font-semibold text-text-light dark:text-text">
+          No reviews yet
+        </h3>
+        <button
+          routerLink="/reviews/create"
+          class="inline-flex items-center justify-center gap-2 px-6 py-3 cursor-pointer bg-blue-light dark:bg-blue text-white rounded-lg font-medium hover:bg-lavender-light dark:hover:bg-lavender transition-colors duration-200"
+        >
+          Be the first!
+        </button>
+      </div>
+    </div>
   } @else {
     <div class="grid grid-cols-1 gap-6 animate-pulse">
       @for (item of counter; track $index) {
