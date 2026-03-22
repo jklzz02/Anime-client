@@ -14,35 +14,35 @@ const routes: Routes = [
   {
     path: 'search',
     component: ReviewSearchComponent,
-    title: 'AnimeHub | Review Search',
+    title: 'AnimeHQ | Review Search',
   },
   {
     path: 'user/:userId',
     component: UserReviewComponent,
-    title: "AnimeHub | User's Reviews",
+    title: "AnimeHQ | User's Reviews",
   },
   {
     path: 'create',
     component: ReviewCreateComponent,
     canActivate: [authGuard],
-    title: 'AnimeHub | Write a Review',
+    title: 'AnimeHQ | Write a Review',
     data: { authMessage: 'To write a review you must sign in first.' },
   },
   {
     path: 'edit/:id',
     component: ReviewUpdateComponent,
     canActivate: [authGuard],
-    title: 'AnimeHub | Edit Review',
+    title: 'AnimeHQ | Edit Review',
   },
   {
     path: 'detail/:id',
     component: ReviewDetailComponent,
-    title: 'AnimeHub | Review',
+    title: 'AnimeHQ | Review',
   },
   {
     path: ':page',
     component: ReviewComponent,
-    title: 'AnimeHub | Reviews',
+    title: 'AnimeHQ | Reviews',
   },
 ];
 

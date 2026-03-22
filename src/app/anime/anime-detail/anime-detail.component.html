@@ -39,7 +39,7 @@
               @if (isLoggedIn) {
                 <button
                   (click)="toggleFavourite()"
-                  class="flex items-center gap-2 px-4 py-2 rounded-full font-semibold transition-all duration-300 shadow-lg hover:brightness-110 active:scale-95"
+                  class="flex cursor-pointer items-center gap-2 px-4 py-2 rounded-full font-semibold transition-all duration-300 shadow-lg hover:brightness-110 active:scale-95"
                   [ngClass]="{
                     'bg-peach-light dark:bg-peach text-white': isFavourite,
                     'bg-surface0-light dark:bg-surface0 text-text-light dark:text-text hover:bg-surface1-light dark:hover:bg-surface1':
@@ -56,9 +56,16 @@
                     isFavourite ? "In Favorites" : "Add to Favorites"
                   }}</span>
                 </button>
+                <button
+                  (click)="toCreateReview()"
+                  class="flex cursor-pointer bg-green dark:text-black/75 dark:bg-green items-center gap-2 px-4 py-2 rounded-full font-semibold transition-all duration-300 shadow-lg hover:brightness-110 active:scale-95"
+                >
+                  <i class="bi bi-pencil-square"></i>
+                  <span>Review</span>
+                </button>
               }
 
-              @if (isLoggedIn && compatibilityScore) {
+              @if (compatibilityScore) {
                 <div
                   class="flex items-center gap-2 bg-base-light/80 dark:bg-base/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-surface1-light dark:border-surface1 shadow-sm"
                 >
@@ -142,7 +149,7 @@
               (click)="toCreateReview()"
               class="block w-full mt-6 py-2 px-4 cursor-pointer bg-surface0-light dark:bg-surface0 hover:bg-surface1-light dark:hover:bg-surface1 text-text-light dark:text-text font-semibold text-center rounded-lg transition-colors"
             >
-              Review
+              Rate
             </button>
           </div>
 

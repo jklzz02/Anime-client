@@ -11,6 +11,6 @@ export class AboutComponent implements OnInit {
   constructor(private title: Title) {}
 
   ngOnInit(): void {
-    this.title.setTitle('AnimeHub | About');
+    this.title.setTitle('AnimeHQ | About');
   }
 }

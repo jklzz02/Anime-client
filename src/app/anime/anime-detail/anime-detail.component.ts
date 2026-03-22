@@ -50,7 +50,7 @@ export class AnimeDetailComponent implements OnInit {
       this.animeService.getAnimeById(id).subscribe({
         next: (data) => {
           this.anime = data;
-          this.title.setTitle('AnimeHub | ' + this.anime.title);
+          this.title.setTitle('AnimeHQ | ' + this.anime.title);
           this.updateFavouriteStatus();
           this.updateCompatibilityScore();
         },

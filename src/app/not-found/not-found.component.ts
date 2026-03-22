@@ -11,6 +11,6 @@ export class NotFoundComponent implements OnInit {
   constructor(private title: Title) {}
 
   ngOnInit(): void {
-    this.title.setTitle('AnimeHub | Not Found');
+    this.title.setTitle('AnimeHQ | Not Found');
   }
 }

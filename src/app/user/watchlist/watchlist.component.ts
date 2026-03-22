@@ -22,7 +22,7 @@ export class WatchlistComponent implements OnInit {
     private userService: UserService,
   ) {}
   ngOnInit(): void {
-    this.title.setTitle('AnimeHub | Watchlist');
+    this.title.setTitle('AnimeHQ | Watchlist');
 
     this.loadFavourites();
   }

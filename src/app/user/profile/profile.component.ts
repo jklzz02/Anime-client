@@ -35,7 +35,7 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.title.setTitle('AnimeHub | Profile');
+    this.title.setTitle('AnimeHQ | Profile');
 
     this.user$ = this.userService.currentUser$;
     this.userService.getCurrentUser().subscribe();

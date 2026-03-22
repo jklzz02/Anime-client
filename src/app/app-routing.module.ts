@@ -22,7 +22,7 @@ const routes: Routes = [
   {
     path: 'explore/:page',
     component: AnimeComponent,
-    title: 'AnimeHub | Explore',
+    title: 'AnimeHQ | Explore',
   },
   { path: 'detail/:id', component: AnimeDetailComponent },
   { path: 'signin', component: SigninComponent, canActivate: [guestGuard] },
@@ -34,27 +34,27 @@ const routes: Routes = [
   {
     path: 'search',
     component: AnimeSearchResultsComponent,
-    title: 'AnimeHub | Explore',
+    title: 'AnimeHQ | Explore',
   },
   {
     path: 'profile',
     component: ProfileComponent,
     canActivate: [authGuard],
-    title: 'AnimeHub | Profile',
+    title: 'AnimeHQ | Profile',
     data: { authMessage: 'To access your Profile you must sign in first.' },
   },
   {
     path: 'watchlist',
     component: WatchlistComponent,
-    title: 'AnimeHub | Watchlist',
+    title: 'AnimeHQ | Watchlist',
     canActivate: [authGuard],
     data: { authMessage: 'To access the Watchlist you must sign in first.' },
   },
-  { path: 'home', component: HomeComponent, title: 'AnimeHub' },
+  { path: 'home', component: HomeComponent, title: 'AnimeHQ' },
   {
     path: 'auth/:provider/callback',
     component: OauthCallbackComponent,
-    title: 'AnimeHub | Callback..',
+    title: 'AnimeHQ | Callback..',
   },
   {
     path: 'admin',
@@ -64,7 +64,7 @@ const routes: Routes = [
     data: { authMessage: 'Sign in to prove that you have admin privileges.' },
   },
   { path: 'error', component: ErrorComponent },
-  { path: '**', component: NotFoundComponent, title: 'AnimeHub | Not found' },
+  { path: '**', component: NotFoundComponent, title: 'AnimeHQ | Not found' },
 ];
 
 @NgModule({
