@@ -13,7 +13,7 @@ import { AnimeListItem } from '../../../interfaces/anime-list-item';
   providedIn: 'root',
 })
 export class AnimeService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
   private BASE: string = environment.anime_api_domain + '/api/Anime';
 
   getAnimeById(animeId: number): Observable<Anime>;
@@ -43,8 +43,22 @@ export class AnimeService {
       .set('size', count.toString());
 
     return this.http.get<PaginatedResult<Anime>>(`${this.BASE}/search`, {
-      params
+      params,
     });
+  }
+
+  getPaginatedListItems(
+    page: number,
+    count: number,
+  ): Observable<PaginatedResult<AnimeListItem>> {
+    const params = new HttpParams().set('page', page).set('count', count);
+
+    return this.http.get<PaginatedResult<AnimeListItem>>(
+      `${this.BASE}/list-items`,
+      {
+        params: params,
+      },
+    );
   }
 
   getPaginatedAnime(

@@ -1,1 +1,23 @@
-<p>anime-dashboard works!</p>
+<ng-template #titleTpl let-anime>
+  <div class="flex items-center space-x-3">
+    <img
+      [src]="anime.image_url"
+      [alt]="anime.title"
+      class="w-8 h-10 object-cover rounded shadow-sm"
+    />
+    <span class="font-medium">{{ anime.title }}</span>
+  </div>
+</ng-template>
+
+<app-dashboard-table
+  title="Anime Management"
+  emptyMessage="No anime found."
+  [columns]="columns"
+  [data]="anime"
+  [currentPage]="currentPage"
+  [maxPage]="maxPage"
+  [hasNextPage]="hasNextPage"
+  [rowLink]="animeRowLink"
+  (nextPage)="onNextPage()"
+  (previousPage)="onPreviousPage()"
+/>

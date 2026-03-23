@@ -52,7 +52,7 @@
                       isFavourite ? 'bi-suit-heart-fill' : 'bi-suit-heart'
                     "
                   ></i>
-                  <span>{{
+                  <span class="hidden sm:inline">{{
                     isFavourite ? "In Favorites" : "Add to Favorites"
                   }}</span>
                 </button>
@@ -61,7 +61,7 @@
                   class="flex cursor-pointer bg-green dark:text-black/75 dark:bg-green items-center gap-2 px-4 py-2 rounded-full font-semibold transition-all duration-300 shadow-lg hover:brightness-110 active:scale-95"
                 >
                   <i class="bi bi-pencil-square"></i>
-                  <span>Review</span>
+                  <span class="hidden sm:inline">Review</span>
                 </button>
               }
 
