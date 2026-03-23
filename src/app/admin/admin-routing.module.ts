@@ -2,6 +2,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashBoardComponent } from './dash-board/dash-board.component';
 import { UserDashboardComponent } from './dash-board/user-dashboard/user-dashboard.component';
 import { NgModule } from '@angular/core';
+import { AnimeDashboardComponent } from './dash-board/anime-dashboard/anime-dashboard.component';
 
 const routes: Routes = [
   {
@@ -10,6 +11,7 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'users', pathMatch: 'full' },
       { path: 'users', component: UserDashboardComponent },
+      { path: 'anime', component: AnimeDashboardComponent },
     ],
   },
 ];
