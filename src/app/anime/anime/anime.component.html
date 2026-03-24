@@ -1,32 +1,33 @@
-<div *ngIf="anime" class="w-full max-w-screen-xl mx-auto my-8 relative">
-  <div
-    class="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3"
-  >
-    <ng-container *ngFor="let item of anime.data">
-      <app-anime-card [anime]="item"></app-anime-card>
-    </ng-container>
-  </div>
-
-  <app-pagination
-    class="mb-3"
-    [currentPage]="page"
-    [totalPages]="anime.total_pages"
-    [path]="'explore'"
-    (next)="nextPage()"
-    (previous)="previousPage()"
-  >
-  </app-pagination>
-
-  <app-filter class="sticky bottom-1 z-30"></app-filter>
-</div>
-
-<div *ngIf="!anime" class="w-full max-w-screen-xl mx-auto my-8">
-  <div
-    class="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 my-8 min-h-full"
-  >
+@if (!isLoading) {
+  <div class="w-full max-w-screen-xl mx-auto my-8 relative">
     <div
-      *ngFor="let i of counter"
-      class="animate-pulse bg-mantle-light dark:bg-surface0 p-4 min-h-100 lg:h-210 rounded-xl shadow"
-    ></div>
+      class="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3"
+    >
+      @for (item of anime.data; track $index) {
+        <app-anime-card [anime]="item"></app-anime-card>
+      }
+    </div>
+
+    <app-pagination
+      class="mb-3"
+      [currentPage]="page"
+      [totalPages]="anime.total_pages"
+      [path]="'explore'"
+      (next)="nextPage()"
+      (previous)="previousPage()"
+    >
+    </app-pagination>
+
+    <app-filter class="sticky bottom-1 z-30"></app-filter>
   </div>
-</div>
+} @else {
+  <div class="w-full max-w-screen-xl mx-auto my-8">
+    <div
+      class="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 my-8 min-h-full"
+    >
+      @for (i of counter; track $index) {
+        <app-anime-card-skeleton></app-anime-card-skeleton>
+      }
+    </div>
+  </div>
+}

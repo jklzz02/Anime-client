@@ -1,49 +1,53 @@
-<div *ngIf="anime" class="w-full max-w-screen-xl mx-auto my-8">
-  <div
-    class="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 my-4"
-  >
-    <ng-container *ngFor="let item of anime.data">
-      <app-anime-card [anime]="item"></app-anime-card>
-    </ng-container>
-  </div>
-
-  <ng-container *ngIf="anime.total_pages > 1">
-    <app-pagination
-      [currentPage]="page"
-      [totalPages]="anime.total_pages"
-      [path]="'explore'"
-      (next)="nextPage()"
-      (previous)="previousPage()"
-    >
-    </app-pagination>
-  </ng-container>
-
-  <app-filter [filter]="params" class="sticky bottom-1 z-30"></app-filter>
-</div>
-<div class="mx-auto px-4 py-8 max-w-screen-md" *ngIf="notFound">
-  <h1
-    class="text-4xl text-center font-bold text-lavender-light dark:text-lavender"
-  >
-    No results found
-    <ng-container *ngIf="params.q">for "{{ params.q }}"</ng-container>
-  </h1>
-
-  <div class="mx-auto text-center">
-    <a
-      routerLink="/explore"
-      class="mt-8 px-6 py-3 inline-block bg-peach-light dark:bg-peach text-white rounded-md hover:opacity-85 transition"
-      >Back to Explore
-    </a>
-  </div>
-</div>
-
-<div *ngIf="!notFound && !anime" class="w-full max-w-screen-xl mx-auto my-8">
-  <div
-    class="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 my-8 min-h-full"
-  >
+@if (anime) {
+  <div class="w-full max-w-screen-xl mx-auto my-8">
     <div
-      *ngFor="let i of counter"
-      class="animate-pulse bg-mantle-light dark:bg-surface0 p-4 min-h-100 lg:h-210 rounded-xl shadow"
-    ></div>
+      class="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 my-4"
+    >
+      @for (item of anime.data; track item.id) {
+        <app-anime-card [anime]="item"></app-anime-card>
+      }
+    </div>
+
+    @if (anime.total_pages > 1) {
+      <app-pagination
+        [currentPage]="page"
+        [totalPages]="anime.total_pages"
+        [path]="'explore'"
+        (next)="nextPage()"
+        (previous)="previousPage()"
+      >
+      </app-pagination>
+    }
+
+    <app-filter [filter]="params" class="sticky bottom-1 z-30"></app-filter>
   </div>
-</div>
+} @else if (notFound) {
+  <div class="mx-auto px-4 py-8 max-w-screen-md">
+    <h1
+      class="text-4xl text-center font-bold text-lavender-light dark:text-lavender"
+    >
+      No results found
+      @if (params.q) {
+        for "{{ params.q }}"
+      }
+    </h1>
+    <div class="mx-auto text-center">
+      <a
+        routerLink="/explore"
+        class="mt-8 px-6 py-3 inline-block bg-peach-light dark:bg-peach text-white rounded-md hover:opacity-85 transition"
+      >
+        Back to Explore
+      </a>
+    </div>
+  </div>
+} @else {
+  <div class="w-full max-w-screen-xl mx-auto my-8">
+    <div
+      class="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 my-8 min-h-full"
+    >
+      @for (i of counter; track $index) {
+        <app-anime-card-skeleton></app-anime-card-skeleton>
+      }
+    </div>
+  </div>
+}

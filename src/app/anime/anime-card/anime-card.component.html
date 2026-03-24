@@ -5,10 +5,11 @@
     <div
       class="relative w-full rounded-t-lg overflow-hidden aspect-[2/3] bg-surface0-light dark:bg-surface1"
     >
-      <div
-        *ngIf="!isImageLoaded"
-        class="absolute inset-0 animate-pulse bg-surface1-light dark:bg-surface0 z-10"
-      ></div>
+      @if (!isImageLoaded) {
+        <div
+          class="absolute inset-0 animate-pulse bg-surface1-light dark:bg-surface0 z-10"
+        ></div>
+      }
       <img
         class="w-full h-full object-cover transition-all duration-300 hover:scale-105"
         [class.opacity-0]="!isImageLoaded"
@@ -28,18 +29,15 @@
           {{ anime.title }}
         </h2>
         <p class="text-sm">
-          <span
-            *ngIf="anime.score > 0"
-            class="text-green-light dark:text-green font-bold"
-          >
-            Score: {{ anime.score }}
-          </span>
-          <span
-            *ngIf="anime.score == 0"
-            class="text-peach-light dark:text-peach"
-          >
-            Not scored yet
-          </span>
+          @if (anime.score > 0) {
+            <span class="text-green-light dark:text-green font-bold">
+              Score: {{ anime.score }}
+            </span>
+          } @else {
+            <span class="text-peach-light dark:text-peach">
+              Not scored yet
+            </span>
+          }
         </p>
       </div>
     </div>
@@ -50,87 +48,111 @@
       {{ anime.other_title }}
     </figcaption>
 
-    <div
-      *ngIf="anime.type.name.toLowerCase() !== 'unknown'"
-      class="mb-2 text-xs text-text-light dark:text-text opacity-60"
-    >
-      {{ anime.type.name }}
-    </div>
+    @if (anime.type.name.toLowerCase() !== "unknown") {
+      <div class="mb-2 text-xs text-text-light dark:text-text opacity-60">
+        {{ anime.type.name }}
+      </div>
+    }
 
-    <div *ngIf="fanFavourite || isNew || short" class="mb-2">
-      <span
-        *ngIf="isNew"
-        class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-green-light dark:bg-green dark:text-crust"
-      >
-        new
-      </span>
-      <a
-        [routerLink]="['/search']"
-        [queryParams]="{ min_score: 8 }"
-        *ngIf="fanFavourite"
-        class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-green-light dark:bg-green dark:text-crust hover:opacity-80 transition-opacity"
-      >
-        fan favourite
-      </a>
-      <a
-        [routerLink]="['/search']"
-        [queryParams]="{ min_episodes: '2', max_episodes: '12' }"
-        *ngIf="short"
-        class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-green-light dark:bg-green dark:text-crust hover:opacity-80 transition-opacity"
-      >
-        short
-      </a>
-    </div>
+    @if (fanFavourite || isNew || short) {
+      <div class="mb-2">
+        @if (isNew) {
+          <span
+            class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-green-light dark:bg-green dark:text-crust"
+          >
+            new
+          </span>
+        }
 
-    <div *ngIf="anime.genres" class="mb-2">
-      <a
-        [routerLink]="['/search']"
-        [queryParams]="{ genres: [genre.name] }"
-        *ngFor="let genre of anime.genres | slice: 0 : 3"
-        class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-blue-light dark:bg-blue dark:text-crust hover:opacity-80 transition-opacity"
-      >
-        {{ genre.name }}
-      </a>
-      <span
-        *ngIf="anime.genres.length > 3"
-        class="text-xs text-text-light dark:text-text opacity-50 px-1"
-      >
-        +{{ anime.genres.length - 3 }}
-      </span>
-    </div>
+        @if (fanFavourite) {
+          <a
+            [routerLink]="['/search']"
+            [queryParams]="{ min_score: 8 }"
+            class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-green-light dark:bg-green dark:text-crust hover:opacity-80 transition-opacity"
+          >
+            fan favourite
+          </a>
+        }
 
-    <div *ngIf="anime.producers" class="mb-2">
-      <a
-        [routerLink]="['/search']"
-        [queryParams]="{ producers: [producer.name] }"
-        *ngFor="let producer of anime.producers | slice: 0 : 3"
-        class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-lavender-light dark:bg-lavender dark:text-crust hover:opacity-80 transition-opacity"
-      >
-        {{ producer.name }}
-      </a>
-      <span
-        *ngIf="anime.producers.length > 3"
-        class="text-xs text-text-light dark:text-text opacity-50 px-1"
-      >
-        +{{ anime.producers.length - 3 }}
-      </span>
-    </div>
+        @if (short) {
+          <a
+            [routerLink]="['/search']"
+            [queryParams]="{ min_episodes: '2', max_episodes: '12' }"
+            class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-green-light dark:bg-green dark:text-crust hover:opacity-80 transition-opacity"
+          >
+            short
+          </a>
+        }
+      </div>
+    }
 
-    <div *ngIf="anime.licensors" class="mb-1">
-      <a
-        [routerLink]="['/search']"
-        [queryParams]="{ licensors: [licensor.name] }"
-        *ngFor="let licensor of anime.licensors | slice: 0 : 3"
-        class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-peach-light dark:bg-peach dark:text-crust hover:opacity-80 transition-opacity"
-      >
-        {{ licensor.name }}
-      </a>
-      <span
-        *ngIf="anime.licensors.length > 3"
-        class="text-xs text-text-light dark:text-text opacity-50 px-1"
-      >
-        +{{ anime.licensors.length - 3 }}
-      </span>
-    </div>
+    @if (anime.genres) {
+      <div class="mb-2">
+        @for (genre of anime.genres.slice(0, 3); track $index) {
+          <a
+            [routerLink]="['/search']"
+            [queryParams]="{ genres: [genre.name] }"
+            class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-blue-light dark:bg-blue dark:text-crust hover:opacity-80 transition-opacity"
+          >
+            {{
+              genre.name.length >= 14
+                ? genre.name.substring(0, 14) + ".."
+                : genre.name
+            }}
+          </a>
+        }
+        @if (anime.genres.length > 3) {
+          <span class="text-xs text-text-light dark:text-text opacity-50 px-1">
+            +{{ anime.genres.length - 3 }}
+          </span>
+        }
+      </div>
+    }
+
+    @if (anime.producers) {
+      <div class="mb-2">
+        @for (producer of anime.producers.slice(0, 3); track $index) {
+          <a
+            [routerLink]="['/search']"
+            [queryParams]="{ producers: [producer.name] }"
+            class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-lavender-light dark:bg-lavender dark:text-crust hover:opacity-80 transition-opacity"
+          >
+            {{
+              producer.name.length >= 14
+                ? producer.name.substring(0, 14) + ".."
+                : producer.name
+            }}
+          </a>
+        }
+        @if (anime.producers.length > 3) {
+          <span class="text-xs text-text-light dark:text-text opacity-50 px-1">
+            +{{ anime.producers.length - 3 }}
+          </span>
+        }
+      </div>
+    }
+
+    @if (anime.licensors) {
+      <div class="mb-1">
+        @for (licensor of anime.licensors.slice(0, 3); track $index) {
+          <a
+            [routerLink]="['/search']"
+            [queryParams]="{ licensors: [licensor.name] }"
+            class="text-xs rounded-full px-2 py-1 mr-1 mb-1 inline-block text-white bg-peach-light dark:bg-peach dark:text-crust hover:opacity-80 transition-opacity"
+          >
+            {{
+              licensor.name.length >= 14
+                ? licensor.name.substring(0, 14) + ".."
+                : licensor.name
+            }}
+          </a>
+        }
+        @if (anime.licensors.length > 3) {
+          <span class="text-xs text-text-light dark:text-text opacity-50 px-1">
+            +{{ anime.licensors.length - 3 }}
+          </span>
+        }
+      </div>
+    }
   </div>
 </div>

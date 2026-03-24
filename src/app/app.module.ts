@@ -35,6 +35,7 @@ import { DiscordButtonComponent } from './auth/discord-button/discord-button.com
 import { headerInterceptor } from '../interceptors/header/header.interceptor';
 import { credentialsInterceptor } from '../interceptors/credentials/credentials.interceptor';
 import { SharedModule } from './shared/shared.module';
+import { AnimeCardSkeletonComponent } from './anime/anime-card/anime-card-skeleton/anime-card-skeleton.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { SharedModule } from './shared/shared.module';
     FacebookButtonComponent,
     OauthCallbackComponent,
     DiscordButtonComponent,
+    AnimeCardSkeletonComponent,
   ],
   imports: [
     BrowserModule,

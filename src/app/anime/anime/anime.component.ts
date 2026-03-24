@@ -16,6 +16,7 @@ export class AnimeComponent implements OnInit {
   page: number = 1;
   count: number = 33;
   counter: number[] = Array(33);
+  isLoading: boolean = true;
 
   constructor(
     private title: Title,
@@ -34,8 +35,13 @@ export class AnimeComponent implements OnInit {
   }
 
   loadAnime() {
+    this.isLoading = true;
+
     this.animeService.getPaginatedAnime(this.page, this.count).subscribe({
-      next: (data) => (this.anime = data),
+      next: (data) => {
+        this.anime = data;
+        this.isLoading = false;
+      },
       error: (err) => {
         if (err.status >= 500 || err.status == 0) {
           this.router.navigate(['/error'], {
