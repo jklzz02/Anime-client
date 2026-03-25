@@ -13,6 +13,7 @@ export class ReviewCardComponent {
   get preview(): string {
     return (
       this.review.content
+        .replace(/>!\s?(.*?)\s?!</gs, '<span class="spoiler">$1</span>')
         .replace(/!\[.*?\]\(.*?\)/g, '')
         .substring(0, 100)
         .trimEnd() + '...'
