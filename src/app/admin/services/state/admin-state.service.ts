@@ -12,12 +12,24 @@ export class AdminStateService {
       pageSize: 30,
       sortedBy: 'id',
       sortDirection: 'asc',
+      filterBy: null,
+      filterValue: null,
     },
     animeDashboard: {
       currentPage: 1,
       pageSize: 30,
       sortedBy: 'id',
       sortDirection: 'asc',
+      filterBy: null,
+      filterValue: null,
+    },
+    reviewDashboard: {
+      currentPage: 1,
+      pageSize: 30,
+      sortedBy: 'id',
+      sortDirection: 'asc',
+      filterBy: null,
+      filterValue: null,
     },
     banList: {
       currentPage: 1,
@@ -43,6 +55,10 @@ export class AdminStateService {
     return this.getState().animeDashboard;
   }
 
+  getReviewDashBoardState() {
+    return this.getState().reviewDashboard;
+  }
+
   getBanListState() {
     return this.getState().banList;
   }
@@ -58,6 +74,13 @@ export class AdminStateService {
     const current = this.getState();
     this.updateState({
       animeDashboard: { ...current.animeDashboard, ...partial },
+    });
+  }
+
+  updateReviewDashboardState(partial: Partial<AdminState['reviewDashboard']>) {
+    const current = this.getState();
+    this.updateState({
+      reviewDashboard: { ...current.reviewDashboard, ...partial },
     });
   }
 

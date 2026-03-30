@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { UserDashboardComponent } from './dash-board/user-dashboard/user-dashboard.component';
 import { AnimeDashboardComponent } from './dash-board/anime-dashboard/anime-dashboard.component';
 import { DashboardTableComponent } from './shared/dashboard-table/dashboard-table.component';
+import { ReviewDashboardComponent } from './dash-board/review-dashboard-component/review-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { DashboardTableComponent } from './shared/dashboard-table/dashboard-tabl
     UserDashboardComponent,
     AnimeDashboardComponent,
     DashboardTableComponent,
+    ReviewDashboardComponent,
   ],
   imports: [CommonModule, RouterModule, AdminRoutingModule],
 })

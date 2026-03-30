@@ -1,0 +1,54 @@
+<ng-template #animeTpl let-review>
+  <div class="flex items-center space-x-3">
+    <img
+      [src]="review.anime.image_url"
+      [alt]="review.anime.title"
+      class="w-8 h-10 object-cover rounded shadow-sm"
+    />
+    <span class="font-medium">{{ review.anime.title }}</span>
+  </div>
+</ng-template>
+
+<ng-template #scoreTpl let-review>
+  <div class="flex items-center space-x-3">
+    @if (review.score >= 7.5) {
+      <div class="font-medium text-green-light dark:text-green">
+        {{ review.score }}
+      </div>
+    } @else if (review.score >= 6) {
+      <div class="font-medium text-peach-light dark:text-peach">
+        {{ review.score }}
+      </div>
+    } @else {
+      <div class="font-medium text-red-500">{{ review.score }}</div>
+    }
+  </div>
+</ng-template>
+
+<ng-template #userTpl let-review>
+  <a
+    [routerLink]="['/admin/user/', review.user.id]"
+    class="flex items-center gap-2 p-1 px-2 rounded-lg hover:opacity-80"
+  >
+    <img
+      [src]="review.user.profile_picture"
+      [alt]="review.user.username"
+      (error)="review.user.profile_picture = 'assets/placeholder.png'"
+      class="w-8 h-8 rounded-full"
+    />
+    <span class="text-sm">{{ review.user.username }}</span>
+  </a>
+</ng-template>
+
+<app-dashboard-table
+  title="Reviews Management"
+  emptyMessage="No review found."
+  [columns]="columns"
+  [data]="reviews"
+  [currentPage]="currentPage"
+  [maxPage]="maxPage"
+  [hasNextPage]="hasNextPage"
+  [rowLink]="reviewRowLink"
+  (nextPage)="onNextPage()"
+  (previousPage)="onPreviousPage()"
+/>
