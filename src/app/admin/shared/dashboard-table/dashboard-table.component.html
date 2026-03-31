@@ -3,6 +3,17 @@
     <h1 class="text-3xl font-bold text-text-light dark:text-text">
       {{ title }}
     </h1>
+    <select
+      name="page-size"
+      id="page-size"
+      (change)="pageSizeChange.emit(+$any($event.target).value)"
+      class="bg-surface1-light dark:bg-surface1 text-text-light dark:text-text text-sm font-medium rounded-lg px-3 py-2 border border-surface0-light dark:border-surface2 focus:outline-none focus:ring-2 focus:ring-blue-light dark:focus:ring-blue cursor-pointer transition-colors duration-200 hover:bg-surface2-light dark:hover:bg-surface2"
+    >
+      <option [selected]="pageSize === 10" value="10">10 / page</option>
+      <option [selected]="pageSize === 20" value="20">20 / page</option>
+      <option [selected]="pageSize === 30" value="30">30 / page</option>
+      <option [selected]="pageSize === 40" value="40">40 / page</option>
+    </select>
   </div>
 
   @if (!data) {
@@ -15,7 +26,7 @@
       <div class="space-y-4">
         @for (i of [1, 2, 3, 4, 5]; track i) {
           <div
-            class="h-12 bg-surface1-light dark:bg-surface1 rounded w-full"
+            class="h-12 bg-surface1-light dark:bg-surface1 rounded w-full animate-pulse"
           ></div>
         }
       </div>
@@ -44,7 +55,7 @@
           </thead>
 
           <tbody class="divide-y divide-surface0-light dark:divide-surface1">
-            @for (item of data.data; track item) {
+            @for (item of data.data; track $index) {
               <tr
                 class="hover:bg-surface1-light dark:hover:bg-surface1 transition-colors duration-150"
               >

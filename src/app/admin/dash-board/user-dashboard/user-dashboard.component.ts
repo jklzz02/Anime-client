@@ -23,7 +23,7 @@ export class UserDashboardComponent implements OnInit {
   maxPage = 0;
   userRowLink = (user: User) => ['/admin/user', user.id];
 
-  @ViewChild('usernameTpl') usernameTpl!: TemplateRef<{ $implicit: User }>;
+  @ViewChild('userTpl') userTpl!: TemplateRef<{ $implicit: User }>;
   @ViewChild('roleTpl') roleTpl!: TemplateRef<{ $implicit: User }>;
 
   constructor(
@@ -50,7 +50,7 @@ export class UserDashboardComponent implements OnInit {
       {
         key: 'username',
         header: 'Username',
-        template: this.usernameTpl,
+        template: this.userTpl,
       },
       {
         key: 'email',

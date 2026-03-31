@@ -48,7 +48,9 @@
   [currentPage]="currentPage"
   [maxPage]="maxPage"
   [hasNextPage]="hasNextPage"
+  [pageSize]="pageSize"
   [rowLink]="reviewRowLink"
   (nextPage)="onNextPage()"
   (previousPage)="onPreviousPage()"
+  (pageSizeChange)="onPageSizeUpdate($event)"
 />

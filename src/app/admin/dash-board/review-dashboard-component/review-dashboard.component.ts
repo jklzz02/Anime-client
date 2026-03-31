@@ -66,14 +66,14 @@ export class ReviewDashboardComponent implements OnInit, AfterViewInit {
         template: this.animeTpl,
       },
       {
-        key: 'score',
-        header: 'Score',
-        template: this.scoreTpl,
-      },
-      {
         key: 'created_by',
         header: 'Created by',
         template: this.userTpl,
+      },
+      {
+        key: 'score',
+        header: 'Score',
+        template: this.scoreTpl,
       },
     ];
   }
@@ -101,6 +101,15 @@ export class ReviewDashboardComponent implements OnInit, AfterViewInit {
           });
         },
       });
+  }
+
+  onPageSizeUpdate(size: number): void {
+    this.pageSize = size;
+    this.adminStateService.updateReviewDashboardState({
+      pageSize: this.pageSize,
+    });
+
+    this.loadReviews();
   }
 
   onNextPage(): void {

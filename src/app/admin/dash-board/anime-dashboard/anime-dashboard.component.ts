@@ -102,4 +102,13 @@ export class AnimeDashboardComponent implements OnInit, AfterViewInit {
       this.currentPage === 1 ? this.maxPage : this.currentPage - 1;
     this.loadAnime();
   }
+
+  onPageSizeChange(size: number): void {
+    this.pageSize = size;
+    this.adminStateService.updateAnimeDashboardState({
+      pageSize: this.pageSize,
+    });
+
+    this.loadAnime();
+  }
 }

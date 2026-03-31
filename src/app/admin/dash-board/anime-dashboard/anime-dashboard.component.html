@@ -19,7 +19,9 @@
   [currentPage]="currentPage"
   [maxPage]="maxPage"
   [hasNextPage]="hasNextPage"
+  [pageSize]="pageSize"
   [rowLink]="animeRowLink"
   (nextPage)="onNextPage()"
   (previousPage)="onPreviousPage()"
+  (pageSizeChange)="onPageSizeChange($event)"
 />

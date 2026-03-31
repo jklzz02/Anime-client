@@ -17,19 +17,25 @@ export class DashboardTableComponent<T = any> {
   @Input() hasNextPage: boolean = false;
   @Input() emptyMessage: string = 'No items found.';
   @Input() rowLink!: (item: T) => any[];
+  @Input() pageSize: number = 10;
 
   @Output() nextPage = new EventEmitter<void>();
   @Output() previousPage = new EventEmitter<void>();
+  @Output() pageSizeChange = new EventEmitter<number>();
 
   resolveCellClass(col: TableColumn<T>, item: T): string {
-    if (!col.cellClass) return '';
+    if (!col.cellClass) {
+      return '';
+    }
     return typeof col.cellClass === 'function'
       ? col.cellClass(item)
       : col.cellClass;
   }
 
   resolveCellValue(col: TableColumn<T>, item: T): any {
-    if (col.accessor) return col.accessor(item);
+    if (col.accessor) {
+      return col.accessor(item);
+    }
     return (item as Record<string, unknown>)[col.key];
   }
 }

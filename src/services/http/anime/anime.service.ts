@@ -51,7 +51,7 @@ export class AnimeService {
     page: number,
     count: number,
   ): Observable<PaginatedResult<AnimeListItem>> {
-    const params = new HttpParams().set('page', page).set('count', count);
+    const params = new HttpParams().set('page', page).set('size', count);
 
     return this.http.get<PaginatedResult<AnimeListItem>>(
       `${this.BASE}/list-items`,
