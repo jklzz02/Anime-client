@@ -17,7 +17,7 @@ export class AdminStateService {
     },
     animeDashboard: {
       currentPage: 1,
-      pageSize: 30,
+      pageSize: 10,
       sortedBy: 'id',
       sortDirection: 'asc',
       filterBy: null,
@@ -25,7 +25,7 @@ export class AdminStateService {
     },
     reviewDashboard: {
       currentPage: 1,
-      pageSize: 30,
+      pageSize: 10,
       sortedBy: 'id',
       sortDirection: 'asc',
       filterBy: null,
@@ -33,7 +33,7 @@ export class AdminStateService {
     },
     banList: {
       currentPage: 1,
-      pageSize: 30,
+      pageSize: 10,
       sortedBy: 'email',
       sortDirection: 'asc',
       typeFilter: 'all',
