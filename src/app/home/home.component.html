@@ -30,7 +30,7 @@
   <div class="max-w-7xl mx-auto">
     @if (recentAnime) {
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        <ng-container *ngFor="let anime of recentAnime">
+        @for (anime of recentAnime; track anime.id) {
           <div
             class="bg-mantle-light dark:bg-surface0 hover:scale-[1.02] transition-all duration-300 rounded-xl overflow-hidden shadow-md hover:shadow-xl border border-surface0-light dark:border-surface1"
           >
@@ -38,15 +38,16 @@
               <div
                 class="relative w-full h-48 bg-surface0-light dark:bg-surface1"
               >
-                <div
-                  *ngIf="!isImageLoaded(anime.id)"
-                  class="absolute inset-0 animate-pulse bg-surface1-light dark:bg-surface0 z-10"
-                ></div>
+                @if (!loadedImages.has(anime.id)) {
+                  <div
+                    class="absolute inset-0 animate-pulse bg-surface1-light dark:bg-surface0 z-10"
+                  ></div>
+                }
                 <img
                   [src]="anime.image_url"
                   [title]="anime.title"
-                  [class.opacity-0]="!isImageLoaded(anime.id)"
-                  [class.opacity-100]="isImageLoaded(anime.id)"
+                  [class.opacity-0]="!loadedImages.has(anime.id)"
+                  [class.opacity-100]="loadedImages.has(anime.id)"
                   (load)="onImageLoad(anime.id)"
                   (error)="
                     anime.image_url = 'assets/placeholder.png';
@@ -69,23 +70,24 @@
               </p>
             </div>
           </div>
-        </ng-container>
-        <ng-container *ngIf="loading">
-          <div
-            *ngFor="let i of stepCounter"
-            class="animate-pulse bg-surface0-light dark:bg-surface0 rounded-xl overflow-hidden shadow-md p-4 border border-surface0-light dark:border-surface1"
-          >
+        }
+        @if (loading) {
+          @for (item of stepCounter; track item) {
             <div
-              class="bg-surface1-light dark:bg-surface1 h-48 w-full mb-4 rounded"
-            ></div>
-            <div
-              class="h-4 bg-surface1-light dark:bg-surface1 mb-2 rounded w-3/4"
-            ></div>
-            <div
-              class="h-3 bg-surface1-light dark:bg-surface1 rounded w-full"
-            ></div>
-          </div>
-        </ng-container>
+              class="animate-pulse bg-surface0-light dark:bg-surface0 rounded-xl overflow-hidden shadow-md p-4 border border-surface0-light dark:border-surface1"
+            >
+              <div
+                class="bg-surface1-light dark:bg-surface1 h-48 w-full mb-4 rounded"
+              ></div>
+              <div
+                class="h-4 bg-surface1-light dark:bg-surface1 mb-2 rounded w-3/4"
+              ></div>
+              <div
+                class="h-3 bg-surface1-light dark:bg-surface1 rounded w-full"
+              ></div>
+            </div>
+          }
+        }
       </div>
     } @else {
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

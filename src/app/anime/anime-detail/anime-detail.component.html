@@ -169,7 +169,7 @@
                   >Genres</span
                 >
                 <div class="flex flex-wrap gap-2">
-                  @for (genre of anime.genres; track $index) {
+                  @for (genre of anime.genres; track genre.id) {
                     <a
                       [routerLink]="['/search']"
                       [queryParams]="{ genres: genre.name }"
@@ -204,7 +204,7 @@
                     >Producers</span
                   >
                   <div class="flex flex-wrap gap-2">
-                    @for (producer of anime.producers; track $index) {
+                    @for (producer of anime.producers; track producer.id) {
                       <a
                         [routerLink]="['/search']"
                         [queryParams]="{ producers: producer.name }"
@@ -327,7 +327,7 @@
             #carousel
             class="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory py-4 px-2 carousel no-scrollbar"
           >
-            @for (summary of relatedSummaries; track $index) {
+            @for (summary of relatedSummaries; track summary.id) {
               <app-anime-summary-card
                 [summary]="summary"
                 class="flex-shrink-0 w-48 md:w-60 snap-start transition-transform hover:-translate-y-2 duration-300"

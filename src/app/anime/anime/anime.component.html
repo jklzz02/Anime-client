@@ -3,8 +3,8 @@
     <div
       class="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3"
     >
-      @for (item of anime.data; track $index) {
-        <app-anime-card [anime]="item"></app-anime-card>
+      @for (anime of anime.data; track anime.id) {
+        <app-anime-card [anime]="anime"></app-anime-card>
       }
     </div>
 
@@ -25,7 +25,7 @@
     <div
       class="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 my-8 min-h-full"
     >
-      @for (i of counter; track $index) {
+      @for (i of counter; track i) {
         <app-anime-card-skeleton></app-anime-card-skeleton>
       }
     </div>

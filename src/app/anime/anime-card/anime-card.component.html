@@ -88,7 +88,7 @@
 
     @if (anime.genres) {
       <div class="mb-2">
-        @for (genre of anime.genres.slice(0, 3); track $index) {
+        @for (genre of anime.genres.slice(0, 3); track genre.id) {
           <a
             [routerLink]="['/search']"
             [queryParams]="{ genres: [genre.name] }"
@@ -111,7 +111,7 @@
 
     @if (anime.producers) {
       <div class="mb-2">
-        @for (producer of anime.producers.slice(0, 3); track $index) {
+        @for (producer of anime.producers.slice(0, 3); track producer.id) {
           <a
             [routerLink]="['/search']"
             [queryParams]="{ producers: [producer.name] }"
@@ -134,7 +134,7 @@
 
     @if (anime.licensors) {
       <div class="mb-1">
-        @for (licensor of anime.licensors.slice(0, 3); track $index) {
+        @for (licensor of anime.licensors.slice(0, 3); track licensor.id) {
           <a
             [routerLink]="['/search']"
             [queryParams]="{ licensors: [licensor.name] }"

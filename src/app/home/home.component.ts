@@ -27,10 +27,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private page: number = 1;
   private initialPageSize: number = 33;
   private stepSize: number = 12;
-
-  private loadedImages: Set<number> = new Set();
   private observer!: IntersectionObserver;
 
+  loadedImages: Set<number> = new Set();
   recentAnime: Anime[] = [];
   counter: number[] = Array(this.initialPageSize);
   stepCounter: number[] = Array(this.stepSize);
@@ -61,10 +60,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.loadedImages.add(id);
   }
 
-  public isImageLoaded(id: number): boolean {
-    return this.loadedImages.has(id);
-  }
-
   private loadRecentAnime() {
     this.loading = true;
     const size = this.recentAnime.length ? this.stepSize : this.initialPageSize;
@@ -75,7 +70,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         if (!data.has_next_page) {
           this.allLoaded = true;
         }
-        this.recentAnime = this.recentAnime.concat(data.data);
+        this.recentAnime.push(...data.data);
       },
       error: (err) => {
         if (err.status >= 500 || err.status == 0) {
