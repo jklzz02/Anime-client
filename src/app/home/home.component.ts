@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -15,7 +16,7 @@ import { Router } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent implements OnInit, AfterViewInit {
+export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private animeService: AnimeService,
     private router: Router,
@@ -23,19 +24,21 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   @ViewChild('sentinel') sentinel!: ElementRef;
 
-  private loadCount: number = 33;
-  private stepCount: number = 12;
+  private page: number = 1;
+  private initialPageSize: number = 33;
+  private stepSize: number = 12;
+
   private loadedImages: Set<number> = new Set();
   private observer!: IntersectionObserver;
 
   recentAnime: Anime[] = [];
-  counter: number[] = Array(this.loadCount);
-  stepCounter: number[] = Array(this.stepCount);
+  counter: number[] = Array(this.initialPageSize);
+  stepCounter: number[] = Array(this.stepSize);
   loading: boolean = false;
   allLoaded: boolean = false;
 
   ngOnInit(): void {
-    this.loadRecentAnime(this.loadCount);
+    this.loadRecentAnime();
   }
 
   ngAfterViewInit(): void {
@@ -46,7 +49,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           !this.loading &&
           !this.allLoaded
         ) {
-          this.loadMore();
+          this.loadRecentAnime();
         }
       },
       { rootMargin: '200px' },
@@ -62,20 +65,17 @@ export class HomeComponent implements OnInit, AfterViewInit {
     return this.loadedImages.has(id);
   }
 
-  public loadMore() {
-    this.loadCount += this.stepCount;
-    this.loadRecentAnime(this.loadCount);
-  }
-
-  private loadRecentAnime(count: number) {
+  private loadRecentAnime() {
     this.loading = true;
+    const size = this.recentAnime.length ? this.stepSize : this.initialPageSize;
 
-    this.animeService.getRecent(count).subscribe({
+    this.animeService.getPaginatedRecents(this.page + 1, size).subscribe({
       next: (data) => {
-        if (data.length < this.loadCount) {
+        this.page++;
+        if (!data.has_next_page) {
           this.allLoaded = true;
         }
-        this.recentAnime = data;
+        this.recentAnime = this.recentAnime.concat(data.data);
       },
       error: (err) => {
         if (err.status >= 500 || err.status == 0) {
@@ -86,5 +86,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
       },
       complete: () => (this.loading = false),
     });
+  }
+
+  ngOnDestroy(): void {
+    this.observer?.disconnect();
   }
 }

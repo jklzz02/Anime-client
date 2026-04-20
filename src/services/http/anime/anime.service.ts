@@ -47,6 +47,19 @@ export class AnimeService {
     });
   }
 
+  getPaginatedRecents(
+    page: number,
+    count: number,
+  ): Observable<PaginatedResult<Anime>> {
+    const params: HttpParams = new HttpParams()
+      .set('page', page.toString())
+      .set('size', count.toString());
+
+    return this.http.get<PaginatedResult<Anime>>(`${this.BASE}/recent`, {
+      params,
+    });
+  }
+
   getPaginatedListItems(
     page: number,
     count: number,
