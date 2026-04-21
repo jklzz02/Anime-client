@@ -4,6 +4,7 @@ import { UserDashboardComponent } from './dash-board/user-dashboard/user-dashboa
 import { NgModule } from '@angular/core';
 import { AnimeDashboardComponent } from './dash-board/anime-dashboard/anime-dashboard.component';
 import { ReviewDashboardComponent } from './dash-board/review-dashboard-component/review-dashboard.component';
+import { ServiceStatusDashboardComponent } from './dash-board/service-status-dashboard/service-status-dashboard.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,10 @@ const routes: Routes = [
         path: 'reviews',
         component: ReviewDashboardComponent,
         title: 'AnimeHQ | Admin reviews',
+      },
+      {
+        path: 'services',
+        component: ServiceStatusDashboardComponent,
       },
     ],
   },
