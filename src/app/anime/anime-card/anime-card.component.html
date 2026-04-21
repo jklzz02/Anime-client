@@ -18,6 +18,7 @@
         [alt]="anime.title"
         [title]="anime.title"
         (load)="isImageLoaded = true"
+        loading="lazy"
         (error)="
           anime.image_url = 'assets/placeholder.png'; isImageLoaded = true
         "

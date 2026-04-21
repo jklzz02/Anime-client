@@ -336,14 +336,16 @@
   </form>
 </div>
 
-<div *ngIf="!isOpen" class="mx-auto text-center">
-  <button
-    class="px-3 py-2 shadow-lg rounded-full bg-blue-light dark:bg-blue text-white hover:opacity-90 transition cursor-pointer"
-    (click)="toggleMenu()"
-  >
-    <div class="flex px-2 py-1 items-center gap-2">
-      <i class="text-2xl bi bi-filter"></i>
-      <p>Filter</p>
-    </div>
-  </button>
-</div>
+@if (!isOpen) {
+  <div class="mx-auto text-center">
+    <button
+      class="px-3 py-2 shadow-lg rounded-full bg-blue-light dark:bg-blue text-white hover:opacity-90 transition cursor-pointer"
+      (click)="toggleMenu()"
+    >
+      <div class="flex px-2 py-1 items-center gap-2">
+        <i class="text-2xl bi bi-filter"></i>
+        <p>Filter</p>
+      </div>
+    </button>
+  </div>
+}

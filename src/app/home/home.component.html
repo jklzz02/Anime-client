@@ -49,6 +49,7 @@
                   [class.opacity-0]="!loadedImages.has(anime.id)"
                   [class.opacity-100]="loadedImages.has(anime.id)"
                   (load)="onImageLoad(anime.id)"
+                  loading="lazy"
                   (error)="
                     anime.image_url = 'assets/placeholder.png';
                     onImageLoad(anime.id)
