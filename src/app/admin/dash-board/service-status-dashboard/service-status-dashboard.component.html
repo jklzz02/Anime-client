@@ -256,7 +256,7 @@
             <p class="text-2xl font-bold text-text-light dark:text-text">
               {{
                 healthCheck.entries?.RecommenderHealthCheck?.data?.anime_loader
-                  ?.anime_count | number
+                  ?.anime_count ?? 0 | number
               }}
             </p>
           </div>
@@ -265,7 +265,13 @@
               Version
             </p>
             <p class="text-2xl font-bold text-text-light dark:text-text">
-              v{{ healthCheck.entries?.RecommenderHealthCheck?.data?.version }}
+              @if (healthCheck.entries?.RecommenderHealthCheck?.data?.version) {
+                v{{
+                  healthCheck.entries?.RecommenderHealthCheck?.data?.version
+                }}
+              } @else {
+                Unknown
+              }
             </p>
           </div>
         </div>
@@ -286,7 +292,7 @@
             >
               {{
                 healthCheck.entries?.RecommenderHealthCheck?.data
-                  ?.service_status
+                  ?.service_status ?? "Unreachable"
               }}
             </span>
           </div>
@@ -343,23 +349,30 @@
           </div>
         </div>
 
-        <div class="border-t border-surface0-light dark:border-surface1 pt-3">
-          <button
-            (click)="expandFilesIntegrityMetrics = !expandFilesIntegrityMetrics"
-            class="w-full flex items-center justify-between text-xs text-text-light dark:text-text opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-pointer"
-          >
-            <span
-              >Dataset files ({{
-                healthCheck.entries?.RecommenderHealthCheck?.data
-                  ?.dataset_status?.length
-              }})</span
+        <div>
+          @if (
+            healthCheck.entries?.RecommenderHealthCheck?.data?.dataset_status
+              ?.length
+          ) {
+            <button
+              (click)="
+                expandFilesIntegrityMetrics = !expandFilesIntegrityMetrics
+              "
+              class="border-t border-surface0-light dark:border-surface1 pt-3 w-full flex items-center justify-between text-xs text-text-light dark:text-text opacity-50 hover:opacity-100 transition-opacity duration-200 cursor-pointer"
             >
-            <span
-              class="transition-transform duration-200"
-              [class.rotate-180]="expandFilesIntegrityMetrics"
-              >▾</span
-            >
-          </button>
+              <span
+                >Dataset files ({{
+                  healthCheck.entries?.RecommenderHealthCheck?.data
+                    ?.dataset_status?.length
+                }})</span
+              >
+              <span
+                class="transition-transform duration-200"
+                [class.rotate-180]="expandFilesIntegrityMetrics"
+                >▾</span
+              >
+            </button>
+          }
 
           @if (expandFilesIntegrityMetrics) {
             <div class="mt-3 space-y-1.5">
