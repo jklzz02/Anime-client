@@ -38,7 +38,7 @@
             data-suggestion="true"
           >
             <div class="w-10 h-14 shrink-0 overflow-hidden rounded">
-              @if (!suggestions.loaded) {
+              @if (suggestions.loaded) {
                 <img
                   src="assets/placeholder.png"
                   class="w-full h-full object-cover relative z-10"
