@@ -3,18 +3,21 @@
   (ngSubmit)="onSubmit(form)"
   class="max-w-4xl mx-auto p-4 sm:p-8 space-y-6 animate-fade-in"
 >
-  <div
-    *ngIf="submitAttempted && form.invalid"
-    class="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-500"
-  >
-    <div class="flex items-center gap-2 mb-2">
-      <i class="bi bi-exclamation-circle-fill"></i>
-      <p class="font-semibold">Please fix the following issues:</p>
+  @if (submitAttempted && form.invalid) {
+    <div
+      class="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-500"
+    >
+      <div class="flex items-center gap-2 mb-2">
+        <i class="bi bi-exclamation-circle-fill"></i>
+        <p class="font-semibold">Please fix the following issues:</p>
+      </div>
+      <ul class="list-disc list-inside space-y-1 opacity-90 ml-1">
+        @for (error of getErrorMessages(form); track error) {
+          <li>{{ error }}</li>
+        }
+      </ul>
     </div>
-    <ul class="list-disc list-inside space-y-1 opacity-90 ml-1">
-      <li *ngFor="let error of getErrorMessages(form)">{{ error }}</li>
-    </ul>
-  </div>
+  }
 
   <section
     class="rounded-xl border bg-mantle-light dark:bg-surface0 border-surface0-light dark:border-surface1 p-6 shadow-md"
@@ -33,23 +36,23 @@
       class="block"
     ></app-anime-select>
 
-    <div
-      *ngIf="selectedAnime"
-      class="mt-4 flex items-center gap-2 text-sm px-4 py-2 rounded-lg bg-surface0-light/50 dark:bg-surface0/50 border border-lavender-light/30 dark:border-lavender/30 text-text-light dark:text-text"
-    >
-      <span class="opacity-60">Selected:</span>
-      <span class="font-bold text-lavender-light dark:text-lavender">{{
-        selectedAnime.title
-      }}</span>
-    </div>
+    @if (selectedAnime) {
+      <div
+        class="mt-4 flex items-center gap-2 text-sm px-4 py-2 rounded-lg bg-surface0-light/50 dark:bg-surface0/50 border border-lavender-light/30 dark:border-lavender/30 text-text-light dark:text-text"
+      >
+        <span class="opacity-60">Selected:</span>
+        <span class="font-bold text-lavender-light dark:text-lavender">{{
+          selectedAnime.title
+        }}</span>
+      </div>
+    }
 
-    <p
-      *ngIf="(anime.touched || submitAttempted) && anime.invalid"
-      class="mt-2 text-sm text-red-500 flex items-center gap-1"
-    >
-      <i class="bi bi-exclamation-circle"></i>
-      Anime selection is required.
-    </p>
+    @if ((anime.touched || submitAttempted) && anime.invalid) {
+      <p class="mt-2 text-sm text-red-500 flex items-center gap-1">
+        <i class="bi bi-exclamation-circle"></i>
+        Anime selection is required.
+      </p>
+    }
   </section>
 
   <section
@@ -72,29 +75,29 @@
       class="w-full rounded-lg px-4 py-3 text-text-light dark:text-text bg-base-light dark:bg-base border border-surface1-light dark:border-surface1 focus:outline-none focus:ring-2 focus:ring-peach-light/50 dark:focus:ring-peach/50 focus:border-peach-light dark:focus:border-peach disabled:opacity-50 transition-all placeholder:text-text-light/30 dark:placeholder:text-text/30"
     />
 
-    <div
-      *ngIf="(title.touched || submitAttempted) && title.invalid"
-      class="mt-2 space-y-1"
-    >
-      <p
-        *ngIf="title.errors?.['required']"
-        class="text-sm text-red-500 flex items-center gap-1"
-      >
-        <i class="bi bi-exclamation-circle"></i> Title is required.
-      </p>
-      <p
-        *ngIf="title.errors?.['minlength']"
-        class="text-sm text-red-500 flex items-center gap-1"
-      >
-        <i class="bi bi-exclamation-circle"></i> Minimum 10 characters required.
-      </p>
-      <p
-        *ngIf="title.errors?.['maxlength']"
-        class="text-sm text-red-500 flex items-center gap-1"
-      >
-        <i class="bi bi-exclamation-circle"></i> Maximum 30 characters allowed.
-      </p>
-    </div>
+    @if ((title.touched || submitAttempted) && title.invalid) {
+      <div class="mt-2 space-y-1">
+        @if (title.errors?.["required"]) {
+          <p class="text-sm text-red-500 flex items-center gap-1">
+            <i class="bi bi-exclamation-circle"></i> Title is required.
+          </p>
+        }
+
+        @if (title.errors?.["minlength"]) {
+          <p class="text-sm text-red-500 flex items-center gap-1">
+            <i class="bi bi-exclamation-circle"></i> Minimum 10 characters
+            required.
+          </p>
+        }
+
+        @if (title.errors?.["maxlength"]) {
+          <p class="text-sm text-red-500 flex items-center gap-1">
+            <i class="bi bi-exclamation-circle"></i> Maximum 30 characters
+            allowed.
+          </p>
+        }
+      </div>
+    }
   </section>
 
   <section
@@ -120,24 +123,24 @@
       class="block border-none"
     ></app-markdown-editor>
 
-    <div
-      *ngIf="(content.touched || submitAttempted) && content.invalid"
-      class="px-6 pb-6 pt-2 space-y-1 bg-red-500/5 border-t border-red-500/10"
-    >
-      <p
-        *ngIf="content.errors?.['required']"
-        class="text-sm text-red-500 flex items-center gap-1"
+    @if ((content.touched || submitAttempted) && content.invalid) {
+      <div
+        class="px-6 pb-6 pt-2 space-y-1 bg-red-500/5 border-t border-red-500/10"
       >
-        <i class="bi bi-exclamation-circle"></i> Content is required.
-      </p>
-      <p
-        *ngIf="content.errors?.['minlength']"
-        class="text-sm text-red-500 flex items-center gap-1"
-      >
-        <i class="bi bi-exclamation-circle"></i> At least 100 characters
-        required.
-      </p>
-    </div>
+        @if (content.errors?.["required"]) {
+          <p class="text-sm text-red-500 flex items-center gap-1">
+            <i class="bi bi-exclamation-circle"></i> Content is required.
+          </p>
+        }
+
+        @if (content.errors?.["minlength"]) {
+          <p class="text-sm text-red-500 flex items-center gap-1">
+            <i class="bi bi-exclamation-circle"></i> At least 100 characters
+            required.
+          </p>
+        }
+      </div>
+    }
   </section>
 
   <section
@@ -205,17 +208,15 @@
       </div>
     </div>
 
-    <div
-      *ngIf="(score.touched || submitAttempted) && score.invalid"
-      class="mt-6 text-center"
-    >
-      <p
-        *ngIf="score.errors?.['required']"
-        class="text-sm text-red-500 inline-flex items-center gap-1"
-      >
-        <i class="bi bi-exclamation-circle"></i> Score is required.
-      </p>
-    </div>
+    @if ((score.touched || submitAttempted) && score.invalid) {
+      <div class="mt-6 text-center">
+        @if (score.errors?.["required"]) {
+          <p class="text-sm text-red-500 inline-flex items-center gap-1">
+            <i class="bi bi-exclamation-circle"></i> Score is required.
+          </p>
+        }
+      </div>
+    }
   </section>
 
   <div class="flex justify-end pt-4">
@@ -224,11 +225,14 @@
       [disabled]="isSubmitting || form.invalid"
       class="px-8 py-3 rounded-lg font-semibold text-white bg-blue-light dark:bg-blue hover:bg-lavender-light dark:hover:bg-lavender disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg"
     >
-      <span *ngIf="!isSubmitting">Publish Review</span>
-      <span *ngIf="isSubmitting" class="flex items-center gap-2">
-        <i class="bi bi-arrow-repeat animate-spin"></i>
-        Publishing...
-      </span>
+      @if (!isSubmitting) {
+        <span>Publish Review</span>
+      } @else {
+        <span class="flex items-center gap-2">
+          <i class="bi bi-arrow-repeat animate-spin"></i>
+          Publishing...
+        </span>
+      }
     </button>
   </div>
 </form>

@@ -11,6 +11,7 @@
         ></div>
       }
       <img
+        loading="lazy"
         class="w-full h-full object-cover transition-all duration-300 hover:scale-105"
         [class.opacity-0]="!isImageLoaded"
         [class.opacity-100]="isImageLoaded"
@@ -18,7 +19,6 @@
         [alt]="anime.title"
         [title]="anime.title"
         (load)="isImageLoaded = true"
-        loading="lazy"
         (error)="
           anime.image_url = 'assets/placeholder.png'; isImageLoaded = true
         "

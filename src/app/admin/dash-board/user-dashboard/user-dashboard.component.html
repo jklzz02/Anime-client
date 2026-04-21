@@ -3,6 +3,7 @@
     <img
       [src]="user.profile_picture"
       [alt]="user.username"
+      loading="lazy"
       (error)="user.profile_picture = 'assets/placeholder.png'"
       class="w-8 h-8 rounded-full"
     />

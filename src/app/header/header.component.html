@@ -15,16 +15,28 @@
         class="absolute lg:hidden end-10 px-2 py-1 rounded transition-colors hover:bg-lavender-light/20 hover:dark:bg-lavender/20"
         (click)="onThemeToggle()"
       >
-        <i *ngIf="currentTheme == 'dark'" class="bi bi-sun"></i>
-        <i *ngIf="currentTheme == 'light'" class="bi bi-moon"></i>
+        @switch (currentTheme) {
+          @case ("dark") {
+            <i class="bi bi-sun"></i>
+          }
+          @case ("light") {
+            <i class="bi bi-sun"></i>
+          }
+          @default {
+            <i class="bi bi-moon"></i>
+          }
+        }
       </button>
       <button
         (click)="isMenuOpen = !isMenuOpen"
         class="lg:hidden inline-flex items-center justify-center p-2 rounded"
         aria-label="Toggle menu"
       >
-        <i *ngIf="!isMenuOpen" class="absolute bi bi-list text-2xl end-2"></i>
-        <i *ngIf="isMenuOpen" class="absolute bi bi-x text-2xl end-2"></i>
+        @if (!isMenuOpen) {
+          <i class="absolute bi bi-list text-2xl end-2"></i>
+        } @else {
+          <i class="absolute bi bi-x text-2xl end-2"></i>
+        }
       </button>
       <div class="hidden lg:flex gap-1.5 items-center">
         <app-nav-button route="home"> Home </app-nav-button>
@@ -41,137 +53,156 @@
           class="flex items-center justify-center px-2 py-1 rounded transition-colors hover:bg-lavender-light/20 hover:dark:bg-lavender/20"
           (click)="onThemeToggle()"
         >
-          <i *ngIf="currentTheme == 'dark'" class="bi bi-sun text-lg"></i>
-          <i *ngIf="currentTheme == 'light'" class="bi bi-moon text-lg"></i>
+          @switch (currentTheme) {
+            @case ("dark") {
+              <i class="bi bi-sun text-lg"></i>
+            }
+            @case ("light") {
+              <i class="bi bi-sun text-lg"></i>
+            }
+            @default {
+              <i class="bi bi-moon text-lg"></i>
+            }
+          }
         </button>
         <app-anime-search class="lg:min-w-sm"></app-anime-search>
 
-        <div *ngIf="!isLoggedIn" class="flex gap-2">
-          <a
-            routerLink="signin"
-            routerLinkActive="bg-blue-light text-white dark:bg-blue dark:text-white"
-            [routerLinkActiveOptions]="{ exact: true }"
-            class="py-1.5 px-3 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition border border-blue-light/20 dark:border-blue/20 block text-center"
-          >
-            Sign In
-          </a>
-        </div>
-
-        <div *ngIf="isLoggedIn" class="relative">
-          <button
-            (click)="isUserMenuOpen = !isUserMenuOpen"
-            class="flex items-center gap-2 p-1 px-2 rounded-lg hover:bg-lavender-light/20 hover:dark:bg-lavender/20"
-          >
-            <img
-              [src]="user.profile_picture"
-              [alt]="user.username"
-              (error)="user.profile_picture = 'assets/placeholder.png'"
-              class="w-8 h-8 rounded-full"
-            />
-            <span class="text-sm">{{ user.username }}</span>
-            <i
-              class="bi bi-chevron-down text-xs transition-transform"
-              [class.rotate-180]="isUserMenuOpen"
-            ></i>
-          </button>
-
-          <div
-            *ngIf="isUserMenuOpen"
-            class="absolute overflow-clip right-0 mt-2 w-48 bg-mantle-light dark:bg-mantle border border-lavender-light/20 dark:border-lavender/20 rounded-md shadow-lg z-50"
-          >
+        @if (!isLoggedIn) {
+          <div class="flex gap-2">
             <a
-              routerLink="profile"
-              class="block px-4 py-2 hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
+              routerLink="signin"
+              routerLinkActive="bg-blue-light text-white dark:bg-blue dark:text-white"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="py-1.5 px-3 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition border border-blue-light/20 dark:border-blue/20 block text-center"
             >
-              Profile
+              Sign In
             </a>
-            <a
-              routerLink="/watchlist"
-              class="block px-4 py-2 hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
-            >
-              My Watchlist
-            </a>
-            <button
-              (click)="signOut()"
-              class="block w-full text-left px-4 py-2 hover:bg-red-500 hover:text-white transition"
-            >
-              Sign Out
-            </button>
           </div>
-        </div>
+        }
+
+        @if (isLoggedIn) {
+          <div class="relative">
+            <button
+              (click)="isUserMenuOpen = !isUserMenuOpen"
+              class="flex items-center gap-2 p-1 px-2 rounded-lg hover:bg-lavender-light/20 hover:dark:bg-lavender/20"
+            >
+              <img
+                [src]="user.profile_picture"
+                [alt]="user.username"
+                (error)="user.profile_picture = 'assets/placeholder.png'"
+                loading="lazy"
+                class="w-8 h-8 rounded-full"
+              />
+              <span class="text-sm">{{ user.username }}</span>
+              <i
+                class="bi bi-chevron-down text-xs transition-transform"
+                [class.rotate-180]="isUserMenuOpen"
+              ></i>
+            </button>
+
+            @if (isUserMenuOpen) {
+              <div
+                class="absolute overflow-clip right-0 mt-2 w-48 bg-mantle-light dark:bg-mantle border border-lavender-light/20 dark:border-lavender/20 rounded-md shadow-lg z-50"
+              >
+                <a
+                  routerLink="profile"
+                  class="block px-4 py-2 hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
+                >
+                  Profile
+                </a>
+                <a
+                  routerLink="/watchlist"
+                  class="block px-4 py-2 hover:bg-blue-light dark:hover:bg-blue hover:text-white transition"
+                >
+                  My Watchlist
+                </a>
+                <button
+                  (click)="signOut()"
+                  class="block w-full text-left px-4 py-2 hover:bg-red-500 hover:text-white transition"
+                >
+                  Sign Out
+                </button>
+              </div>
+            }
+          </div>
+        }
       </div>
     </div>
 
-    <div *ngIf="isMenuOpen" class="mt-4 flex flex-col space-y-2 lg:hidden">
-      <app-anime-search class="w-full mb-2"></app-anime-search>
+    @if (isMenuOpen) {
+      <div class="mt-4 flex flex-col space-y-2 lg:hidden">
+        <app-anime-search class="w-full mb-2"></app-anime-search>
 
-      <app-nav-button
-        route="home"
-        [mobile]="true"
-        (onClick)="isMenuOpen = false"
-      >
-        Home
-      </app-nav-button>
-      <app-nav-button
-        route="about"
-        [mobile]="true"
-        (onClick)="isMenuOpen = false"
-      >
-        About
-      </app-nav-button>
-      <app-nav-button
-        route="explore"
-        [exact]="false"
-        [mobile]="true"
-        (onClick)="isMenuOpen = false"
-      >
-        Explore
-      </app-nav-button>
-      <app-nav-button
-        route="reviews/1"
-        [exact]="false"
-        [mobile]="true"
-        (onClick)="isMenuOpen = false"
-      >
-        Reviews
-      </app-nav-button>
+        <app-nav-button
+          route="home"
+          [mobile]="true"
+          (onClick)="isMenuOpen = false"
+        >
+          Home
+        </app-nav-button>
+        <app-nav-button
+          route="about"
+          [mobile]="true"
+          (onClick)="isMenuOpen = false"
+        >
+          About
+        </app-nav-button>
+        <app-nav-button
+          route="explore"
+          [exact]="false"
+          [mobile]="true"
+          (onClick)="isMenuOpen = false"
+        >
+          Explore
+        </app-nav-button>
+        <app-nav-button
+          route="reviews/1"
+          [exact]="false"
+          [mobile]="true"
+          (onClick)="isMenuOpen = false"
+        >
+          Reviews
+        </app-nav-button>
 
-      <div class="pt-2">
-        <div *ngIf="!isLoggedIn" class="space-y-1">
-          <a
-            routerLink="signin"
-            routerLinkActive="bg-blue-light text-white dark:bg-blue dark:text-white"
-            [routerLinkActiveOptions]="{ exact: true }"
-            class="py-1.5 px-3 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition border border-blue-light/20 dark:border-blue/20 block text-center"
-            (click)="isMenuOpen = false"
-          >
-            Sign In
-          </a>
-        </div>
-
-        <div *ngIf="isLoggedIn" class="space-y-1">
-          <app-nav-button
-            route="profile"
-            [mobile]="true"
-            (onClick)="isMenuOpen = false"
-          >
-            Profile
-          </app-nav-button>
-          <app-nav-button
-            route="/watchlist"
-            [mobile]="true"
-            (onClick)="isMenuOpen = false"
-          >
-            Watchlist
-          </app-nav-button>
-          <button
-            (click)="signOut(); isMenuOpen = false"
-            class="block w-full text-left px-2 py-1 rounded hover:bg-red-500 hover:text-white transition"
-          >
-            Sign Out
-          </button>
+        <div class="pt-2">
+          @if (!isLoggedIn) {
+            <div class="space-y-1">
+              <a
+                routerLink="signin"
+                routerLinkActive="bg-blue-light text-white dark:bg-blue dark:text-white"
+                [routerLinkActiveOptions]="{ exact: true }"
+                class="py-1.5 px-3 rounded hover:bg-blue-light dark:hover:bg-blue hover:text-white transition border border-blue-light/20 dark:border-blue/20 block text-center"
+                (click)="isMenuOpen = false"
+              >
+                Sign In
+              </a>
+            </div>
+          } @else {
+            <div class="space-y-1">
+              <app-nav-button
+                route="profile"
+                [mobile]="true"
+                (onClick)="isMenuOpen = false"
+              >
+                Profile
+              </app-nav-button>
+              <app-nav-button
+                route="/watchlist"
+                [mobile]="true"
+                (onClick)="isMenuOpen = false"
+              >
+                Watchlist
+              </app-nav-button>
+              <button
+                (click)="signOut(); isMenuOpen = false"
+                class="block w-full text-left px-2 py-1 rounded hover:bg-red-500 hover:text-white transition"
+              >
+                Sign Out
+              </button>
+            </div>
+          }
         </div>
       </div>
-    </div>
+    }
   </nav>
 </header>

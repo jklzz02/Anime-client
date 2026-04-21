@@ -41,13 +41,15 @@
               <img
                 src="assets/placeholder.png"
                 class="w-full h-full object-cover mx-1"
+                loading="lazy"
               />
             }
             <img
               [src]="anime.image_url"
-              class="w-full h-full object-cover"
               (load)="onImageLoad(anime.id)"
               (error)="onImageError(anime)"
+              class="w-full h-full object-cover"
+              loading="lazy"
             />
           </div>
           <span class="font-medium">{{ anime.title }}</span>

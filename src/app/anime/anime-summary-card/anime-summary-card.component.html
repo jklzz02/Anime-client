@@ -15,24 +15,24 @@
     {{ summary.title }}
   </h3>
   <div class="flex items-center gap-2 mb-2">
-    <span
-      *ngIf="summary.score >= 8"
-      class="text-lg font-bold text-green-light dark:text-green"
-    >
-      {{ summary.score }}
-    </span>
-    <span
-      *ngIf="summary.score < 8 && summary.score >= 6"
-      class="text-lg font-bold text-peach-light dark:text-peach"
-    >
-      {{ summary.score }}
-    </span>
-    <span
-      *ngIf="summary.score < 6"
-      class="text-lg font-bold text-red-500 dark:text-red-400"
-    >
-      {{ summary.score }}
-    </span>
+    @switch (summary.score != undefined) {
+      @case (summary.score >= 8) {
+        <span class="text-lg font-bold text-green-light dark:text-green">
+          {{ summary.score }}
+        </span>
+      }
+
+      @case (summary.score < 8 && summary.score >= 6) {
+        <span class="text-lg font-bold text-peach-light dark:text-peach">
+          {{ summary.score }}
+        </span>
+      }
+      @default {
+        <span class="text-lg font-bold text-red-500 dark:text-red-400">
+          {{ summary.score }}
+        </span>
+      }
+    }
     <span class="text-xs text-text-light dark:text-text opacity-60">{{
       summary.release_year
     }}</span>

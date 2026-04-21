@@ -31,56 +31,65 @@
     </button>
   </div>
 
-  <div
-    *ngIf="activeTab === 'write'"
-    class="flex items-center gap-1 overflow-x-auto px-2 py-2 border-b border-surface1-light dark:border-surface1"
-  >
-    <button type="button" title="Image" (click)="insertImage()">
-      <i class="bi bi-file-earmark-image"></i>
-    </button>
-
-    <button type="button" title="Link" (click)="insertLink()">
-      <i class="bi bi-link"></i>
-    </button>
-
-    <button type="button" title="Bold" (click)="wrapSelection('**')">
-      <i class="bi bi-type-bold"></i>
-    </button>
-
-    <button type="button" title="Italic" (click)="wrapSelection('*')">
-      <i class="bi bi-type-italic"></i>
-    </button>
-
-    <button type="button" title="Spoiler" (click)="wrapSelection('>! ', ' !<')">
-      <i class="bi bi-eye-slash"></i>
-    </button>
-  </div>
-
-  <div *ngIf="activeTab === 'write'" class="p-3">
-    <textarea
-      #textarea
-      [name]="name"
-      [placeholder]="placeholder"
-      [disabled]="disabled"
-      [attr.maxLength]="maxLength"
-      [value]="value"
-      rows="6"
-      (input)="updateValue($any($event.target).value)"
-      (blur)="onTouched()"
-      class="w-full resize-y rounded-md p-3 text-sm md:text-base bg-mantle-light text-text-light border border-surface1-light focus:outline-none focus:ring-2 focus:ring-blue-light dark:bg-mantle dark:text-text dark:border-surface1 dark:focus:ring-blue"
-    ></textarea>
-
+  @if (activeTab === "write") {
     <div
-      class="mt-1 text-right text-xs opacity-70"
-      [ngClass]="
-        value.length > maxLength * 0.9 ? 'text-peach-light dark:text-peach' : ''
-      "
+      class="flex items-center gap-1 overflow-x-auto px-2 py-2 border-b border-surface1-light dark:border-surface1"
     >
-      {{ value.length }} / {{ maxLength }}
-    </div>
-  </div>
+      <button type="button" title="Image" (click)="insertImage()">
+        <i class="bi bi-file-earmark-image"></i>
+      </button>
 
-  <div *ngIf="activeTab === 'preview'" class="p-4 prose max-w-full break-words">
-    <markdown class="prose" [data]="previewContent"></markdown>
-  </div>
+      <button type="button" title="Link" (click)="insertLink()">
+        <i class="bi bi-link"></i>
+      </button>
+
+      <button type="button" title="Bold" (click)="wrapSelection('**')">
+        <i class="bi bi-type-bold"></i>
+      </button>
+
+      <button type="button" title="Italic" (click)="wrapSelection('*')">
+        <i class="bi bi-type-italic"></i>
+      </button>
+
+      <button
+        type="button"
+        title="Spoiler"
+        (click)="wrapSelection('>! ', ' !<')"
+      >
+        <i class="bi bi-eye-slash"></i>
+      </button>
+    </div>
+
+    <div class="p-3">
+      <textarea
+        #textarea
+        [name]="name"
+        [placeholder]="placeholder"
+        [disabled]="disabled"
+        [attr.maxLength]="maxLength"
+        [value]="value"
+        rows="6"
+        (input)="updateValue($any($event.target).value)"
+        (blur)="onTouched()"
+        class="w-full resize-y rounded-md p-3 text-sm md:text-base bg-mantle-light text-text-light border border-surface1-light focus:outline-none focus:ring-2 focus:ring-blue-light dark:bg-mantle dark:text-text dark:border-surface1 dark:focus:ring-blue"
+      ></textarea>
+
+      <div
+        class="mt-1 text-right text-xs opacity-70"
+        [ngClass]="
+          value.length > maxLength * 0.9
+            ? 'text-peach-light dark:text-peach'
+            : ''
+        "
+      >
+        {{ value.length }} / {{ maxLength }}
+      </div>
+    </div>
+  }
+
+  @if (activeTab === "preview") {
+    <div class="p-4 prose max-w-full break-words">
+      <markdown class="prose" [data]="previewContent"></markdown>
+    </div>
+  }
 </div>

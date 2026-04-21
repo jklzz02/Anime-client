@@ -1,10 +1,11 @@
 <div class="relative w-full">
-  <label
-    *ngIf="label"
-    class="block text-sm font-medium text-subtext1-light dark:text-subtext1 mb-1"
-  >
-    {{ label }}
-  </label>
+  @if (label) {
+    <label
+      class="block text-sm font-medium text-subtext1-light dark:text-subtext1 mb-1"
+    >
+      {{ label }}
+    </label>
+  }
 
   <button
     type="button"
@@ -25,54 +26,57 @@
     ></i>
   </button>
 
-  <div
-    *ngIf="isOpen"
-    class="absolute z-[60] mt-2 left-0 right-0 rounded-xl shadow-xl bg-surface1-light dark:bg-surface1 border border-surface1-light dark:border-surface1 overflow-hidden"
-  >
+  @if (isOpen) {
     <div
-      class="max-h-40 overflow-y-auto divide-y divide-surface1-light dark:divide-surface1"
+      class="absolute z-[60] mt-2 left-0 right-0 rounded-xl shadow-xl bg-surface1-light dark:bg-surface1 border border-surface1-light dark:border-surface1 overflow-hidden"
     >
-      <button
-        type="button"
-        (click)="clearSelection()"
-        class="w-full flex items-center justify-between px-4 py-2.5 text-left text-text-light dark:text-text hover:bg-surface0-light dark:hover:bg-surface0 transition-colors"
-        [class.bg-surface0-light]="!selected"
-        [class.dark:bg-surface0]="!selected"
-      >
-        <span class="text-sm text-subtext0-light dark:text-subtext0">
-          {{ placeholder }}
-        </span>
-
-        <i
-          *ngIf="!selected"
-          class="bi bi-check-lg text-blue-light dark:text-blue text-sm"
-        ></i>
-      </button>
-
-      <button
-        *ngFor="let item of items"
-        type="button"
-        (click)="selectItem(item)"
-        class="w-full flex items-center justify-between px-4 py-2.5 text-left text-text-light dark:text-text hover:bg-surface0-light dark:hover:bg-surface0 transition-colors"
-        [class.bg-surface0-light]="isSelected(item)"
-        [class.dark:bg-surface0]="isSelected(item)"
-      >
-        <span class="text-sm">
-          {{ labelFn(item) }}
-        </span>
-
-        <i
-          *ngIf="isSelected(item)"
-          class="bi bi-check-lg text-blue-light dark:text-blue text-sm"
-        ></i>
-      </button>
-
       <div
-        *ngIf="!items.length"
-        class="px-4 py-3 text-sm text-subtext0-light dark:text-subtext0"
+        class="max-h-40 overflow-y-auto divide-y divide-surface1-light dark:divide-surface1"
       >
-        No options available
+        <button
+          type="button"
+          (click)="clearSelection()"
+          class="w-full flex items-center justify-between px-4 py-2.5 text-left text-text-light dark:text-text hover:bg-surface0-light dark:hover:bg-surface0 transition-colors"
+          [class.bg-surface0-light]="!selected"
+          [class.dark:bg-surface0]="!selected"
+        >
+          <span class="text-sm text-subtext0-light dark:text-subtext0">
+            {{ placeholder }}
+          </span>
+
+          @if (!isSelected) {
+            <i
+              class="bi bi-check-lg text-blue-light dark:text-blue text-sm"
+            ></i>
+          }
+        </button>
+
+        @for (item of items; track item) {
+          <button
+            type="button"
+            (click)="selectItem(item)"
+            class="w-full flex items-center justify-between px-4 py-2.5 text-left text-text-light dark:text-text hover:bg-surface0-light dark:hover:bg-surface0 transition-colors"
+            [class.bg-surface0-light]="isSelected(item)"
+            [class.dark:bg-surface0]="isSelected(item)"
+          >
+            <span class="text-sm">
+              {{ labelFn(item) }}
+            </span>
+
+            @if (isSelected(item)) {
+              <i
+                class="bi bi-check-lg text-blue-light dark:text-blue text-sm"
+              ></i>
+            }
+          </button>
+        }
+
+        @if (!items.length) {
+          <div class="px-4 py-3 text-sm text-subtext0-light dark:text-subtext0">
+            No options available
+          </div>
+        }
       </div>
     </div>
-  </div>
+  }
 </div>

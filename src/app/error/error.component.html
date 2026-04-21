@@ -11,34 +11,36 @@
   </h1>
 
   <div
-    [ngSwitch]="statusCode"
     class="text-2xl font-semibold mb-4 text-lavender-light dark:text-lavender"
   >
-    <p *ngSwitchCase="401">Unauthorized. Who are you??</p>
+    @switch (statusCode) {
+      @case (401) {
+        <p>Unauthorized. Who are you??</p>
+      }
 
-    <p *ngSwitchCase="403">
-      Forbidden. You lack the power level for this area.
-    </p>
+      @case (403) {
+        <p>Forbidden. You lack the power level for this area.</p>
+      }
 
-    <p *ngSwitchCase="404">
-      404. This page went to get milk and never came back.
-    </p>
+      @case (404) {
+        <p>404. This page went to get milk and never came back.</p>
+      }
 
-    <p *ngSwitchDefault>
-      Something broke. Not saying it was you… but it *was* you.
-    </p>
+      @default {
+        <p>Something broke. Not saying it was you… but it *was* you.</p>
+      }
+    }
   </div>
 
   <p class="max-w-lg mb-8 text-surface1-light dark:text-text">
-    <ng-container *ngIf="!message">
+    @if (!message) {
       It looks like we're running into some issues.
       <br />
-    </ng-container>
-    <ng-container *ngIf="statusCode != 0">
-      <p class="text-light dark:text-text" *ngIf="message">
+    } @else if (statusCode != 0) {
+      <p class="text-light dark:text-text">
         {{ message }}
       </p>
-    </ng-container>
+    }
   </p>
 
   <a

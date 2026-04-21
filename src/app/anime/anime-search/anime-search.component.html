@@ -24,48 +24,51 @@
     </button>
   </div>
 
-  <ul
-    *ngIf="suggestions.length && isVisible"
-    class="absolute mt-2 w-full max-h-72 overflow-auto rounded-lg border shadow-lg bg-base-light border-surface1-light text-text dark:bg-base dark:border-surface1 dark:text-text z-50"
-  >
-    <li
-      *ngFor="let suggestion of suggestions"
-      class="group flex items-center gap-2 px-3 py-2 hover:bg-surface0-light dark:hover:bg-surface2 transition-colors"
+  @if (suggestions.length && isVisible) {
+    <ul
+      class="absolute mt-2 w-full max-h-72 overflow-auto rounded-lg border shadow-lg bg-base-light border-surface1-light text-text dark:bg-base dark:border-surface1 dark:text-text z-50"
     >
-      <a
-        class="flex items-center gap-2 w-full"
-        routerLink="/detail/{{ suggestion.id }}"
-        data-suggestion="true"
-      >
-        <div class="w-10 h-14 shrink-0 overflow-hidden rounded">
-          <img
-            *ngIf="!suggestion.loaded"
-            src="assets/placeholder.png"
-            class="w-full h-full object-cover relative z-10"
-          />
-          <img
-            [src]="suggestion.image_url"
-            class="w-full h-full object-cover relative z-10"
-            (load)="suggestion.loaded = true"
-            (error)="suggestion.image_url = 'assets/placeholder.png'"
-          />
-        </div>
-        <span class="text-text-light dark:text-text text-sm truncate">
-          <p>{{ suggestion.title }}</p>
-          <ng-container
-            *ngIf="
-              suggestion.english_title &&
-              suggestion.title != suggestion.english_title
-            "
+      @for (suggestion of suggestions; track $index) {
+        <li
+          class="group flex items-center gap-2 px-3 py-2 hover:bg-surface0-light dark:hover:bg-surface2 transition-colors"
+        >
+          <a
+            class="flex items-center gap-2 w-full"
+            routerLink="/detail/{{ suggestion.id }}"
+            data-suggestion="true"
           >
-            <p
-              class="text-surface2-light dark:text-surface2 group-hover:text-surface1-light dark:group-hover:text-surface1"
-            >
-              ({{ suggestion.english_title ?? "" }})
-            </p>
-          </ng-container>
-        </span>
-      </a>
-    </li>
-  </ul>
+            <div class="w-10 h-14 shrink-0 overflow-hidden rounded">
+              @if (!suggestions.loaded) {
+                <img
+                  src="assets/placeholder.png"
+                  class="w-full h-full object-cover relative z-10"
+                  loading="lazy"
+                />
+              }
+              <img
+                [src]="suggestion.image_url"
+                (load)="suggestion.loaded = true"
+                (error)="suggestion.image_url = 'assets/placeholder.png'"
+                class="w-full h-full object-cover relative z-10"
+                loading="lazy"
+              />
+            </div>
+            <span class="text-text-light dark:text-text text-sm truncate">
+              <p>{{ suggestion.title }}</p>
+              @if (
+                suggestion.english_title &&
+                suggestion.title != suggestion.english_title
+              ) {
+                <p
+                  class="text-surface2-light dark:text-surface2 group-hover:text-surface1-light dark:group-hover:text-surface1"
+                >
+                  ({{ suggestion.english_title ?? "" }})
+                </p>
+              }
+            </span>
+          </a>
+        </li>
+      }
+    </ul>
+  }
 </form>

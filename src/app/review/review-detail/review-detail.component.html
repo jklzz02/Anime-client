@@ -7,6 +7,7 @@
         <img
           [src]="review.anime.image_url"
           class="absolute inset-0 w-full h-full object-cover sm:blur-md opacity-50 scale-105"
+          loading="lazy"
           alt="Background"
         />
         <div
@@ -20,6 +21,7 @@
             [routerLink]="['/detail', review.anime_id]"
             [src]="review.anime.image_url"
             [alt]="review.anime.title"
+            loading="lazy"
             class="w-32 md:w-52 rounded-xl shadow-2xl shrink-0 cursor-pointer hidden sm:block"
           />
 
@@ -62,6 +64,7 @@
                 <img
                   [src]="review.user.picture_url"
                   class="w-5 h-5 md:w-6 md:h-6 rounded-full"
+                  loading="lazy"
                 />
                 <span
                   class="text-xs md:text-sm font-semibold text-text-light dark:text-text"
@@ -191,6 +194,7 @@
               <img
                 [src]="review.user.picture_url"
                 class="w-20 h-20 rounded-full mb-3 border-2 border-lavender-light dark:border-lavender object-cover shadow-md"
+                loading="lazy"
               />
               <h4 class="text-lg font-bold text-text-light dark:text-text">
                 {{ review.user.username }}

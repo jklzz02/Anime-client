@@ -33,6 +33,7 @@
     <img
       [src]="review.user.profile_picture"
       [alt]="review.user.username"
+      loading="lazy"
       (error)="review.user.profile_picture = 'assets/placeholder.png'"
       class="w-8 h-8 rounded-full"
     />

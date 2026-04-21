@@ -24,37 +24,39 @@
     ></i>
   </button>
 
-  <div
-    *ngIf="isOpen"
-    class="absolute z-50 mt-2 w-full rounded-xl shadow-xl bg-surface1-light dark:bg-surface1 border border-surface1-light dark:border-surface1 overflow-hidden"
-  >
+  @if (isOpen) {
     <div
-      class="max-h-64 overflow-y-auto divide-y divide-surface1-light dark:divide-surface1"
+      class="absolute z-50 mt-2 w-full rounded-xl shadow-xl bg-surface1-light dark:bg-surface1 border border-surface1-light dark:border-surface1 overflow-hidden"
     >
-      <button
-        *ngFor="let option of options"
-        type="button"
-        (click)="toggleValue(option)"
-        class="w-full flex items-center justify-between px-4 py-2.5 text-left text-text-light dark:text-text hover:bg-surface0-light dark:hover:bg-surface0 transition-colors"
-        [class.bg-surface0-light]="selected.includes(option)"
-        [class.dark:bg-surface0]="selected.includes(option)"
-      >
-        <span class="text-sm">
-          {{ option }}
-        </span>
-
-        <i
-          *ngIf="selected.includes(option)"
-          class="bi bi-check-lg text-blue-light dark:text-blue text-sm"
-        ></i>
-      </button>
-
       <div
-        *ngIf="!options.length"
-        class="px-4 py-3 text-sm text-subtext0-light dark:text-subtext0"
+        class="max-h-64 overflow-y-auto divide-y divide-surface1-light dark:divide-surface1"
       >
-        No options available
+        @for (option of options; track option) {
+          <button
+            type="button"
+            (click)="toggleValue(option)"
+            class="w-full flex items-center justify-between px-4 py-2.5 text-left text-text-light dark:text-text hover:bg-surface0-light dark:hover:bg-surface0 transition-colors"
+            [class.bg-surface0-light]="selected.includes(option)"
+            [class.dark:bg-surface0]="selected.includes(option)"
+          >
+            <span class="text-sm">
+              {{ option }}
+            </span>
+
+            @if (selected.includes(option)) {
+              <i
+                class="bi bi-check-lg text-blue-light dark:text-blue text-sm"
+              ></i>
+            }
+          </button>
+        }
+
+        @if (!options.length) {
+          <div class="px-4 py-3 text-sm text-subtext0-light dark:text-subtext0">
+            No options available
+          </div>
+        }
       </div>
     </div>
-  </div>
+  }
 </div>
