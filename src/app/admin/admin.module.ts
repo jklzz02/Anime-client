@@ -8,6 +8,7 @@ import { AnimeDashboardComponent } from './dash-board/anime-dashboard/anime-dash
 import { DashboardTableComponent } from './shared/dashboard-table/dashboard-table.component';
 import { ReviewDashboardComponent } from './dash-board/review-dashboard-component/review-dashboard.component';
 import { ServiceStatusDashboardComponent } from './dash-board/service-status-dashboard/service-status-dashboard.component';
+import { AdminUserComponent } from './user/admin-user.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ServiceStatusDashboardComponent } from './dash-board/service-status-das
     DashboardTableComponent,
     ReviewDashboardComponent,
     ServiceStatusDashboardComponent,
+    AdminUserComponent,
   ],
   imports: [CommonModule, RouterModule, AdminRoutingModule],
 })

@@ -55,7 +55,6 @@ export class AnimeDetailComponent implements OnInit {
           this.updateCompatibilityScore();
         },
         error: (error) => {
-          console.log(error);
           this.router.navigateByUrl('not-found');
         },
       });

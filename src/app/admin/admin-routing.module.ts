@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { AnimeDashboardComponent } from './dash-board/anime-dashboard/anime-dashboard.component';
 import { ReviewDashboardComponent } from './dash-board/review-dashboard-component/review-dashboard.component';
 import { ServiceStatusDashboardComponent } from './dash-board/service-status-dashboard/service-status-dashboard.component';
+import { AdminUserComponent } from './user/admin-user.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,11 @@ const routes: Routes = [
         path: 'users',
         component: UserDashboardComponent,
         title: 'AnimeHQ | Admin users',
+      },
+      {
+        path: 'user/:userId',
+        component: AdminUserComponent,
+        title: 'AnimeHQ | Admin',
       },
       {
         path: 'anime',
