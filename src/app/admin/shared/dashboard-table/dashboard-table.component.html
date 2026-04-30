@@ -9,6 +9,7 @@
       (change)="pageSizeChange.emit(+$any($event.target).value)"
       class="bg-surface1-light dark:bg-surface1 text-text-light dark:text-text text-sm font-medium rounded-lg px-3 py-2 border border-surface0-light dark:border-surface2 focus:outline-none focus:ring-2 focus:ring-blue-light dark:focus:ring-blue cursor-pointer transition-colors duration-200 hover:bg-surface2-light dark:hover:bg-surface2"
     >
+      <option [selected]="pageSize === 5" value="5">5 / page</option>
       <option [selected]="pageSize === 10" value="10">10 / page</option>
       <option [selected]="pageSize === 20" value="20">20 / page</option>
       <option [selected]="pageSize === 30" value="30">30 / page</option>

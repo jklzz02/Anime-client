@@ -17,7 +17,7 @@ export class DashboardTableComponent<T = any> {
   @Input() hasNextPage: boolean = false;
   @Input() emptyMessage: string = 'No items found.';
   @Input() rowLink!: (item: T) => any[];
-  @Input() pageSize: number = 10;
+  @Input() pageSize: number = 5;
 
   @Output() nextPage = new EventEmitter<void>();
   @Output() previousPage = new EventEmitter<void>();

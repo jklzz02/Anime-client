@@ -2,13 +2,6 @@ export interface AdminState {
   userDashboard: DashboardState;
   animeDashboard: DashboardState;
   reviewDashboard: DashboardState;
-  banList: {
-    currentPage: number;
-    pageSize: number;
-    sortedBy: string;
-    sortDirection: 'asc' | 'desc';
-    typeFilter: 'permanent' | 'temporary' | 'all';
-  };
 }
 
 export interface DashboardState {

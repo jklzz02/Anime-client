@@ -9,7 +9,7 @@ export class AdminStateService {
   private readonly initialState: AdminState = {
     userDashboard: {
       currentPage: 1,
-      pageSize: 30,
+      pageSize: 5,
       sortedBy: 'id',
       sortDirection: 'asc',
       filterBy: null,
@@ -17,7 +17,7 @@ export class AdminStateService {
     },
     animeDashboard: {
       currentPage: 1,
-      pageSize: 10,
+      pageSize: 5,
       sortedBy: 'id',
       sortDirection: 'asc',
       filterBy: null,
@@ -25,18 +25,11 @@ export class AdminStateService {
     },
     reviewDashboard: {
       currentPage: 1,
-      pageSize: 10,
+      pageSize: 5,
       sortedBy: 'id',
       sortDirection: 'asc',
       filterBy: null,
       filterValue: null,
-    },
-    banList: {
-      currentPage: 1,
-      pageSize: 10,
-      sortedBy: 'email',
-      sortDirection: 'asc',
-      typeFilter: 'all',
     },
   };
 
@@ -59,10 +52,6 @@ export class AdminStateService {
     return this.getState().reviewDashboard;
   }
 
-  getBanListState() {
-    return this.getState().banList;
-  }
-
   updateUserDashboardState(partial: Partial<AdminState['userDashboard']>) {
     const current = this.getState();
     this.updateState({
@@ -81,13 +70,6 @@ export class AdminStateService {
     const current = this.getState();
     this.updateState({
       reviewDashboard: { ...current.reviewDashboard, ...partial },
-    });
-  }
-
-  updateBanListState(partial: Partial<AdminState['banList']>) {
-    const current = this.getState();
-    this.updateState({
-      banList: { ...current.banList, ...partial },
     });
   }
 
