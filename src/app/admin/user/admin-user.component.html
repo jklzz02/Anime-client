@@ -1,1 +1,323 @@
-<p>admin-user works!</p>
+@if (isLoading) {
+  <div
+    class="flex justify-center items-center min-h-screen bg-base-light dark:bg-base"
+  >
+    <div class="animate-pulse flex flex-col items-center gap-4">
+      <div
+        class="w-24 h-24 rounded-full bg-surface0-light dark:bg-surface0"
+      ></div>
+      <div class="h-6 w-40 bg-surface0-light dark:bg-surface0 rounded-lg"></div>
+      <div class="h-4 w-56 bg-surface0-light dark:bg-surface0 rounded-lg"></div>
+    </div>
+  </div>
+}
+
+@if (!isLoading && userDetails.user; as user) {
+  <div
+    class="flex flex-col items-center min-h-screen bg-base-light dark:bg-base p-6 animate-fade-in gap-6"
+  >
+    <div
+      class="bg-mantle-light dark:bg-mantle border border-surface0-light dark:border-surface0 rounded-xl p-8 max-w-2xl w-full shadow-sm hover:shadow-md transition-shadow duration-300"
+    >
+      <div
+        class="relative flex flex-col items-center gap-3 mb-6 pb-6 border-b border-surface0-light dark:border-surface0"
+      >
+        <img
+          [src]="user.profile_picture"
+          [alt]="user.username"
+          (error)="user.profile_picture = 'assets/placeholder.png'"
+          class="w-24 h-24 rounded-full object-cover border-2 border-blue-light dark:border-blue"
+          loading="lazy"
+        />
+        <div class="flex items-center gap-2">
+          <h2 class="text-2xl font-semibold text-text-light dark:text-text">
+            {{ user.username }}
+          </h2>
+          @if (user.admin) {
+            <span
+              class="px-2 py-0.5 text-xs font-medium rounded-full bg-green-200 text-green-800 dark:bg-green-900/30 dark:text-green-300"
+            >
+              Admin
+            </span>
+          }
+          @if (isCurrentlyBanned()) {
+            <span
+              class="px-2 py-0.5 text-xs font-medium rounded-full bg-red-200 text-red-800 dark:bg-red-900/30 dark:text-red-300"
+            >
+              Banned
+            </span>
+          }
+        </div>
+      </div>
+
+      <div class="space-y-2 mb-6">
+        <div
+          class="flex items-center gap-3 p-3 bg-base-light dark:bg-base rounded-lg"
+        >
+          <i class="bi bi-envelope text-lg text-blue-light dark:text-blue"></i>
+          <span class="text-sm text-text-light dark:text-text break-words">{{
+            user.email
+          }}</span>
+        </div>
+        <div
+          class="flex items-center gap-3 p-3 bg-base-light dark:bg-base rounded-lg"
+        >
+          <i class="bi bi-shield text-lg text-blue-light dark:text-blue"></i>
+          <span class="text-sm text-text-light dark:text-text">
+            Provider:
+            <span class="font-medium">{{ user.identity_provider.name }}</span>
+          </span>
+        </div>
+        <div
+          class="flex items-center gap-3 p-3 bg-base-light dark:bg-base rounded-lg"
+        >
+          <i class="bi bi-calendar3 text-lg text-blue-light dark:text-blue"></i>
+          <span class="text-sm text-text-light dark:text-text">
+            Member since
+            <span class="font-medium">{{
+              user.created_at | date: "mediumDate"
+            }}</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        @if (isCurrentlyBanned()) {
+          <button
+            (click)="onUnban()"
+            [disabled]="isUnbanning"
+            class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-green-200 text-green-800 dark:bg-green-900/30 dark:text-green-300 rounded-lg font-medium hover:bg-green-300 dark:hover:bg-green-900/40 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 cursor-pointer"
+          >
+            <i class="bi bi-unlock"></i>
+            {{ isUnbanning ? "Unbanning..." : "Unban User" }}
+          </button>
+        } @else {
+          <button
+            (click)="onBan()"
+            class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-red-200 text-red-800 dark:bg-red-900/30 dark:text-red-300 rounded-lg font-medium hover:bg-red-300 dark:hover:bg-red-900/40 transition-colors duration-200 cursor-pointer"
+          >
+            <i class="bi bi-ban"></i>
+            Ban User
+          </button>
+        }
+      </div>
+    </div>
+
+    <div
+      class="bg-mantle-light dark:bg-mantle border border-surface0-light dark:border-surface0 rounded-xl p-6 max-w-2xl w-full shadow-sm"
+    >
+      <h3
+        class="text-lg font-semibold text-text-light dark:text-text mb-4 flex items-center gap-2"
+      >
+        <i class="bi bi-chat-left-text text-blue-light dark:text-blue"></i>
+        Reviews
+        <span
+          class="ml-auto text-sm font-normal text-subtext0-light dark:text-subtext0"
+        >
+          {{ userDetails.reviews?.length ?? 0 }} total
+        </span>
+      </h3>
+
+      @if (!userDetails.reviews || userDetails.reviews.length === 0) {
+        <div class="text-center py-8 text-subtext0-light dark:text-subtext0">
+          <i class="bi bi-inbox text-4xl mb-2 block"></i>
+          <p class="text-sm">No reviews yet.</p>
+        </div>
+      } @else {
+        <div class="space-y-3 max-h-150 overflow-x-scroll">
+          @for (review of userDetails.reviews; track review.id) {
+            <a
+              [routerLink]="['/reviews', review.id]"
+              class="block p-4 bg-base-light dark:bg-base rounded-lg border border-surface0-light dark:border-surface0 hover:border-blue-light dark:hover:border-blue transition-colors duration-200"
+            >
+              <div class="flex items-start justify-between gap-2 mb-1">
+                <span
+                  class="font-medium text-text-light dark:text-text text-sm truncate"
+                  >{{ review.title }}</span
+                >
+                <span
+                  class="flex-shrink-0 inline-flex items-center gap-1 px-2 py-0.5 bg-blue-light dark:bg-blue text-white text-xs rounded-full"
+                >
+                  <i class="bi bi-star-fill"></i>
+                  {{ review.score | number: "1.1-1" }}
+                </span>
+              </div>
+              <p
+                class="text-xs text-subtext0-light dark:text-subtext0 line-clamp-2 mb-2"
+              >
+                {{ review.content }}
+              </p>
+              <p class="text-xs text-subtext0-light dark:text-subtext0">
+                {{ review.created_at | date: "mediumDate" }}
+              </p>
+            </a>
+          }
+        </div>
+      }
+    </div>
+
+    <div
+      class="bg-mantle-light dark:bg-mantle border border-surface0-light dark:border-surface0 rounded-xl p-6 max-w-2xl w-full shadow-sm"
+    >
+      <h3
+        class="text-lg font-semibold text-text-light dark:text-text mb-4 flex items-center gap-2"
+      >
+        <i class="bi bi-ban text-red-500"></i>
+        Ban History
+        <span
+          class="ml-auto text-sm font-normal text-subtext0-light dark:text-subtext0"
+        >
+          {{ userDetails.ban?.length ?? 0 }} entries
+        </span>
+      </h3>
+
+      @if (!userDetails.ban || userDetails.ban.length === 0) {
+        <div class="text-center py-8 text-subtext0-light dark:text-subtext0">
+          <p class="text-sm">No bans on record.</p>
+        </div>
+      } @else {
+        <div class="space-y-3 max-h-150 overflow-y-scroll">
+          @for (ban of userDetails.ban; track ban.id) {
+            <div
+              class="p-4 bg-base-light dark:bg-base rounded-lg border transition-colors duration-200"
+              [class]="
+                ban.active
+                  ? 'border-red-300 dark:border-red-800'
+                  : 'border-surface0-light dark:border-surface0'
+              "
+            >
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span
+                  class="text-xs font-medium px-2 py-0.5 rounded-full"
+                  [class]="
+                    ban.active
+                      ? 'bg-red-200 text-red-800 dark:bg-red-900/30 dark:text-red-300'
+                      : 'bg-surface1-light dark:bg-surface1 text-subtext0-light dark:text-subtext0'
+                  "
+                >
+                  {{ ban.active ? "Active" : "Expired" }}
+                </span>
+                <span class="text-xs text-subtext0-light dark:text-subtext0"
+                  >v{{ ban.version }}</span
+                >
+              </div>
+              <p
+                class="text-sm text-text-light dark:text-text mb-2 font-medium"
+              >
+                "{{ ban.reason }}"
+              </p>
+              <div
+                class="grid grid-cols-2 gap-2 text-xs text-subtext0-light dark:text-subtext0"
+              >
+                <div>
+                  <span class="block font-medium text-text-light dark:text-text"
+                    >Issued</span
+                  >
+                  {{ ban.created_at | date: "mediumDate" }}
+                </div>
+                <div>
+                  <span
+                    class="block font-medium text-text-light dark:text-text"
+                    >{{ ban.active ? "expires at" : "expired at" }}</span
+                  >
+                  {{ ban.expiration_date | date: "mediumDate" }}
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+}
+
+@if (banModalOpened) {
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center animate-fade-in"
+    (click)="banModalOpened = false"
+  >
+    <div
+      class="bg-mantle-light dark:bg-mantle border border-surface0-light dark:border-surface0 rounded-xl p-6 w-full max-w-md mx-4 shadow-xl"
+      (click)="$event.stopPropagation()"
+    >
+      <div class="flex items-center justify-between mb-5">
+        <h3
+          class="text-lg font-semibold text-text-light dark:text-text flex items-center gap-2"
+        >
+          <i class="bi bi-ban text-red-500"></i>
+          Ban User
+        </h3>
+        <button
+          (click)="banModalOpened = false"
+          class="text-subtext0-light dark:text-subtext0 hover:text-text-light dark:hover:text-text transition-colors"
+        >
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <div class="mb-4">
+        <label
+          class="block text-sm font-medium text-text-light dark:text-text mb-2"
+          >Duration</label
+        >
+        <div class="grid grid-cols-3 gap-2">
+          @for (preset of banPresets; track preset.label) {
+            <button
+              (click)="applyBanPreset(preset.days)"
+              [class]="
+                selectedPresetDays === preset.days
+                  ? 'px-3 py-2 text-xs rounded-lg font-medium bg-red-200 text-red-800 dark:bg-red-900/30 dark:text-red-300 border border-red-300 dark:border-red-700 transition-colors duration-200'
+                  : 'px-3 py-2 text-xs rounded-lg font-medium bg-surface0-light dark:bg-surface0 text-text-light dark:text-text border border-surface0-light dark:border-surface0 hover:bg-surface1-light dark:hover:bg-surface1 transition-colors duration-200'
+              "
+            >
+              {{ preset.label }}
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label
+          class="block text-sm font-medium text-text-light dark:text-text mb-2"
+          >Banned until</label
+        >
+        <input
+          type="date"
+          [(ngModel)]="banUntil"
+          (input)="selectedPresetDays = null"
+          [min]="today"
+          class="w-full px-3 py-2 text-sm rounded-lg bg-base-light dark:bg-base border border-surface0-light dark:border-surface0 text-text-light dark:text-text focus:outline-none focus:border-blue-light dark:focus:border-blue transition-colors"
+        />
+      </div>
+
+      <div class="mb-6">
+        <label
+          class="block text-sm font-medium text-text-light dark:text-text mb-2"
+          >Reason</label
+        >
+        <textarea
+          [(ngModel)]="banReason"
+          rows="3"
+          placeholder="Describe the reason for the ban..."
+          class="w-full px-3 py-2 text-sm rounded-lg bg-base-light dark:bg-base border border-surface0-light dark:border-surface0 text-text-light dark:text-text placeholder:text-subtext0-light dark:placeholder:text-subtext0 focus:outline-none focus:border-blue-light dark:focus:border-blue transition-colors resize-none"
+        ></textarea>
+      </div>
+
+      <div class="flex gap-2">
+        <button
+          (click)="banModalOpened = false"
+          class="flex-1 px-4 py-2.5 text-sm rounded-lg font-medium bg-surface0-light dark:bg-surface0 text-text-light dark:text-text hover:bg-surface1-light dark:hover:bg-surface1 transition-colors duration-200"
+        >
+          Cancel
+        </button>
+        <button
+          (click)="confirmBan()"
+          [disabled]="!banReason.trim() || !banUntil || isBanning"
+          class="flex-1 px-4 py-2.5 text-sm rounded-lg font-medium bg-red-200 text-red-800 dark:bg-red-900/30 dark:text-red-300 hover:bg-red-300 dark:hover:bg-red-900/40 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+        >
+          {{ isBanning ? "Banning..." : "Confirm Ban" }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

@@ -9,6 +9,7 @@ import { DashboardTableComponent } from './shared/dashboard-table/dashboard-tabl
 import { ReviewDashboardComponent } from './dash-board/review-dashboard-component/review-dashboard.component';
 import { ServiceStatusDashboardComponent } from './dash-board/service-status-dashboard/service-status-dashboard.component';
 import { AdminUserComponent } from './user/admin-user.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,6 @@ import { AdminUserComponent } from './user/admin-user.component';
     ServiceStatusDashboardComponent,
     AdminUserComponent,
   ],
-  imports: [CommonModule, RouterModule, AdminRoutingModule],
+  imports: [CommonModule, FormsModule, RouterModule, AdminRoutingModule],
 })
 export class AdminModule {}

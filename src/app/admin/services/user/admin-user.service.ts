@@ -47,25 +47,20 @@ export class AdminUserService {
   }
 
   unbanUser(email: string): Observable<void> {
-    return this.http.post<void>(`${this.BASE}/admin/unban`, { email });
+    return this.http.patch<void>(`${this.BASE}/admin/unban`, { email: email });
   }
 
-  banUser(email: string): Observable<void>;
-  banUser(email: string, reason: string): Observable<void>;
   banUser(
     email: string,
-    reason?: string,
-    expirationDate?: Date,
+    reason: string,
+    expirationDate: Date,
   ): Observable<void> {
-    const params: any = { email };
+    const payload = {
+      email: email,
+      reason: reason,
+      expiration: expirationDate.toISOString(),
+    };
 
-    if (reason) {
-      params.reason = reason;
-    }
-    if (expirationDate) {
-      params.expiration = expirationDate.toUTCString();
-    }
-
-    return this.http.post<void>(`${this.BASE}/admin/ban`, { params });
+    return this.http.post<void>(`${this.BASE}/admin/ban`, payload);
   }
 }
