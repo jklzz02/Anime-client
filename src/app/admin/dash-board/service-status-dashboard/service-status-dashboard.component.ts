@@ -23,6 +23,15 @@ export class ServiceStatusDashboardComponent implements OnInit {
     this.loadHealthStaus();
   }
 
+  clearApiCache() {
+    this.http
+      .delete(`${environment.anime_api_domain}/admin/cache/clear`)
+      .subscribe({
+        next: () => this.loadHealthStaus(),
+        complete: () => console.log('complete'),
+      });
+  }
+
   loadHealthStaus(): void {
     this.isLoading = true;
 
